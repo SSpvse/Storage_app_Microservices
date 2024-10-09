@@ -28,10 +28,9 @@ public class AmqpConfiguration {
         return BindingBuilder
                 .bind(notificationQueue)
                 .to(notificationTopicExchange)
-                .with("routing_key_storage_prj"); // TODO CHANGE KEY
+                .with("item.date"); // TODO CHANGE KEY
     }
 
-    // Listener
 
     // JSON converter for message handling
     @Bean
@@ -43,7 +42,7 @@ public class AmqpConfiguration {
         return factory;
     }
 
-    //
+    // Listener
     @Bean
     public RabbitListenerConfigurer rabbitListenerConfigurer(final MessageHandlerMethodFactory messageHandlerMethodFactory){
         return (c) -> c.setMessageHandlerMethodFactory(messageHandlerMethodFactory);
@@ -53,35 +52,4 @@ public class AmqpConfiguration {
 
 
 
-
-    // queues
-    @Bean
-    public Queue storeDtoQueue(@Value("${amqp.queue.name}") final String queueName) {
-        return QueueBuilder
-                .durable(queueName)
-                .build();
-    }
-
-
-
-
-
-
-    // Bogdans making of jackson JSON converter with two imported Classes
-    @Bean
-    public MessageHandlerMethodFactory messageHandlerMethodFactory() {
-
-        DefaultMessageHandlerMethodFactory factory = new DefaultMessageHandlerMethodFactory();
-        final MappingJackson2MessageConverter jsonConverter = new MappingJackson2MessageConverter();
-        jsonConverter.getObjectMapper().registerModule(new ParameterNamesModule(JsonCreator.Mode.PROPERTIES));
-        factory.setMessageConverter(jsonConverter);
-        return factory;
-    }
-
-    // Bogdans Rabbit listener is being injected by the messagehandler factory
-    @Bean
-    public RabbitListenerConfigurer rabbitListenerConfigurer(final MessageHandlerMethodFactory messageHandlerMethodFactory) {
-
-        return (c) -> c.setMessageHandlerMethodFactory(messageHandlerMethodFactory);
-    }
 }
