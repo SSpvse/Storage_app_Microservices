@@ -28,9 +28,16 @@ public class AmqpConfiguration {
         return BindingBuilder
                 .bind(notificationQueue)
                 .to(notificationTopicExchange)
-                .with("item.date"); // TODO CHANGE KEY
+                .with("item.date.key");
     }
 
+    // Queue
+    @Bean
+    public Queue storeDtoQueue(@Value("${amqp.queue.name}") final String queueName) {
+        return QueueBuilder
+                .durable(queueName)
+                .build();
+    }
 
     // JSON converter for message handling
     @Bean
