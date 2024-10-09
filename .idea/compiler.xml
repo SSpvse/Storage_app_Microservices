@@ -6,9 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Item_Service" />
         <module name="Notification_Service" />
         <module name="Unit_Service" />
-        <module name="Item_Service" />
+        <module name="gateway" />
+        <module name="SearchService" />
       </profile>
     </annotationProcessing>
   </component>
@@ -16,7 +18,9 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Item_Service" options="-parameters" />
       <module name="Notification_Service" options="-parameters" />
+      <module name="SearchService" options="-parameters" />
       <module name="Unit_Service" options="-parameters" />
+      <module name="gateway" options="-parameters" />
     </option>
   </component>
 </project>
