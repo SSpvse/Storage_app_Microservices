@@ -1,0 +1,40 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: gateway
+  config:
+    import: "optional:consul:"
+  cloud:
+    gateway:
+      routes:
+        - id: ItemService
+          uri: lb://ItemService # lb://ItemService
+          predicates:
+            - Path=/item,/item/**
+        - id: StorageUnitService
+          uri: lb://StorageUnitService
+          predicates:
+            - Path=/storageUnits
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins:
+              - "http://localhost:5173"  # Should this be loaclhost:3000 ??? TEST
+            allowed-headers:
+              - "*"
+            allowed-methods:
+              - "GET"
+              - "POST"
+              - "OPTIONS"
+      default-filters:
+        - name: Retry
+          args:
+            retries: 3
+            methods: GET, POST
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+
