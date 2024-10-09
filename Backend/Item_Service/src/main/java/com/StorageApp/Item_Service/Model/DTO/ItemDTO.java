@@ -28,7 +28,7 @@ public class ItemDTO {
         item.setDescription(description);
         item.setQuantity(quantity);
         item.setDate(date);
-        item.setUnit_ID(unit_id);
+        item.setUnitID(unit_id);
         return item;
     }
 

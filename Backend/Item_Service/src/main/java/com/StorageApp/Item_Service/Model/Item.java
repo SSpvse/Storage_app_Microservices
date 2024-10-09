@@ -2,7 +2,6 @@ package com.StorageApp.Item_Service.Model;
 
 import com.StorageApp.Item_Service.Model.DTO.DateDTO;
 import com.StorageApp.Item_Service.Model.DTO.ItemDTO;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,16 +36,16 @@ public class Item {
     private LocalDate date;
 
     @Column(nullable = false)
-    private Long Unit_ID;
+    private Long unitID;
 
     @Column(nullable = false)
-    private Long user_id;
+    private Long userID;
 
     public DateDTO to_DateDTO() {
         DateDTO dateDTO = new DateDTO();
         dateDTO.setId(id);
         dateDTO.setDateTime(date);
-        dateDTO.setUser_id(user_id);
+        dateDTO.setUser_id(userID);
         return dateDTO;
     }
     public ItemDTO to_ItemDTO() {
@@ -56,7 +55,7 @@ public class Item {
         itemDTO.setDescription(description);
         itemDTO.setQuantity(quantity);
         itemDTO.setDate(date);
-        itemDTO.setUnit_id(Unit_ID);
+        itemDTO.setUnit_id(unitID);
         return itemDTO;
     }
 
