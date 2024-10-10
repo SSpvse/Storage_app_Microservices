@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Backend/Item_Service/Item_Service.iml" filepath="$PROJECT_DIR$/Backend/Item_Service/Item_Service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Storage_App_Main.iml" filepath="$PROJECT_DIR$/Storage_App_Main.iml" />
+    </modules>
+  </component>
+</project>
