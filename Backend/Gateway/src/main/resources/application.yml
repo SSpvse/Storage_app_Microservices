@@ -13,15 +13,15 @@ spring:
           uri: lb://ItemService # lb://ItemService
           predicates:
             - Path=/item,/item/**
-        - id: StorageUnitService
-          uri: lb://StorageUnitService
+        - id: UnitService
+          uri: lb://UnitService
           predicates:
-            - Path=/storageUnits
+            - Path=/unit, /unit/**
       globalcors:
         cors-configurations:
           '[/**]':
             allowed-origins:
-              - "http://localhost:5173"  # Should this be loaclhost:3000 ??? TEST
+              - "http://localhost:3000"  # Should this be loaclhost:3000 ??? TEST    This is for frontend ?
             allowed-headers:
               - "*"
             allowed-methods:
