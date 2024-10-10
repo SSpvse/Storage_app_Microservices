@@ -1,9 +1,10 @@
 package com.email.emailservice.service;
 
-import org.springframework.stereotype.Service;
+import com.email.emailservice.model.DTO.DateDTO;
+import org.springframework.http.HttpStatus;
 
-@Service
-public class EmailService {
+interface EmailService {
 
-    // emailService.handleExpiredItem(notificationDTO);
+
+    HttpStatus SendDateItemToEmail(DateDTO dateDTO);
 }

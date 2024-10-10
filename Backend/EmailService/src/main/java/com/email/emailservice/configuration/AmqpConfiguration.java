@@ -6,10 +6,12 @@ import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.messaging.handler.annotation.support.MessageHandlerMethodFactory;
 
+@Configuration
 public class AmqpConfiguration {
 
     // Exchange
@@ -22,22 +24,25 @@ public class AmqpConfiguration {
                 .build();
     }
 
-    // Binding
-    @Bean
-    public Binding notificationBinding(final Queue notificationQueue, final TopicExchange notificationTopicExchange){
-        return BindingBuilder
-                .bind(notificationQueue)
-                .to(notificationTopicExchange)
-                .with("item.date.key");
-    }
-
-    // Queue
+    // queues
     @Bean
     public Queue storeDtoQueue(@Value("${amqp.queue.name}") final String queueName) {
         return QueueBuilder
                 .durable(queueName)
                 .build();
     }
+
+
+
+    // Binding
+    @Bean
+    public Binding notificationBinding(final Queue notificationQueue, final TopicExchange notificationTopicExchange){
+        return BindingBuilder
+                .bind(notificationQueue)
+                .to(notificationTopicExchange)
+                .with("item.date.bindkey"); // TODO CHANGE KEY
+    }
+
 
     // JSON converter for message handling
     @Bean
@@ -54,9 +59,5 @@ public class AmqpConfiguration {
     public RabbitListenerConfigurer rabbitListenerConfigurer(final MessageHandlerMethodFactory messageHandlerMethodFactory){
         return (c) -> c.setMessageHandlerMethodFactory(messageHandlerMethodFactory);
     }
-
-
-
-
 
 }
