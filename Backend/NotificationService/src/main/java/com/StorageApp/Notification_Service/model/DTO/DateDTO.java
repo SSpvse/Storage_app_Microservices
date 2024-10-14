@@ -19,6 +19,7 @@ public class DateDTO {
 
     @Id
     private Long id;
+    private String name;
     private LocalDate date;
     private Long user_id;
 

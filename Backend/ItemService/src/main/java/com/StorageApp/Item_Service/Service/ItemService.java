@@ -67,7 +67,7 @@ public class ItemService {
             if (itemDto.getDate() != null) {
 
                 assert savedItem != null;
-                DateDTO timeDto = new DateDTO(savedItem.getId(), savedItem.getDate(), savedItem.getUserID());
+                DateDTO timeDto = new DateDTO(savedItem.getId(),savedItem.getName(), savedItem.getDate(), savedItem.getUserID());
                 String notificationUrl = "http://localhost:8080/notification/addDto";
                 ResponseEntity<String> response = restTemplate.postForEntity(notificationUrl, timeDto, String.class);
                 if (!response.getStatusCode().is2xxSuccessful()) {

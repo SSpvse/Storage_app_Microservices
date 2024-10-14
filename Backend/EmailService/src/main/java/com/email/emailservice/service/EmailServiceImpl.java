@@ -21,7 +21,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public HttpStatus SendDateItemToEmail(DateDTO dateDTO) {
 
-        System.out.println("HERE IS THE DTO VALUES:: : : " + dateDTO.getDate());
+        System.out.println("HERE IS THE DTO VALUES:: : : " + dateDTO.getName());
 
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         MediaType mediaType = MediaType.parse("application/json");
@@ -30,7 +30,9 @@ public class EmailServiceImpl implements EmailService {
         String subject = String.format("You are awesome! Here's the object to check: Date: %s, ID: %s",
                 dateDTO.getDate(), dateDTO.getId());
 
-        String text = String.format("Your items that are running out: %s", dateDTO.getDate());
+        // ------
+        // FOR FUTURE :: if you want to say what container its in, call unitService and use getUnitID to get the name ... here
+        String text = String.format("Your items that are running out: %s", dateDTO.getName());
 
         // Construct the JSON body dynamically
         String jsonBody = String.format(

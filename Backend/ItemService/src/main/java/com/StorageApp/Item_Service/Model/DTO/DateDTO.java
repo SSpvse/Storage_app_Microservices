@@ -15,6 +15,7 @@ import java.time.LocalDate;
 public class DateDTO {
 
     private Long id;
+    private String name;
     private LocalDate dateTime;
     private Long user_id;
 
