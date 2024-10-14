@@ -21,6 +21,8 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public HttpStatus SendDateItemToEmail(DateDTO dateDTO) {
 
+        System.out.println("HERE IS THE DTO VALUES:: : : " + dateDTO.getDate());
+
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         MediaType mediaType = MediaType.parse("application/json");
 
@@ -28,10 +30,12 @@ public class EmailServiceImpl implements EmailService {
         String subject = String.format("You are awesome! Here's the object to check: Date: %s, ID: %s",
                 dateDTO.getDate(), dateDTO.getId());
 
+        String text = String.format("Your items that are running out: %s", dateDTO.getDate());
+
         // Construct the JSON body dynamically
         String jsonBody = String.format(
-                "{\"from\":{\"email\":\"hello@demomailtrap.com\",\"name\":\"Mailtrap Test\"},\"to\":[{\"email\":\"stefvns003@gmail.com\"}],\"subject\":\"%s\",\"text\":\"Congrats for sending test email with Mailtrap!\",\"category\":\"Integration Test\"}",
-                subject
+                "{\"from\":{\"email\":\"hello@demomailtrap.com\",\"name\":\"Mailtrap Test\"},\"to\":[{\"email\":\"stefvns003@gmail.com\"}],\"subject\":\"%s\",\"text\":\"%s\",\"category\":\"Integration Test\"}",
+                subject, text
         );
 
         // Create the request body
