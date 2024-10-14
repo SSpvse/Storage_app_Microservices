@@ -20,13 +20,13 @@ public class UnitController {
     private UnitService unitService;
 
     // Get all units
-    @GetMapping
+    @GetMapping("/getall")
     public ResponseEntity<List<Unit>> getAllUnits(){
         return ResponseEntity.ok(unitService.getAllUnits());
     }
 
     // Get a specific unit by id
-    @GetMapping("/{unitId}")
+    @GetMapping("/getunitbyid/{unitId}")
     public ResponseEntity<Boolean> checkUnitExists(@PathVariable Long unitId){
 
         try {
@@ -39,14 +39,14 @@ public class UnitController {
     }
 
     // Adding a unit
-    @PostMapping
+    @PostMapping("/addunit")
     public ResponseEntity<UnitDTO> createUnit(@RequestBody UnitDTO unitDTO){
         UnitDTO createdUnit = unitService.createUnit(unitDTO);
         return ResponseEntity.ok(createdUnit);
     }
 
     // Update an existing unit by id
-    @PutMapping("/{id}")
+    @PutMapping("/updateunit/{id}")
     public ResponseEntity<UnitDTO> updateUnit(@PathVariable("id") Long id, @RequestBody UnitDTO unitDTO) {
         // Call the service method to update the unit
         UnitDTO updatedUnitDTO = unitService.updateUnit(id, unitDTO);
@@ -56,7 +56,7 @@ public class UnitController {
     }
 
     // Delete a unit by ID
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteunit/{id}")
     public ResponseEntity<Void> deleteUnit(@PathVariable("id") Long id) {
         if (!unitService.unitExists(id)) {
             // Return 404 if unit doesn't exist
