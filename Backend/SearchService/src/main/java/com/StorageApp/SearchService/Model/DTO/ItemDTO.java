@@ -1,6 +1,6 @@
 package com.StorageApp.SearchService.Model.DTO;
 
-import com.StorageApp.Item_Service.Model.Item;
+import com.StorageApp.SearchService.Model.Item;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
