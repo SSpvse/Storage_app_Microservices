@@ -3,10 +3,10 @@ package com.email.emailservice.service;
 import com.email.emailservice.model.DTO.DateDTO;
 import com.email.emailservice.repository.ReceiverRepository;
 import okhttp3.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -14,25 +14,24 @@ public class EmailServiceImpl implements EmailService {
 
     ReceiverRepository receiverRepository;
 
-    public void addDateItemToRepo(DateDTO item) {
-        receiverRepository.save(item);
+    public void addDateItemToRepo(List<DateDTO> items) {
+        receiverRepository.saveAll(items);
     }
 
-    @Override
-    public HttpStatus SendDateItemToEmail(DateDTO dateDTO) {
 
-        System.out.println("HERE IS THE DTO VALUES:: : : " + dateDTO.getName());
+
+    @Override
+    public void SendDateItemToEmail(List<DateDTO> dateDTOs) {
 
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         MediaType mediaType = MediaType.parse("application/json");
 
-        // Construct the subject dynamically by using dateDTO values
-        String subject = String.format("You are awesome! Here's the object to check: Date: %s, ID: %s",
-                dateDTO.getDate(), dateDTO.getId());
+        // Construct the subject dynamically by using dateDTOs values
+        String subject = String.format("Expiring items from unit_name: ");
 
         // ------
         // FOR FUTURE :: if you want to say what container its in, call unitService and use getUnitID to get the name ... here
-        String text = String.format("Your items that are running out: %s", dateDTO.getName());
+        String text = String.format("Your items that are running out: %s", dateDTOs.getName());
 
         // Construct the JSON body dynamically
         String jsonBody = String.format(
@@ -59,7 +58,6 @@ public class EmailServiceImpl implements EmailService {
             throw new RuntimeException(e);
         }
 
-        return HttpStatus.OK; // Or another status depending on the success of the operation
     }
 
 }

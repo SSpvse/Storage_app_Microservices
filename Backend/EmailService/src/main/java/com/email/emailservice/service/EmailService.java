@@ -1,10 +1,11 @@
 package com.email.emailservice.service;
 
 import com.email.emailservice.model.DTO.DateDTO;
-import org.springframework.http.HttpStatus;
+
+import java.util.List;
 
 interface EmailService {
 
 
-    HttpStatus SendDateItemToEmail(DateDTO dateDTO);
+    void SendDateItemToEmail(List<DateDTO> dateDTOS);
 }
