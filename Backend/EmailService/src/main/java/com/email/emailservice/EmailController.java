@@ -20,7 +20,7 @@ public class EmailController {
     @PostMapping
     public void sendMail(@RequestBody DateDTO text) {
 
-        emailService.SendDateItemToEmail(text);
+        // emailService.SendDateItemToEmail(text);
 
     }
 

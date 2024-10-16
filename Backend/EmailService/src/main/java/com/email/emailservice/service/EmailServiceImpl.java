@@ -29,9 +29,13 @@ public class EmailServiceImpl implements EmailService {
         // Construct the subject dynamically by using dateDTOs values
         String subject = String.format("Expiring items from unit_name: ");
 
+        StringBuilder itemsForMail = new StringBuilder();
+        for (DateDTO dateDTO : dateDTOs) {
+            itemsForMail.append(String.format("Item: %s date of expiring: %s", dateDTO.getName(), dateDTO.getDate()));
+        }
         // ------
         // FOR FUTURE :: if you want to say what container its in, call unitService and use getUnitID to get the name ... here
-        String text = String.format("Your items that are running out: %s", dateDTOs.getName());
+        String text = String.format("Your items that are running out: %s", itemsForMail);
 
         // Construct the JSON body dynamically
         String jsonBody = String.format(

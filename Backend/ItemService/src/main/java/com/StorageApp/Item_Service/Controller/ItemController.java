@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/item")
+@RequestMapping("/item")
 public class ItemController {
 
 
@@ -42,6 +42,7 @@ public class ItemController {
     // add item
     @PostMapping("/add_item")
     public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO item_dto) {
+        System.out.println("ACCESSING API");
 
         Item savedItem = _itemService.addItem(item_dto);
         System.out.println("FROM CONTROLLER: " + savedItem.toString());

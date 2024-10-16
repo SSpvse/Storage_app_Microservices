@@ -40,6 +40,8 @@ public class ItemService {
     @Transactional
     public Item addItem(ItemDTO itemDto) {
 
+        System.out.println("ACCESSING ADD ITEM METHOD ");
+
         if (itemDto == null) {
             throw new NullPointerException("Item cannot be null");
         }
@@ -48,7 +50,7 @@ public class ItemService {
         try {
             if (itemDto.getUnit_id() != null) {
                 // check for the unit in database to see if we have it
-                String unitUrl = "http://localhost:8080/unit/get/" + itemDto.getUnit_id();
+                String unitUrl = "http://localhost:8080/unit/getunitbyid/" + itemDto.getUnit_id();
                 ResponseEntity<UnitDTO> unitResponse = restTemplate.getForEntity(unitUrl, UnitDTO.class);
                 // check the response of the DB
                 if (unitResponse.getStatusCode().is2xxSuccessful()) {
