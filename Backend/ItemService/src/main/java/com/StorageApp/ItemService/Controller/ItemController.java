@@ -1,20 +1,19 @@
-package com.StorageApp.Item_Service.Controller;
+package com.StorageApp.ItemService.Controller;
 
-import com.StorageApp.Item_Service.Model.DTO.ItemDTO;
-import com.StorageApp.Item_Service.Model.Item;
-import com.StorageApp.Item_Service.Service.ItemService;
+import com.StorageApp.ItemService.Model.DTO.ItemDTO;
+import com.StorageApp.ItemService.Model.Item;
+import com.StorageApp.ItemService.Service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/item")
+@RequestMapping("/item")
 public class ItemController {
 
 
@@ -23,6 +22,13 @@ public class ItemController {
 
     private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 
+
+    @PostMapping("/x")
+    public ResponseEntity<Item> add(@RequestBody Item item) {
+
+
+        return ResponseEntity.ok(_itemService.addItemTable(item));
+    }
     /*
     // TESTING
     @GetMapping("/testUnit/{id}")
@@ -40,8 +46,9 @@ public class ItemController {
     // ---- CREATE
 
     // add item
-    @PostMapping("/add_item")
+    @PostMapping("/add")
     public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO item_dto) {
+        System.out.println("ACCESSING API");
 
         Item savedItem = _itemService.addItem(item_dto);
         System.out.println("FROM CONTROLLER: " + savedItem.toString());
@@ -68,7 +75,7 @@ public class ItemController {
     }
 
     // get items_dtos by UNIT_ID
-    @GetMapping("/get_unitID/{id}")
+    @GetMapping("/byid/{id}")
     public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long id) {
 
         System.out.println("!!!! --- getlist by unit id");

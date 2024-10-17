@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 
 @Slf4j
 @Service
@@ -26,18 +28,18 @@ public class ItemEventPublisher {
 
 
 
-    public ResponseEntity<DateDTO> testSendRabbit(@RequestBody DateDTO timeItemDto) {
+    public ResponseEntity<List<DateDTO>> testSendRabbit(@RequestBody List<DateDTO> dateDTOList) {
 
-        System.out.println("TESTING FOR testSendRabbit method::: " + timeItemDto);
+        System.out.println("TESTING FOR testSendRabbit method::: " + dateDTOList);
 
-        if (timeItemDto == null) {
-            throw new IllegalArgumentException("TimeItemDto cannot be null");
+        if (dateDTOList == null) {
+            throw new IllegalArgumentException("TimeItemDto list cannot be null");
         }
         // Send the message to RabbitMQ
-        rabbitTemplate.convertAndSend(exchangeName, routingKey, timeItemDto);
+        rabbitTemplate.convertAndSend(exchangeName, routingKey, dateDTOList);
 
         // Log and return the sent object for confirmation
-        log.info("Sent message to RabbitMQ: " + timeItemDto);
-        return ResponseEntity.ok(timeItemDto);
+        log.info("Sent message to RabbitMQ: " + dateDTOList);
+        return ResponseEntity.ok(dateDTOList);
     }
 }

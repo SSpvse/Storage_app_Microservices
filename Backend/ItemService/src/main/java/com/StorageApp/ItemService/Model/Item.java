@@ -1,11 +1,8 @@
-package com.StorageApp.Item_Service.Model;
+package com.StorageApp.ItemService.Model;
 
-import com.StorageApp.Item_Service.Model.DTO.DateDTO;
-import com.StorageApp.Item_Service.Model.DTO.ItemDTO;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.StorageApp.ItemService.Model.DTO.DateDTO;
+import com.StorageApp.ItemService.Model.DTO.ItemDTO;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +18,7 @@ import java.time.LocalDate;
 public class Item {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -45,7 +42,7 @@ public class Item {
         DateDTO dateDTO = new DateDTO();
         dateDTO.setId(id);
         dateDTO.setDateTime(date);
-        dateDTO.setUser_id(userID);
+        dateDTO.setUserID(userID);
         return dateDTO;
     }
     public ItemDTO to_ItemDTO() {
@@ -55,8 +52,21 @@ public class Item {
         itemDTO.setDescription(description);
         itemDTO.setQuantity(quantity);
         itemDTO.setDate(date);
-        itemDTO.setUnit_id(unitID);
+        itemDTO.setUnitID(unitID);
         return itemDTO;
     }
 
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", quantity=" + quantity +
+                ", date=" + date +
+                ", unitID=" + unitID +
+                ", userID=" + userID +
+                '}';
+    }
 }

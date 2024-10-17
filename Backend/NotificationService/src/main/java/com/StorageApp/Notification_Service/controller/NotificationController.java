@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notification")
+@RequestMapping("/notification")
 @Slf4j
 public class NotificationController {
 
@@ -45,7 +45,7 @@ public class NotificationController {
 // --------------------------------AA
 
     // add timeDto
-    @PostMapping("/addDto")
+    @PostMapping("/add")
     public ResponseEntity<DateDTO> addTimeDto(@RequestBody DateDTO timeDto) {
 
         DateDTO dto = notificationService.addTimeDto(timeDto);

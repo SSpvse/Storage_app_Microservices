@@ -1,6 +1,6 @@
-package com.StorageApp.Unit_Service.dto;
+package com.StorageApp.UnitService.dto;
 
-import com.StorageApp.Unit_Service.model.Unit;
+import com.StorageApp.UnitService.model.Unit;
 import lombok.Getter;
 import lombok.Setter;
 

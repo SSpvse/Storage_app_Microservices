@@ -45,7 +45,7 @@ public class Item {
         DateDTO dateDTO = new DateDTO();
         dateDTO.setId(id);
         dateDTO.setDate(date);
-        dateDTO.setUser_id(userID);
+        dateDTO.setUserID(userID);
         return dateDTO;
     }
     public ItemDTO to_ItemDTO() {

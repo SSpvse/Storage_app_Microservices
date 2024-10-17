@@ -40,17 +40,8 @@ public class DateChecker {
         List<DateDTO> itemsToSend = notificationRepository.findByDate(tomorrowLocalDate);
 
         System.out.println("CHECKING TOMORROW DATE AND ITEMSTO SEND LENGTH==== " + itemsToSend.size());
-        for (DateDTO item : itemsToSend) {
-            itemEventPublisher.testSendRabbit(item);
-        }
 
-        /*
-        List<TimeItemDto> itemsToSend = notificationRepository.findByName("Rabbit");
-
-        for (TimeItemDto item : itemsToSend) {
-            itemEventPublisher.testSendRabbit(item);
-        }
-         */
+        itemEventPublisher.testSendRabbit(itemsToSend);
 
     }
 
