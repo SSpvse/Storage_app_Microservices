@@ -1,4 +1,4 @@
-const ITEM_SERVICE_URL = "http://localhost:8000/item";
+const ITEM_SERVICE_URL = "http://localhost:8000/item/";
 
 // Define an interface for the item structure //TODO move this interface to types.tsx
 export interface Item {
