@@ -1,4 +1,4 @@
-package com.StorageApp.Unit_Service;
+package com.StorageApp.UnitService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

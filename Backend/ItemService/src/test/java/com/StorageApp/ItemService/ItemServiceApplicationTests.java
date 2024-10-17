@@ -1,10 +1,10 @@
-package com.StorageApp.Unit_Service;
+package com.StorageApp.ItemService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class UnitServiceApplicationTests {
+class ItemServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

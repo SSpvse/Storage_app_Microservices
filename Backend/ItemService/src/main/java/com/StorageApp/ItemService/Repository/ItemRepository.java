@@ -1,6 +1,6 @@
-package com.StorageApp.Item_Service.Repository;
+package com.StorageApp.ItemService.Repository;
 
-import com.StorageApp.Item_Service.Model.Item;
+import com.StorageApp.ItemService.Model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

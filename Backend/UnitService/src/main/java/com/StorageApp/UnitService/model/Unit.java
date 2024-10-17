@@ -1,6 +1,6 @@
-package com.StorageApp.Unit_Service.model;
+package com.StorageApp.UnitService.model;
 
-import com.StorageApp.Unit_Service.dto.UnitDTO;
+import com.StorageApp.UnitService.dto.UnitDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

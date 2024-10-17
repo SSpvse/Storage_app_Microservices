@@ -1,4 +1,4 @@
-package com.StorageApp.Item_Service.Model.DTO;
+package com.StorageApp.ItemService.Model.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +17,6 @@ public class DateDTO {
     private Long id;
     private String name;
     private LocalDate dateTime;
-    private Long user_id;
+    private Long userID;
 
 }

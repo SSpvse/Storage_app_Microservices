@@ -1,4 +1,4 @@
-package com.StorageApp.Item_Service.Model.DTO;
+package com.StorageApp.ItemService.Model.DTO;
 
 public class UnitDTO {
 

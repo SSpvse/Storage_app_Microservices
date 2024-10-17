@@ -1,11 +1,10 @@
-package com.StorageApp.Item_Service.Service;
+package com.StorageApp.ItemService.Service;
 
-import com.StorageApp.Item_Service.Controller.ItemController;
-import com.StorageApp.Item_Service.Model.DTO.DateDTO;
-import com.StorageApp.Item_Service.Model.DTO.ItemDTO;
-import com.StorageApp.Item_Service.Model.DTO.UnitDTO;
-import com.StorageApp.Item_Service.Model.Item;
-import com.StorageApp.Item_Service.Repository.ItemRepository;
+import com.StorageApp.ItemService.Controller.ItemController;
+import com.StorageApp.ItemService.Model.DTO.DateDTO;
+import com.StorageApp.ItemService.Model.DTO.ItemDTO;
+import com.StorageApp.ItemService.Model.Item;
+import com.StorageApp.ItemService.Repository.ItemRepository;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -36,6 +35,11 @@ public class ItemService {
 
     // ---- ADD ITEMS
 
+    public Item addItemTable(Item item) {
+        System.out.println(item.toString());
+        return itemRepository.save(item);
+    }
+
     // add item
     @Transactional
     public Item addItem(ItemDTO itemDto) {
@@ -48,14 +52,14 @@ public class ItemService {
         Item savedItem = null;
 
         try {
-            if (itemDto.getUnit_id() != null) {
+            if (itemDto.getUnitID() != null) {
                 // check for the unit in database to see if we have it
-                String unitUrl = "http://localhost:8080/unit/getunitbyid/" + itemDto.getUnit_id();
-                ResponseEntity<UnitDTO> unitResponse = restTemplate.getForEntity(unitUrl, UnitDTO.class);
+                String unitUrl = "http://localhost:8081/unit/exists/" + itemDto.getUnitID();
+                ResponseEntity<Boolean> unitResponse = restTemplate.getForEntity(unitUrl, Boolean.class);
                 // check the response of the DB
                 if (unitResponse.getStatusCode().is2xxSuccessful()) {
-                    UnitDTO existingUnit = unitResponse.getBody();
-                    if (existingUnit != null) {
+                    Boolean existingUnit = unitResponse.getBody();
+                    if (existingUnit == true) {
                         // if unit exists save the item so you can get the ID on it
                         System.out.println("EXISTING UNIT::: " + existingUnit.toString());
                         savedItem = itemRepository.save(itemDto.DTO_to_Item());// Save the item to the database first
@@ -70,7 +74,7 @@ public class ItemService {
 
                 assert savedItem != null;
                 DateDTO timeDto = new DateDTO(savedItem.getId(),savedItem.getName(), savedItem.getDate(), savedItem.getUserID());
-                String notificationUrl = "http://localhost:8080/notification/addDto";
+                String notificationUrl = "http://localhost:8086/notification/add";
                 ResponseEntity<String> response = restTemplate.postForEntity(notificationUrl, timeDto, String.class);
                 if (!response.getStatusCode().is2xxSuccessful()) {
                     throw new RuntimeException("Failed to add notification to NotificationService");

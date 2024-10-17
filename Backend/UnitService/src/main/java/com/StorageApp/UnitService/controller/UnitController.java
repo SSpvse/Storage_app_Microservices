@@ -1,8 +1,8 @@
-package com.StorageApp.Unit_Service.controller;
+package com.StorageApp.UnitService.controller;
 
-import com.StorageApp.Unit_Service.dto.UnitDTO;
-import com.StorageApp.Unit_Service.model.Unit;
-import com.StorageApp.Unit_Service.service.UnitService;
+import com.StorageApp.UnitService.dto.UnitDTO;
+import com.StorageApp.UnitService.model.Unit;
+import com.StorageApp.UnitService.service.UnitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,11 +26,24 @@ public class UnitController {
     }
 
     // Get a specific unit by id
-    @GetMapping("/getunitbyid/{unitId}")
-    public ResponseEntity<Boolean> checkUnitExists(@PathVariable Long unitId){
+    @GetMapping("/byid/{unitId}")
+    public UnitDTO getUnitByID(@PathVariable Long unitId){
 
         try {
-            boolean exists = unitService.unitExists(unitId);
+            Unit dto = unitService.getUnitById(unitId).DTO_to_Unit();
+            return dto.Unit_to_DTO();
+        } catch (Exception e){
+            log.error("Error checking if unit exists", e);
+            return null;
+        }
+    }
+
+    // Check if unit exists
+    @GetMapping("/exists/{id}")
+    public ResponseEntity<Boolean> checkUnitExists(@PathVariable Long id) {
+
+        try {
+            boolean exists = unitService.unitExists(id);
             return ResponseEntity.ok(exists);
         } catch (Exception e){
             log.error("Error checking if unit exists", e);
@@ -48,7 +61,7 @@ public class UnitController {
     }
 
     // Update an existing unit by id
-    @PutMapping("/updateunit/{id}")
+    @PutMapping("/byid/{id}")
     public ResponseEntity<UnitDTO> updateUnit(@PathVariable("id") Long id, @RequestBody UnitDTO unitDTO) {
         // Call the service method to update the unit
         UnitDTO updatedUnitDTO = unitService.updateUnit(id, unitDTO);
@@ -58,7 +71,7 @@ public class UnitController {
     }
 
     // Delete a unit by ID
-    @DeleteMapping("/deleteunit/{id}")
+    @DeleteMapping("/byid/{id}")
     public ResponseEntity<Void> deleteUnit(@PathVariable("id") Long id) {
         if (!unitService.unitExists(id)) {
             // Return 404 if unit doesn't exist

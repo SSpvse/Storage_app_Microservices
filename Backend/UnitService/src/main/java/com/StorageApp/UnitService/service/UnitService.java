@@ -1,8 +1,8 @@
-package com.StorageApp.Unit_Service.service;
+package com.StorageApp.UnitService.service;
 
-import com.StorageApp.Unit_Service.dto.UnitDTO;
-import com.StorageApp.Unit_Service.model.Unit;
-import com.StorageApp.Unit_Service.repository.UnitRepository;
+import com.StorageApp.UnitService.dto.UnitDTO;
+import com.StorageApp.UnitService.model.Unit;
+import com.StorageApp.UnitService.repository.UnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +36,10 @@ public class UnitService {
     public boolean unitExists(Long unitId){
         // Return true if the Unit exists
         return unitRepository.existsById(unitId);
+    }
+
+    public UnitDTO getUnitById(Long unitId){
+        return unitRepository.findUnitByid(unitId).Unit_to_DTO();
     }
 
     // Updating a unit
