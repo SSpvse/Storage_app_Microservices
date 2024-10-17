@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.StorageApp</groupId>
-	<artifactId>UnitService</artifactId>
+	<artifactId>NotificationService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Unit_Service</name>
-	<description>UnitService for StorageApp</description>
+	<name>NotificationService</name>
+	<description>NotificationService for StorageApp</description>
 	<url/>
 	<licenses>
 		<license/>

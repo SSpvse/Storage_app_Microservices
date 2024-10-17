@@ -1,0 +1,1 @@
+// Component for displaying all the storage units
