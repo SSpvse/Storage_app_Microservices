@@ -1,0 +1,88 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+.idea
+dist
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# Maven/Gradle build directories
+target/
+build/
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.swp
+*.tmp
+*.bak
+*.pid
+*.seed
+*.old
+
+# IntelliJ IDEA and Eclipse IDE project files
+/.idea/
+/.project
+/.classpath
+/.settings/
+/out/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+
+
+
+# ---- Vite frontend ----
+# Node modules (Vite frontend dependencies)
+node_modules/
+
+# Build output (Vite build artifacts)
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local

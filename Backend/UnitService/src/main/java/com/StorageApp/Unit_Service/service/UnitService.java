@@ -1,0 +1,61 @@
+package com.StorageApp.Unit_Service.service;
+
+import com.StorageApp.Unit_Service.dto.UnitDTO;
+import com.StorageApp.Unit_Service.model.Unit;
+import com.StorageApp.Unit_Service.repository.UnitRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UnitService {
+
+    @Autowired
+    private UnitRepository unitRepository;
+
+    // Creating/Adding a new Unit
+    public UnitDTO createUnit(UnitDTO unitDTO) {
+
+        // Converting the DTO to Entity
+        Unit unit = unitDTO.DTO_to_Unit();
+
+        // Save the unit in the repository
+        unit = unitRepository.save(unit);
+
+        // Return the updated DTO with the saved entity's details
+        return unit.Unit_to_DTO();
+    }
+
+    // Get all units
+    public List<Unit> getAllUnits(){
+        return unitRepository.findAll();
+    }
+
+    // Checking if a unit exists by ID
+    public boolean unitExists(Long unitId){
+        // Return true if the Unit exists
+        return unitRepository.existsById(unitId);
+    }
+
+    // Updating a unit
+    public UnitDTO updateUnit(Long unitId, UnitDTO unitDTO) {
+        // Fetch the existing unit from the repository
+        Unit existingUnit = unitRepository.findById(unitId)
+                .orElseThrow(() -> new Error("Unit not found with ID: " + unitId));
+
+        // Update the existing unit's properties with values from the DTO
+        existingUnit.setName(unitDTO.getName());
+
+        // Save the updated unit in the repository
+        Unit updatedUnit = unitRepository.save(existingUnit);
+
+        // Convert the updated unit back to DTO and return
+        return updatedUnit.Unit_to_DTO();
+    }
+
+    // Deleting a unit by the ID
+    public void deleteUnit(Long unitId){
+        unitRepository.deleteById(unitId);
+    }
+}
