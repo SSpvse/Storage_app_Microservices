@@ -1,8 +1,9 @@
 package com.email.emailservice.service;
 
 import com.email.emailservice.model.DTO.DateDTO;
-import com.email.emailservice.repository.ReceiverRepository;
+import com.email.emailservice.repository.EmailServiceRepository;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -12,10 +13,11 @@ import java.util.List;
 public class EmailServiceImpl implements EmailService {
 
 
-    ReceiverRepository receiverRepository;
+    @Autowired
+    EmailServiceRepository emailServiceRepository;
 
     public void addDateItemToRepo(List<DateDTO> items) {
-        receiverRepository.saveAll(items);
+        emailServiceRepository.saveAll(items);
     }
 
 

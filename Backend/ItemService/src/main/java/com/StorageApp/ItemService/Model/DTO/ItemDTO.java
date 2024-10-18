@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @Setter
 public class ItemDTO {
 
-    private Long id;
     private String name;
     private String description;
     private Long quantity;
@@ -22,9 +21,20 @@ public class ItemDTO {
     private Long unitID;
     private Long userID;
 
+    @Override
+    public String toString() {
+        return "ItemDTO{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", quantity=" + quantity +
+                ", date=" + date +
+                ", unitID=" + unitID +
+                ", userID=" + userID +
+                '}';
+    }
+
     public Item DTO_to_Item() {
         Item item = new Item();
-        item.setId(id);
         item.setName(name);
         item.setDescription(description);
         item.setQuantity(quantity);

@@ -33,51 +33,52 @@ public class ItemService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+
     // ---- ADD ITEMS
 
-    public Item addItemTable(Item item) {
-        System.out.println(item.toString());
-        return itemRepository.save(item);
-    }
 
     // add item
     @Transactional
     public Item addItem(ItemDTO itemDto) {
 
-        System.out.println("ACCESSING ADD ITEM METHOD ");
 
         if (itemDto == null) {
-            throw new NullPointerException("Item cannot be null");
+            throw new NullPointerException("Item is null");
         }
         Item savedItem = null;
 
         try {
             if (itemDto.getUnitID() != null) {
                 // check for the unit in database to see if we have it
-                String unitUrl = "http://localhost:8081/unit/exists/" + itemDto.getUnitID();
+                String unitUrl = "http://localhost:8000/unit/exists/" + itemDto.getUnitID();
                 ResponseEntity<Boolean> unitResponse = restTemplate.getForEntity(unitUrl, Boolean.class);
                 // check the response of the DB
                 if (unitResponse.getStatusCode().is2xxSuccessful()) {
                     Boolean existingUnit = unitResponse.getBody();
+                    System.out.println("THIS HERE IS THE EXISTING UNIT::: ------: :::: " + existingUnit);
                     if (existingUnit == true) {
-                        // if unit exists save the item so you can get the ID on it
-                        System.out.println("EXISTING UNIT::: " + existingUnit.toString());
-                        savedItem = itemRepository.save(itemDto.DTO_to_Item());// Save the item to the database first
+                        System.out.println("THIS IS THE TO STRING ITEM DTO INSIDE THE ITEM SERVICE::: ");
+                        itemDto.toString();
+                        Item item = itemDto.DTO_to_Item();
+                        savedItem = itemRepository.save(item);// Save the item to the database first
                     } else {
-                        throw new RuntimeException("--Unit not found, choose another!");
+                        throw new RuntimeException("Could not save item to database! ");
                     }
                 } else {
                     throw new RuntimeException("Failed to retrieve unit from UnitService");
                 }
             }
             if (itemDto.getDate() != null) {
+                System.out.println("INSIDE ITEM_SERVICE / ADDITEM METHOD / itemDto.getDate != null :: getdate::" + savedItem.getDate());
 
                 assert savedItem != null;
-                DateDTO timeDto = new DateDTO(savedItem.getId(),savedItem.getName(), savedItem.getDate(), savedItem.getUserID());
-                String notificationUrl = "http://localhost:8086/notification/add";
+                DateDTO timeDto = new DateDTO(savedItem.getId(),savedItem.getName(), savedItem.getDate(), savedItem.getUserID(), savedItem.getUnitID());
+
+                System.out.println("BEFORE SENDING TO THE RESTTEMPLATE POSTFORENTTITY, timeDto.getDate:::: " + timeDto.getDate());
+                String notificationUrl = "http://localhost:8000/notification/add";
                 ResponseEntity<String> response = restTemplate.postForEntity(notificationUrl, timeDto, String.class);
                 if (!response.getStatusCode().is2xxSuccessful()) {
-                    throw new RuntimeException("Failed to add notification to NotificationService");
+                    throw new RuntimeException("Failed to add dateDTO  to notification/add ");
                 }
             }
             return savedItem;

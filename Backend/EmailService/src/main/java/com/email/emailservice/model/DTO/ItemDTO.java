@@ -18,7 +18,7 @@ public class ItemDTO {
     private String name;
     private String description;
     private Long quantity;
-    private LocalDate date;
+    private String date;
     private Long unitID;
     private Long userID;
 

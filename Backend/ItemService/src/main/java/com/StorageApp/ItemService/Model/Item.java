@@ -41,13 +41,12 @@ public class Item {
     public DateDTO to_DateDTO() {
         DateDTO dateDTO = new DateDTO();
         dateDTO.setId(id);
-        dateDTO.setDateTime(date);
+        dateDTO.setDate(date);
         dateDTO.setUserID(userID);
         return dateDTO;
     }
     public ItemDTO to_ItemDTO() {
         ItemDTO itemDTO = new ItemDTO();
-        itemDTO.setId(id);
         itemDTO.setName(name);
         itemDTO.setDescription(description);
         itemDTO.setQuantity(quantity);

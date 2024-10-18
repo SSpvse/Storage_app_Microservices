@@ -23,8 +23,9 @@ public class DateDTO {
 
 
     private String name;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate date;
-    private Long user_id;
+
+   // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private String date;
+    private Long userID;
 
 }

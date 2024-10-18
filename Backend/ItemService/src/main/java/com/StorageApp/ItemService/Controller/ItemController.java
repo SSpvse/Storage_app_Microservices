@@ -22,33 +22,12 @@ public class ItemController {
 
     private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 
-
-    @PostMapping("/x")
-    public ResponseEntity<Item> add(@RequestBody Item item) {
-
-
-        return ResponseEntity.ok(_itemService.addItemTable(item));
-    }
-    /*
-    // TESTING
-    @GetMapping("/testUnit/{id}")
-    public ResponseEntity<Unit> getUnitTest(@PathVariable Long id) {
-        RestTemplate restTemplate = new RestTemplate();
-        String unitUrl = "http://localhost:8080/unit/get/" + id;
-        ResponseEntity<UnitDto> unitResponse = restTemplate.getForEntity(unitUrl, UnitDto.class);
-        UnitDto existingUnit = unitResponse.getBody();
-        return new ResponseEntity<>(MapperUnit.dtoToUnit(existingUnit), HttpStatus.OK);
-    }
-
-     */
-
-
     // ---- CREATE
 
     // add item
     @PostMapping("/add")
     public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO item_dto) {
-        System.out.println("ACCESSING API");
+        System.out.println("HERE IS THE ITEM :::::: " + item_dto.toString());
 
         Item savedItem = _itemService.addItem(item_dto);
         System.out.println("FROM CONTROLLER: " + savedItem.toString());
@@ -78,7 +57,6 @@ public class ItemController {
     @GetMapping("/byid/{id}")
     public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long id) {
 
-        System.out.println("!!!! --- getlist by unit id");
         List<ItemDTO> dto_list = _itemService.getItemListBy_UnitID(id);
         return new ResponseEntity<>(dto_list, HttpStatus.OK);
     }

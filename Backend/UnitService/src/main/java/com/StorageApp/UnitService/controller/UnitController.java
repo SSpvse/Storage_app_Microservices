@@ -55,7 +55,6 @@ public class UnitController {
     @PostMapping("/addunit")
     public ResponseEntity<UnitDTO> createUnit(@RequestBody UnitDTO unitDTO){
 
-        System.out.println("TESTING THE CONTROLLER !! FROM GATEWAY");
         UnitDTO createdUnit = unitService.createUnit(unitDTO);
         return ResponseEntity.ok(createdUnit);
     }

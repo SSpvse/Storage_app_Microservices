@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface ReceiverRepository extends JpaRepository<DateDTO, Long> {
+public interface EmailServiceRepository extends JpaRepository<DateDTO, Long> {
 
 
 }

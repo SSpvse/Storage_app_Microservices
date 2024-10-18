@@ -23,12 +23,11 @@ public class Item {
     private String name;
 
     private String description;
-    private String location;
 
     @Column(nullable = false)
     private Long quantity;
 
-    private LocalDate date;
+    private String date;
 
     @Column(nullable = false)
     private Long unitID;
@@ -40,7 +39,6 @@ public class Item {
         DateDTO dateDTO = new DateDTO();
         dateDTO.setId(id);
         dateDTO.setDate(date);
-        dateDTO.setUser_id(userID);
         return dateDTO;
     }
     public ItemDTO to_ItemDTO() {

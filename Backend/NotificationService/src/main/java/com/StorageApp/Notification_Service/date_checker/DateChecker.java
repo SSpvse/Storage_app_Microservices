@@ -31,11 +31,13 @@ public class DateChecker {
 
     // this method runs every 24 hours
 
-    @Scheduled(fixedRate = 300000)
+    @Scheduled(fixedRate = 15000)
     public void checkItems() {
 
-        System.out.println("CHECK IF CHECKS .............");
+        System.out.println("CHECK IF CHECKS (ItemEventPublisher, checkItems()  ) .............");
         LocalDate tomorrowLocalDate = LocalDate.now().plusDays(1);
+
+        System.out.println("HERE IS THE Tomorrow Date: " + tomorrowLocalDate);
 
         List<DateDTO> itemsToSend = notificationRepository.findByDate(tomorrowLocalDate);
 
