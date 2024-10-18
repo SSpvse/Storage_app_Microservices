@@ -49,9 +49,11 @@ public class Item {
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setName(name);
         itemDTO.setDescription(description);
+        itemDTO.setLocation(location);
         itemDTO.setQuantity(quantity);
         itemDTO.setDate(date);
         itemDTO.setUnitID(unitID);
+        itemDTO.setUserID(userID);
         return itemDTO;
     }
 

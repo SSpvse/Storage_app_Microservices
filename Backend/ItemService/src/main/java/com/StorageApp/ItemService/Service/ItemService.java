@@ -39,7 +39,7 @@ public class ItemService {
 
     // add item
     @Transactional
-    public Item addItem(ItemDTO itemDto) {
+    public ItemDTO addItem(ItemDTO itemDto) {
 
 
         if (itemDto == null) {
@@ -81,7 +81,7 @@ public class ItemService {
                     throw new RuntimeException("Failed to add dateDTO  to notification/add ");
                 }
             }
-            return savedItem;
+            return savedItem.to_ItemDTO();
         } catch (RestClientException e) {
             logger.error("Error adding item", e);
             throw e;

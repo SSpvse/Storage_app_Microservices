@@ -18,20 +18,21 @@ public class ItemController {
 
 
     @Autowired
-    private ItemService _itemService;
+    private ItemService itemService;
 
     private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 
     // ---- CREATE
 
     // add item
-    @PostMapping("/add")
-    public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO item_dto) {
-        System.out.println("HERE IS THE ITEM :::::: " + item_dto.toString());
+    @PostMapping("/additem")
+    public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO itemDTO) {
+        System.out.println("HERE IS THE ITEM :::::: " + itemDTO.toString());
 
-        Item savedItem = _itemService.addItem(item_dto);
+        ItemDTO savedItem = itemService.addItem(itemDTO);
         System.out.println("FROM CONTROLLER: " + savedItem.toString());
-        return new ResponseEntity<>(savedItem.to_ItemDTO(), HttpStatus.CREATED);
+        //return new ResponseEntity<>(savedItem.to_ItemDTO(), HttpStatus.CREATED);
+        return ResponseEntity.ok(savedItem);
 
     }
 
@@ -41,7 +42,7 @@ public class ItemController {
     @GetMapping("/getall")
     public ResponseEntity<List<ItemDTO>> getAllItems() {
 
-        List<ItemDTO> itemDTO_list = _itemService.getAllItems();
+        List<ItemDTO> itemDTO_list = itemService.getAllItems();
         return new ResponseEntity<>(itemDTO_list, HttpStatus.OK);
     }
 
@@ -49,7 +50,7 @@ public class ItemController {
     @GetMapping("/get/{id}")
     public ResponseEntity<ItemDTO> getItemBy_Id(@PathVariable Long id) {
 
-        ItemDTO dto = _itemService.getItemById(id);
+        ItemDTO dto = itemService.getItemById(id);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -57,7 +58,7 @@ public class ItemController {
     @GetMapping("/byid/{id}")
     public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long id) {
 
-        List<ItemDTO> dto_list = _itemService.getItemListBy_UnitID(id);
+        List<ItemDTO> dto_list = itemService.getItemListBy_UnitID(id);
         return new ResponseEntity<>(dto_list, HttpStatus.OK);
     }
 
@@ -65,7 +66,7 @@ public class ItemController {
     @GetMapping("/get_name/{name}")
     public ResponseEntity<List<ItemDTO>> getItemListBy_name(@PathVariable String name) {
 
-        List<ItemDTO> dto_list = _itemService.getItemListBy_Name(name);
+        List<ItemDTO> dto_list = itemService.getItemListBy_Name(name);
         return new ResponseEntity<>(dto_list, HttpStatus.OK);
     }
 

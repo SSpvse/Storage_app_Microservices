@@ -1,23 +1,34 @@
-const ITEM_SERVICE_URL = "http://localhost:8000/item/";
+import {Item} from "../types/Item.tsx";
+import {NewItem} from "../types/NewItem.tsx";
 
-// Define an interface for the item structure //TODO move this interface to types.tsx
-export interface Item {
-    itemId: number;
-    itemName: string;
-    itemDescription: string;
-    storageUnitId: number;
-}
+const ITEM_SERVICE_URL = "http://localhost:8000/item";
 
-// Define an interface for the new item structure
-export interface NewItem {
-    itemName: string;
-    itemDescription: string;
-}
 
 // Fetch all items
 export const fetchAllItems = async (): Promise<Item[]> => {
     try {
-        const response = await fetch(ITEM_SERVICE_URL, {
+        const response = await fetch(`${ITEM_SERVICE_URL}/getall`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching items:', error);
+    }
+};
+
+// Fetching items from specific unit id
+export const fetchItemsByUnitId = async (unitId: number) => {
+    try {
+        const response = await fetch(`${ITEM_SERVICE_URL}/byid/{id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,7 +49,7 @@ export const fetchAllItems = async (): Promise<Item[]> => {
 // Add a new item
 export const addItem = async (newItem: NewItem): Promise<Item> => {
     try {
-        const response = await fetch(ITEM_SERVICE_URL, {
+        const response = await fetch(`${ITEM_SERVICE_URL}/additem`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
