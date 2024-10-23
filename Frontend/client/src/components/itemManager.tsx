@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import {addItem, fetchAllItems, fetchItemsByUnitId} from "../services/itemService";
 import {Item} from "../types/Item.tsx";
-import UnitList from "./UnitList.tsx";
-import UnitManager from "./UnitList.tsx";
+import UnitList from "./UnitManager.tsx";
+import UnitManager from "./UnitManager.tsx";
 import {NewItem} from "../types/NewItem.tsx";
 
 
-const ItemList = ({selectedUnit, onUnitDeselected}) => {
+const ItemManager = ({selectedUnit, onUnitDeselected}) => {
     const [items, setItems] = useState<Item[]>([]);
     // holding the Id of the selected unit
     //const [selectedUnit, setSelectedUnit] = useState<number | null>();
@@ -102,4 +102,4 @@ const ItemList = ({selectedUnit, onUnitDeselected}) => {
     );
 }
 
-export default ItemList;
+export default ItemManager;

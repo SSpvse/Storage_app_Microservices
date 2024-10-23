@@ -12,6 +12,7 @@ public class UnitDTO {
     private String name;
     private String description;
     private String location;
+    private String type;
 
     public Unit DTO_to_Unit(){
         Unit unit = new Unit();
@@ -19,6 +20,7 @@ public class UnitDTO {
         unit.setName(name);
         unit.setDescription(description);
         unit.setLocation(location);
+        unit.setType(type);
         return unit;
     }
 

@@ -26,7 +26,7 @@ export const fetchAllItems = async (): Promise<Item[]> => {
 };
 
 // Fetching items from specific unit id
-export const fetchItemsByUnitId = async (unitId: number) => {
+export const fetchItemsByUnitId = async (id: number): Promise<Item[]> => {
     try {
         const response = await fetch(`${ITEM_SERVICE_URL}/byid/{id}`, {
             method: 'GET',
@@ -65,5 +65,26 @@ export const addItem = async (newItem: NewItem): Promise<Item> => {
     } catch (e){
         console.error("Failed adding item", e);
         return e;
+    }
+};
+// Add an item to a specific unit
+export const addItemToUnit = async (unitId: number, newItem: NewItem): Promise<Item> => {
+    try {
+        const response = await fetch(`${ITEM_SERVICE_URL}/units/${unitId}/items`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newItem),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add item to unit');
+        }
+        const data = await response.json();
+        return data; // Assuming this returns the newly created item
+    } catch (e) {
+        console.error("Failed adding item to unit", e);
+        throw e; // Re-throwing the error for further handling
     }
 };

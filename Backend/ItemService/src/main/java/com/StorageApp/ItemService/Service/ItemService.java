@@ -36,7 +36,6 @@ public class ItemService {
 
     // ---- ADD ITEMS
 
-
     // add item
     @Transactional
     public ItemDTO addItem(ItemDTO itemDto) {
@@ -88,6 +87,25 @@ public class ItemService {
         }
     }
 
+    // Add item to a unit by the unitId
+    public ItemDTO addItemToUnit(Long unitId, ItemDTO itemDTO){
+        if (itemDTO.getUnitID() == null){
+            throw new NullPointerException("Unit is null");
+        }
+
+        // Convert ItemDTO to Item
+        Item item = itemDTO.DTO_to_Item();
+
+        // Setting the unitID
+        item.setUnitID(unitId);
+
+        Item savedItem = itemRepository.save(item);
+
+        // Converting back to DTO to return
+        return savedItem.to_ItemDTO();
+
+
+    }
 
     // ---- GET ITEMS
 

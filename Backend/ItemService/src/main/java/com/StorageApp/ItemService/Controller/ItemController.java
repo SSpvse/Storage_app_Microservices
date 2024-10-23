@@ -36,6 +36,18 @@ public class ItemController {
 
     }
 
+    @PostMapping("/units/{unitId}/items")
+    public ResponseEntity<ItemDTO> addItemToUnit(@PathVariable Long unitId, @RequestBody ItemDTO itemDTO){
+        // Log the incoming request
+        logger.info("Adding item to unit ID: {}", unitId);
+        logger.info("Item details: {}", itemDTO);
+
+        ItemDTO addedItem = itemService.addItemToUnit(unitId, itemDTO);
+
+        // Returning the added item as respons
+        return new ResponseEntity<>(addedItem, HttpStatus.CREATED);
+    }
+
     // ---- GET
 
     // get all items
@@ -55,7 +67,7 @@ public class ItemController {
     }
 
     // get items_dtos by UNIT_ID
-    @GetMapping("/byid/{id}")
+    @GetMapping("/byid/{unitId}")
     public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long id) {
 
         List<ItemDTO> dto_list = itemService.getItemListBy_UnitID(id);

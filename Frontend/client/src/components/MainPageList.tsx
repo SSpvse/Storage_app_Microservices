@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ItemList from "./ItemList";
-import UnitManager from "./UnitList.tsx"; // Assuming ItemList is imported from the correct path
+import ItemManager from "./itemManager.tsx";
+import UnitManager from "./UnitManager.tsx"; // Assuming ItemList is imported from the correct path
 
 const MainPage = () => {
     const [selectedUnitId, setSelectedUnitId] = useState<number | null>(null);
@@ -14,6 +14,10 @@ const MainPage = () => {
         setViewingUnits(false); // Hide unit list when a unir is selcted
     };
 
+    const handleUnitDeselected = () => {
+        setSelectedUnitId(null); // Reset selected unit
+    };
+
     return (
         <div>
             <h1>My Storage Management</h1>
@@ -23,10 +27,13 @@ const MainPage = () => {
                 <div>
                     <button onClick={handleViewUnits}>See My Storage</button>
                     {selectedUnitId && (
-                        <ItemList selectedUnit={selectedUnitId} onUnitDeselected={() => setSelectedUnitId(null)} />
+                        <ItemManager
+                            selectedUnit={selectedUnitId}
+                            onUnitDeselected={handleUnitDeselected}
+                        />
                     )}
                 </div>
-                //<ItemList unitId={selectedUnitId} /> // Show items for the selected unit
+
             )}
         </div>
     );

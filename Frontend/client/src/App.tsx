@@ -1,6 +1,6 @@
 
 import './App.css';
-import ItemList from "./components/ItemList";
+import ItemManager from "./components/itemManager.tsx";
 import MainPageList from "./components/MainPageList.tsx";
 
 function App() {
