@@ -21,7 +21,6 @@ public class EmailServiceImpl implements EmailService {
     }
 
 
-
     @Override
     public void SendDateItemToEmail(List<DateDTO> dateDTOs) {
 
@@ -33,7 +32,7 @@ public class EmailServiceImpl implements EmailService {
 
         StringBuilder itemsForMail = new StringBuilder();
         for (DateDTO dateDTO : dateDTOs) {
-            itemsForMail.append(String.format("Item: %s date of expiring: %s", dateDTO.getName(), dateDTO.getDate()));
+            itemsForMail.append(String.format("\nItem: %s date of expiring: %s", dateDTO.getName(), dateDTO.getDate()));
         }
         // ------
         // FOR FUTURE :: if you want to say what container its in, call unitService and use getUnitID to get the name ... here
