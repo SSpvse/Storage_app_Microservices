@@ -73,7 +73,8 @@
 			<artifactId>spring-cloud-starter-consul-config</artifactId>
 		</dependency>
 
-	</dependencies>
+
+    </dependencies>
 
 
 	<dependencyManagement>

@@ -1,2 +1,13 @@
-package com.StorageApp.AuthenticationService.model;public class LoginResponse {
+package com.StorageApp.AuthenticationService.model;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class LoginResponse {
+    private String token;
+
+    private long expiresIn;
+
 }

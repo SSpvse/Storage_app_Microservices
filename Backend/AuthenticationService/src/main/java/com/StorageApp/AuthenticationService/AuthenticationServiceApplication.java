@@ -1,14 +1,13 @@
-package com.StorageApp.UnitService;
+package com.StorageApp.AuthenticationService;
 
-import com.StorageApp.UnitService.model.Unit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UnitServiceApplication {
+public class AuthenticationServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UnitServiceApplication.class, args);
+		SpringApplication.run(AuthenticationServiceApplication.class, args);
 	}
 
 }

@@ -1,6 +1,5 @@
 server:
   port: 8000
-
 spring:
   application:
     name: gateway
@@ -9,6 +8,10 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: AuthenticationService
+          uri: lb://authService
+          predicates:
+            - Path=/auth,/auth/**
         - id: ItemService
           uri: lb://ItemService
           predicates:
@@ -37,7 +40,6 @@ spring:
           args:
             retries: 3
             methods: GET, POST
-
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

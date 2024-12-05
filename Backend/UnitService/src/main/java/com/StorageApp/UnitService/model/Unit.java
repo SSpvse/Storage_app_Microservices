@@ -21,6 +21,7 @@ public class Unit {
     private String location;
     private String type;
 
+
     public UnitDTO Unit_to_DTO(){
         UnitDTO unitDTO = new UnitDTO();
         unitDTO.setId(id);
