@@ -1,0 +1,7 @@
+FROM amazoncorretto:21
+COPY ./target/gateway-0.0.1-SNAPSHOT.jar /usr/src/gateway/
+WORKDIR /usr/src/gateway
+EXPOSE 8000
+CMD ["java", "-jar", "gateway-0.0.1-SNAPSHOT.jar"]
+
+# docker build -t gateway-0.0.1-SNAPSHOT .

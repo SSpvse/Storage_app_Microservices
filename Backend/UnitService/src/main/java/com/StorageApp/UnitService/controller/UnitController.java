@@ -22,6 +22,7 @@ public class UnitController {
     // Get all units
     @GetMapping("/getall")
     public ResponseEntity<List<Unit>> getAllUnits(){
+        log.info("Reached controller");
         return ResponseEntity.ok(unitService.getAllUnits());
     }
 

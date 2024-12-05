@@ -7,20 +7,21 @@ import closetImage from "../assets/closet.png";
 import {Item} from "../types/Item.tsx";
 import {addItemToUnit, fetchItemsByUnitId} from "../services/itemService.tsx";
 import {NewItem} from "../types/NewItem.tsx";
-
+import ItemManager from "./itemManager.tsx";
+/*
 interface UnitManagerProps {
-    onUnitSelected: (unitId: number) => void;
+    onUnitSelected: (unitId?: number) => void;
 }
 
-const UnitManager = ({ onUnitSelected }) => {
+const UnitManager = ({ onUnitSelected }: UnitManagerProps) => {
     const [units, setUnits] = useState<Unit[]>([]);
     const [newUnitName, setNewUnitName] = useState("");
     // Tracking unit that is selected by the user
-    const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
+    const [selectedUnitId, setSelectedUnitId] = useState<number | null>(null);
     // Tracking the items for the selectd unit
     const [items, setItems] = useState<Item[]>([]);
-    const [newItemName, setNewItemName] = useState("");
-    const [newItemDescription, setNewItemDescription] = useState("");
+    //const [newItemName, setNewItemName] = useState("");
+    //const [newItemDescription, setNewItemDescription] = useState("");
     // For loading message
     const [loading, setLoading] = useState<boolean>(false);
     // For error message
@@ -44,65 +45,58 @@ const UnitManager = ({ onUnitSelected }) => {
         fetchUnits();
     }, []);
 
+
     // Fetch items with unit ID when a unit is selected
     useEffect(() => {
-        if(selectedUnit){
-            const fetchItems = async () => {
-                try {
-                    setLoading(true);
-                    const fetchedItems = await fetchItemsByUnitId(selectedUnit.unitId);
-                    setItems(fetchedItems);
-                } catch (err) {
-                    setError("Failed to fetch items");
-                    console.error(err);
-                } finally {
-                    setLoading(false);
-                }
-            };
-            fetchItems();
+        if(selectedUnitId !== null){
+            console.log("SelectedUNITTTT:::", selectedUnitId);
+
         }
-    }, [selectedUnit]);
+    }, [selectedUnitId]);
 
-    // Handling unit selection
-    const handleUnitSelection = (unit: Unit) => {
-        setSelectedUnit(unit);
-        onUnitSelected(unit.unitId);
-    };
+    const handleUnitSelection = async (unitId: number) => {
 
-    // Adding a new item
-    const handleAddItem = async () => {
-        if (!newItemName || !selectedUnit) return;
+        // navigate("/item/${unitId}")
 
-        // Creating a new item object that matches the NewItem type
-        const newItem: NewItem = {
-            name: newItemName, // Set the name of the item
-            description: newItemDescription, // Set the description of the item
-            location: null, // Set location (optional, can be filled later)
-            quantity: 1, // Set the quantity, defaulting to 1
-            date: new Date().toISOString(), // Use current date in ISO format
-            unitID: selectedUnit.unitId, // Use the selected unit ID, which should be a number
-            userID: 1 // Replace with actual user ID if needed
-        };
-
+        setSelectedUnitId(unitId);
+        onUnitSelected(unitId); // Notify MainPage of selected unit
         try {
-            const addedItem = await addItemToUnit(selectedUnit.unitId, newItem);
-            setItems((prevItems) => [...prevItems, addedItem]);
-            setNewItemName(""); // Clear input
-            setNewItemDescription(""); // Clear description
-        } catch (error) {
-            console.error("Failed to add item:", error);
+            setLoading(true);
+            const fetchedItems = await fetchItemsByUnitId(unitId);
+            console.log("Fetching items in useeffect")
+            console.log(fetchedItems)
+            setItems(fetchedItems);
+        } catch (err) {
+            setError("Failed to fetch items");
+            console.error(err);
+        } finally {
+            setLoading(false);
         }
+
     };
+
+    const handleUnitDeselection = () => {
+        setSelectedUnitId(null);
+        onUnitSelected(undefined); // Notify MainPage to deselect unit
+        console.log("Deselected unit");
+    };
+
+
 
     // Creating a unit
     const handleCreateUnit = async () => {
         if (!newUnitName) return;
-
-                                    // TODO add later all the other fiels of unit
-        const newUnit = await addUnit({ name: newUnitName });
-        setUnits((prevUnits) => [...prevUnits, newUnit]);
-        setNewUnitName(""); // Clear input
+        try {
+            // TODO add later all the other fiels of unit
+            const newUnit = await addUnit({ name: newUnitName });
+            setUnits((prevUnits) => [...prevUnits, newUnit]);
+            setNewUnitName(""); // Clear input
+        } catch (err){
+            setError("Failet to create new unit");
+            console.error("Failed to create unit", err);
+        }
     };
+
 
     return (
         <div>
@@ -112,40 +106,12 @@ const UnitManager = ({ onUnitSelected }) => {
             <div>
                 {units.map((unit) => (
                     <UnitCard
-                        key={unit.unitId}
+                        key={unit.id}
                         unit={unit}
-                        onSelect={() => handleUnitSelection(unit)} // Call back to select unit
+                        onSelect={() => handleUnitSelection(unit.id)}
                     />
                 ))}
             </div>
-
-            {selectedUnit && (
-                <div>
-                    <h3>Items in {selectedUnit.name}</h3>
-                    <ul>
-                        {items.map((item) => (
-                            <li key={item.itemId}>
-                                {item.name} - {item.description}
-                            </li>
-                        ))}
-                    </ul>
-
-                    <h3>Add New Item to {selectedUnit.name}</h3>
-                    <input
-                        type="text"
-                        value={newItemName}
-                        onChange={(e) => setNewItemName(e.target.value)}
-                        placeholder="Item Name"
-                    />
-                    <input
-                        type="text"
-                        value={newItemDescription}
-                        onChange={(e) => setNewItemDescription(e.target.value)}
-                        placeholder="Item Description"
-                    />
-                    <button onClick={handleAddItem}>Add Item</button>
-                </div>
-            )}
 
             <div>
                 <h3>Create New Unit</h3>
@@ -157,6 +123,13 @@ const UnitManager = ({ onUnitSelected }) => {
                 />
                 <button onClick={handleCreateUnit}>Create Unit</button>
             </div>
+            {selectedUnitId !== null && (
+                <>
+                    <p>Selected Unit ID in UnitManager: {selectedUnitId}</p>
+                    <ItemManager unitId={selectedUnitId} />
+                </>
+
+            )}
         </div>
     );
 }
@@ -176,4 +149,4 @@ function UnitCard({ unit, onSelect }) {
     );
 }
 
-export default UnitManager;
+export default UnitManager;*/
