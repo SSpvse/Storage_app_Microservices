@@ -1,4 +1,5 @@
 package com.StorageManager.LoginService.configuration;
+
 import com.StorageManager.LoginService.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -42,7 +43,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
 
+        System.out.println("OTHER HEADER::: " + request.getPathInfo());
+        System.out.println("Authorization Header: " + authHeader);
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            System.out.println("(jwtAuthenticationFilter) Invalid Authorization Header ");
             filterChain.doFilter(request, response);
             return;
         }
@@ -50,11 +55,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             final String jwt = authHeader.substring(7);
             final String userEmail = jwtService.extractUsername(jwt);
+            System.out.println("(jwtAuthenticationFilter) Extracted Email: " + userEmail);
+
+
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
             if (userEmail != null && authentication == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+
+                if (userDetails == null) {
+                    System.out.println("(jwtAuthenticationFilter) User not found: " + userEmail); // Log if user is not found
+                } else {
+                    System.out.println("(jwtAuthenticationFilter) User found: " + userDetails.getUsername()); // Log if user is found
+                }
+
+
 
                 if (jwtService.isTokenValid(jwt, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -65,11 +81,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+
+                    System.out.println("(jwtAuthenticationFilter) Authentication successful for: " + userEmail);
+
+                }else {
+                    System.out.println("(jwtAuthenticationFilter) Token is invalid for user: " + userEmail);
                 }
             }
 
             filterChain.doFilter(request, response);
         } catch (Exception exception) {
+            System.out.println("(jwtAuthenticationFilter) Exception occurred: " + exception.getMessage());
+
             handlerExceptionResolver.resolveException(request, response, null, exception);
         }
     }
