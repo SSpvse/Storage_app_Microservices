@@ -1,8 +1,8 @@
 import {Item} from "../types/Item.tsx";
 import {NewItem} from "../types/NewItem.tsx";
 
+//const ITEM_SERVICE_URL = "http://itemservice:8082/item";
 const ITEM_SERVICE_URL = "http://localhost:8000/item";
-
 
 // Fetch all items
 export const fetchAllItems = async (): Promise<Item[]> => {
@@ -27,8 +27,11 @@ export const fetchAllItems = async (): Promise<Item[]> => {
 
 // Fetching items from specific unit id
 export const fetchItemsByUnitId = async (id: number): Promise<Item[]> => {
+    console.log("This is the id:" + id)
     try {
-        const response = await fetch(`${ITEM_SERVICE_URL}/byid/{id}`, {
+                                                    // `http://localhost:8000/item/byid/${id}`
+                                                    // `http://unitservice:8081/item/byid/${id}`
+        const response = await fetch(`http://localhost:8000/item/byid/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,9 +43,11 @@ export const fetchItemsByUnitId = async (id: number): Promise<Item[]> => {
         }
 
         const data = await response.json();
+
         return data;
     } catch (error) {
         console.error('Error fetching items:', error);
+        return []; // returning an empty array if error
     }
 };
 

@@ -1,36 +1,23 @@
 import { useEffect, useState } from "react";
-import {addItem, fetchAllItems, fetchItemsByUnitId} from "../services/itemService";
-import {Item} from "../types/Item.tsx";
-import UnitList from "./UnitManager.tsx";
-import UnitManager from "./UnitManager.tsx";
-import {NewItem} from "../types/NewItem.tsx";
+import { useParams } from "react-router-dom";
+import { fetchItemsByUnitId, addItem } from "../services/itemService";
+import { Item } from "../types/Item";
+import { NewItem } from "../types/NewItem";
 
-//
-// /item/{itemid}
-//
-
-/*
-
-interface ItemManagerProps {
-    unitId: number;
-}
-
-const ItemManager = ({unitId}: ItemManagerProps) => {
+const ItemManager = () => {
+    const { unitId } = useParams<{ unitId: string }>();
     const [items, setItems] = useState<Item[]>([]);
-    // holding the Id of the selected unit
-    //const [selectedUnit, setSelectedUnit] = useState<number | null>();
     const [newItemName, setNewItemName] = useState("");
     const [newItemDescription, setNewItemDescription] = useState("");
     const [loading, setLoading] = useState(false);
 
-
     useEffect(() => {
         const handleFetchItems = async () => {
-            console.log("Recived unitID in ItemManager:", unitId);
+            if (!unitId) return;
             try {
                 setLoading(true);
-                const fetchedItems = await fetchItemsByUnitId(unitId); //Fetch items based on selected unit
-                setItems(fetchedItems); // Only set items for the selected unit
+                const fetchedItems = await fetchItemsByUnitId(Number(unitId));
+                setItems(fetchedItems);
             } catch (err) {
                 console.error("Failed to fetch items", err);
             } finally {
@@ -38,48 +25,38 @@ const ItemManager = ({unitId}: ItemManagerProps) => {
             }
         };
 
-        handleFetchItems()
+        handleFetchItems();
     }, [unitId]);
 
     const handleAddItem = async () => {
-        if (!newItemName || !newItemDescription){
-            console.error("Please provide item details");
-            return; // EXit if no item name or descrip..
-        }
+        if (!newItemName || !newItemDescription) return;
 
-
-        const newItem : NewItem = {
-            name: newItemName, // Set the name of the item
-            description: newItemDescription, // Set the description of the item
-            location: null, // Set location (optional, can be filled later)
+        const newItem: NewItem = {
+            name: newItemName,
+            description: newItemDescription,
+            location: null,
             quantity: 1,
-            date: new Date().toISOString(), // Use current date in ISO format
-            unitID: unitId, // Use the selected unit ID
-            // TODO change userID
-            userID: 1 // Replace with actual user ID (for demo purposes, hardcoded here)
+            date: new Date().toISOString(),
+            unitID: Number(unitId),
+            userID: 1 // Replace with actual user ID
         };
 
         try {
             const addedItem = await addItem(newItem);
-            if (addedItem.itemId) {
-                setItems((prevItems) => [...prevItems, addedItem]); // Only add `Item` objects to the state
-            }
-            // Here I am clering the input field after the user has added the item
+            if (addedItem.itemId) setItems((prevItems) => [...prevItems, addedItem]);
             setNewItemName("");
             setNewItemDescription("");
-
         } catch (err) {
-            console.error("failed to add the item", err)
+            console.error("Failed to add the item", err);
         }
-    }
-
+    };
 
     return (
         <div>
-            <h3>Items in Selected Unit</h3>
+            <h3>Items in Selected Unit {unitId}</h3>
             {loading && <p>Loading...</p>}
             <div>
-                {items && items.length > 0 ? (
+                {items.length > 0 ? (
                     <ul>
                         {items.map((item) => (
                             <li key={item.itemId}>
@@ -107,7 +84,6 @@ const ItemManager = ({unitId}: ItemManagerProps) => {
             <button onClick={handleAddItem}>Add Item</button>
         </div>
     );
-}
+};
 
 export default ItemManager;
-*/

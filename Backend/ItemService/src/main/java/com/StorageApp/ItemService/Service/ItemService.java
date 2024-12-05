@@ -49,7 +49,8 @@ public class ItemService {
         try {
             if (itemDto.getUnitID() != null) {
                 // check for the unit in database to see if we have it
-                String unitUrl = "http://localhost:8000/unit/exists/" + itemDto.getUnitID();
+                //String unitUrl = "http://localhost:8000/unit/exists/" + itemDto.getUnitID();
+                String unitUrl = "http://unitservice:8000/unit/exists/" + itemDto.getUnitID();
                 ResponseEntity<Boolean> unitResponse = restTemplate.getForEntity(unitUrl, Boolean.class);
                 // check the response of the DB
                 if (unitResponse.getStatusCode().is2xxSuccessful()) {
@@ -131,11 +132,11 @@ public class ItemService {
     }
 
     // get item_dto LIST by Unit_ID
-    public List<ItemDTO> getItemListBy_UnitID(Long id) {
+    public List<ItemDTO> getItemListBy_UnitID(Long unitId) {
 
         List<ItemDTO> dtoList = new ArrayList<>();
         List<Item> itemList;
-        itemList = itemRepository.findByUnitID(id);
+        itemList = itemRepository.findByUnitID(unitId);
         if (itemList.isEmpty()) {
             return null;
         }

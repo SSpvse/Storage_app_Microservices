@@ -1,15 +1,18 @@
 
 import './App.css';
-import ItemManager from "./components/itemManager.tsx";
-import MainPageList from "./components/MainPageList.tsx";
+
+import MainPageTest from "./TEST/MainPageTest.tsx";
+import ItemManagerTest from "./TEST/ItemManagerTest.tsx";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
     return (
-        <div>
-            <h1>StorageManager @ Home</h1>
-            <MainPageList />
-
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<MainPageTest/>}/>
+                <Route path="/unit/:unitId" element={<ItemManagerTest/>}/>
+            </Routes>
+        </Router>
     );
 }
 

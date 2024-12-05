@@ -53,7 +53,6 @@ public class ItemController {
     // get all items
     @GetMapping("/getall")
     public ResponseEntity<List<ItemDTO>> getAllItems() {
-
         List<ItemDTO> itemDTO_list = itemService.getAllItems();
         return new ResponseEntity<>(itemDTO_list, HttpStatus.OK);
     }
@@ -68,9 +67,9 @@ public class ItemController {
 
     // get items_dtos by UNIT_ID
     @GetMapping("/byid/{unitId}")
-    public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long id) {
-
-        List<ItemDTO> dto_list = itemService.getItemListBy_UnitID(id);
+    public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long unitId) {
+        logger.info("FInding items by id: " + unitId);
+        List<ItemDTO> dto_list = itemService.getItemListBy_UnitID(unitId);
         return new ResponseEntity<>(dto_list, HttpStatus.OK);
     }
 

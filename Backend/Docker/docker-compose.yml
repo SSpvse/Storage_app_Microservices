@@ -1,0 +1,104 @@
+version: "3.8"
+
+services:
+  gateway:
+    image: gateway:0.0.1-SNAPSHOT
+    container_name: gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - SPRING_CLOUD_CONSUL_HOST=consul
+    networks:
+      - storage_manager
+    depends_on:
+      - consul-dev
+      - rabbitmq-dev
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: StorageApp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - storage_manager
+    restart: on-failure
+
+
+  itemservice:
+    image: itemservice:0.0.1-SNAPSHOT
+    container_name: item_service
+    ports:
+      - '8082:8082'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/StorageApp
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - storage_manager
+    restart: on-failure
+
+  unitservice:
+    image: unitservice:0.0.1-SNAPSHOT
+    container_name: unit_service
+    ports:
+      - '8081:8081'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/StorageApp
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - storage_manager
+    restart: on-failure
+
+  rabbitmq-dev:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - storage_manager
+
+  consul-dev:
+    image: hashicorp/consul:1.19.2
+    container_name: consul
+    ports:
+      - '8500:8500'
+    command: 'agent -dev -node=storage_manager -client=0.0.0.0 -log-level=INFO'
+    networks:
+      - storage_manager
+
+  consul-importer:
+    image: consul-importer:1.19.2
+    depends_on:
+      - consul-dev
+    networks:
+      - storage_manager
+    restart: on-failure
+
+networks:
+  storage_manager:
+    driver: bridge
+
+volumes:
+  postgres_data:
