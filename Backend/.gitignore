@@ -1,8 +1,22 @@
 HELP.md
-target/
+
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+
+# docker stuff i think
+/ItemService/transferring
+/UnitService/transferring
+/NotificationService/transferring
+
+/ItemService/resolve
+/UnitService/resolve
+/NotificationService/resolve
+
+ItemService/sha256*
+UnitService/sha256*
+trasferring
 
 ### STS ###
 .apt_generated
