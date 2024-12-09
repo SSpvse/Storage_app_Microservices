@@ -13,6 +13,9 @@ services:
     depends_on:
       - consul-dev
       - rabbitmq-dev
+    build:
+        context: ../Gateway
+        dockerfile: Dockerfile
 
   postgres:
     image: postgres:13
@@ -49,6 +52,9 @@ services:
     networks:
       - storage_manager
     restart: on-failure
+    build:
+        context: ../ItemService
+        dockerfile: Dockerfile
 
   unitservice:
     image: unitservice:0.0.1-SNAPSHOT
@@ -68,6 +74,9 @@ services:
       - rabbitmq-dev
     networks:
       - storage_manager
+    build:
+        context: ../UnitService
+        dockerfile: Dockerfile
     restart: on-failure
 
   rabbitmq-dev:
@@ -95,6 +104,9 @@ services:
     networks:
       - storage_manager
     restart: on-failure
+    build:
+        context: ./consul
+        dockerfile: Dockerfile
 
 networks:
   storage_manager:
