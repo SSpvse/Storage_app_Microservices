@@ -20,11 +20,11 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: UnitStorage
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - docker_postgres_data:/var/lib/postgresql/data
     networks:
       - storage_manager
     restart: on-failure
@@ -38,7 +38,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ItemStorage
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/itemstorage
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=root
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -58,7 +58,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_CLOUD_CONSUL_HOST=consul
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/UnitStorage
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/unitstorage
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=root
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -67,7 +67,7 @@ services:
       - consul-importer
       - rabbitmq-dev
     networks:
-      - storage_managerç
+      - storage_manager
     restart: on-failure
 
   rabbitmq-dev:
@@ -101,4 +101,4 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
+  docker_postgres_data:

@@ -49,8 +49,8 @@ public class ItemService {
         try {
             if (itemDto.getUnitID() != null) {
                 // check for the unit in database to see if we have it
-                //String unitUrl = "http://localhost:8000/unit/exists/" + itemDto.getUnitID();
-                String unitUrl = "http://unitservice:8000/unit/exists/" + itemDto.getUnitID();
+                String unitUrl = "http://localhost:8081/unit/exists/" + itemDto.getUnitID();
+                // WITH GATEWAY :: String unitUrl = "http://unitservice:8080/unit/exists/" + itemDto.getUnitID();
                 ResponseEntity<Boolean> unitResponse = restTemplate.getForEntity(unitUrl, Boolean.class);
                 // check the response of the DB
                 if (unitResponse.getStatusCode().is2xxSuccessful()) {

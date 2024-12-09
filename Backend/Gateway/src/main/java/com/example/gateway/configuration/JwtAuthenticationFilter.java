@@ -1,4 +1,4 @@
-package com.example.gateway.configuration;
+/*package com.example.gateway.configuration;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -85,3 +85,6 @@ public class JwtAuthenticationFilter implements WebFilter {
         return chain.filter(exchange);
     }
 }
+
+
+ */
