@@ -1,6 +1,101 @@
 version: "3.8"
 
 services:
+
+  unitservice:
+    image: unitservice:0.0.1-SNAPSHOT
+    container_name: unit_service
+    ports:
+      - '8081:8081'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/unitstorage
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - storage_manager
+    build:
+      context: ../UnitService
+      dockerfile: Dockerfile
+    restart: on-failure
+
+  itemservice:
+    image: itemservice:0.0.1-SNAPSHOT
+    container_name: item_service
+    ports:
+      - '8082:8082'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/itemstorage
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - storage_manager
+    restart: on-failure
+    build:
+      context: ../ItemService
+      dockerfile: Dockerfile
+
+  notificationservice:
+    image: notificationservice:0.0.1-SNAPSHOT
+    container_name: notification_service
+    ports:
+      - '8083:8083'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/notificationstorage
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - storage_manager
+    build:
+      context: ../NotificationService
+      dockerfile: Dockerfile
+    restart: on-failure
+
+  emailservice:
+    image: emailservice:0.0.1-SNAPSHOT
+    container_name: email_service
+    ports:
+      - '8084:8084'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/emailstorage
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - notificationservice
+      - postgres
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - storage_manager
+    build:
+      context: ../EmailService
+      dockerfile: Dockerfile
+    restart: on-failure
+
+
   gateway:
     image: gateway:0.0.1-SNAPSHOT
     container_name: gateway
@@ -33,51 +128,6 @@ services:
     restart: on-failure
 
 
-  itemservice:
-    image: itemservice:0.0.1-SNAPSHOT
-    container_name: item_service
-    ports:
-      - '8082:8082'
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_CLOUD_CONSUL_HOST=consul
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/itemstorage
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    depends_on:
-      - postgres
-      - consul-importer
-      - rabbitmq-dev
-    networks:
-      - storage_manager
-    restart: on-failure
-    build:
-        context: ../ItemService
-        dockerfile: Dockerfile
-
-  unitservice:
-    image: unitservice:0.0.1-SNAPSHOT
-    container_name: unit_service
-    ports:
-      - '8081:8081'
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_CLOUD_CONSUL_HOST=consul
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/unitstorage
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    depends_on:
-      - postgres
-      - consul-importer
-      - rabbitmq-dev
-    networks:
-      - storage_manager
-    build:
-        context: ../UnitService
-        dockerfile: Dockerfile
-    restart: on-failure
 
   rabbitmq-dev:
     image: rabbitmq:3-management
