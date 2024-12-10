@@ -3,7 +3,7 @@ export interface NewItem {
     name: string;
     description: string;
     location: string | null;
-    quantity: number;
+    quantity: number | null;
     date: string;
     unitID: number;
     userID: number;

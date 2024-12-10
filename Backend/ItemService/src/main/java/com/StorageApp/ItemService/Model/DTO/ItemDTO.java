@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Setter
 public class ItemDTO {
 
-    @NotNull
+
     private String name;
     private String description;
     private String location;

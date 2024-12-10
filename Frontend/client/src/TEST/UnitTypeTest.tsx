@@ -8,7 +8,6 @@ import React from "react";
 interface UnitTypeTestProps {
     unit: {
         id: number;
-        name: string;
         type: string;
     };
     onSelect: (unitId: number) => void;
@@ -22,9 +21,9 @@ const UnitTypeTest: React.FC<UnitTypeTestProps> = ({ unit, onSelect }) => {
     };
 
     return (
-        <div onClick={() => onSelect(unit.id)} style={{ cursor: 'pointer', border: '1px solid #ccc', padding: '10px', margin: '10px' }}>
-            <img src={images[unit.type] || boxImage} alt={unit.name} style={{ width: '50px', height: '50px' }} />
-            <h4>{unit.name}</h4>
+        <div onClick={() => onSelect(unit.id)} style={{ cursor: 'pointer', padding: '10px', margin: '10px' }}>
+            <img src={images[unit.type] || boxImage} style={{ width: '100px', height: '100px' }} />
+
         </div>
     );
 };

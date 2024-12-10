@@ -19,6 +19,11 @@ export const fetchAllItems = async (): Promise<Item[]> => {
         }
 
         const data = await response.json();
+
+        // Checking if the data is empty or not
+        if (!data || data.length === 0) {
+            console.log("Not items found for this unit.");
+        }
         return data;
     } catch (error) {
         console.error('Error fetching items:', error);
@@ -26,34 +31,52 @@ export const fetchAllItems = async (): Promise<Item[]> => {
 };
 
 // Fetching items from specific unit id
-export const fetchItemsByUnitId = async (id: number): Promise<Item[]> => {
-    console.log("This is the id:" + id)
+export const fetchItemsByUnitId = async (unitId: number): Promise<{items: Item[]; unitType:string}> => {
+    console.log("This is the id:" + unitId)
     try {
                                                     // `http://localhost:8000/item/byid/${id}`
                                                     // `http://unitservice:8081/item/byid/${id}`
-        const response = await fetch(`http://localhost:8000/item/byid/${id}`, {
+        const response = await fetch(`${ITEM_SERVICE_URL}/byid/${unitId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
         });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+        console.log("Response status:", response.status);
+        console.log("Response headers:", response.headers);
+
+        //Handling empty response:
+        if (response.status === 204) {
+            console.warn(`No content returned from API, unit ID: ${unitId}`);
+            return {items: [], unitType: ''};
+        }
+        const responseBody = await response.text();
+
+        if (!responseBody) {
+            console.warn("Empty response body");
+            return {items: [], unitType: ''};
         }
 
-        const data = await response.json();
+        //const data = await response.json();
 
-        return data;
+        const data = JSON.parse(responseBody);
+
+
+        return {
+            items: data.items || [],
+            unitType:  data.unitType || '',
+        };
     } catch (error) {
         console.error('Error fetching items:', error);
-        return []; // returning an empty array if error
+        return {items: [], unitType: ''}; // returning default empty values
     }
 };
 
 // Add a new item
-export const addItem = async (newItem: NewItem): Promise<Item> => {
+export const addItem = async (newItem: NewItem): Promise<Item | null> => {
     try {
+        console.log("Adding item:", newItem)
         const response = await fetch(`${ITEM_SERVICE_URL}/additem`, {
             method: 'POST',
             headers: {
@@ -69,7 +92,7 @@ export const addItem = async (newItem: NewItem): Promise<Item> => {
         return data;
     } catch (e){
         console.error("Failed adding item", e);
-        return e;
+        return null;
     }
 };
 // Add an item to a specific unit
@@ -87,9 +110,9 @@ export const addItemToUnit = async (unitId: number, newItem: NewItem): Promise<I
             throw new Error('Failed to add item to unit');
         }
         const data = await response.json();
-        return data; // Assuming this returns the newly created item
+        return data;
     } catch (e) {
         console.error("Failed adding item to unit", e);
-        throw e; // Re-throwing the error for further handling
+        throw e;
     }
 };

@@ -3,6 +3,7 @@ package com.StorageApp.ItemService.Controller;
 import com.StorageApp.ItemService.Model.DTO.ItemDTO;
 import com.StorageApp.ItemService.Model.Item;
 import com.StorageApp.ItemService.Service.ItemService;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class ItemController {
     public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO itemDTO) {
         System.out.println("HERE IS THE ITEM :::::: " + itemDTO.toString());
 
+
         ItemDTO savedItem = itemService.addItem(itemDTO);
         System.out.println("FROM CONTROLLER: " + savedItem.toString());
         //return new ResponseEntity<>(savedItem.to_ItemDTO(), HttpStatus.CREATED);
@@ -38,14 +40,23 @@ public class ItemController {
 
     @PostMapping("/units/{unitId}/items")
     public ResponseEntity<ItemDTO> addItemToUnit(@PathVariable Long unitId, @RequestBody ItemDTO itemDTO){
-        // Log the incoming request
-        logger.info("Adding item to unit ID: {}", unitId);
-        logger.info("Item details: {}", itemDTO);
+        try{
+            // Log the incoming request
+            logger.info("Adding item to unit ID: {}", unitId);
+            logger.info("Item details: {}", itemDTO);
 
-        ItemDTO addedItem = itemService.addItemToUnit(unitId, itemDTO);
+            ItemDTO addedItem = itemService.addItemToUnit(unitId, itemDTO);
 
-        // Returning the added item as respons
-        return new ResponseEntity<>(addedItem, HttpStatus.CREATED);
+            // Returning the added item as respons
+            return new ResponseEntity<>(addedItem, HttpStatus.CREATED);
+        } catch (EntityNotFoundException e) {
+            logger.error("Unit not found: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            logger.error("Failed to add item to unit: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     // ---- GET
@@ -68,9 +79,9 @@ public class ItemController {
 
     // get items_dtos by UNIT_ID
     @GetMapping("/byid/{unitId}")
-    public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long id) {
+    public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long unitId) {
 
-        List<ItemDTO> dto_list = itemService.getItemListBy_UnitID(id);
+        List<ItemDTO> dto_list = itemService.getItemListBy_UnitID(unitId);
         return new ResponseEntity<>(dto_list, HttpStatus.OK);
     }
 

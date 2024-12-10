@@ -40,7 +40,6 @@ public class ItemService {
     @Transactional
     public ItemDTO addItem(ItemDTO itemDto) {
 
-
         if (itemDto == null) {
             throw new NullPointerException("Item is null");
         }
@@ -49,8 +48,8 @@ public class ItemService {
         try {
             if (itemDto.getUnitID() != null) {
                 // check for the unit in database to see if we have it
-                String unitUrl = "http://localhost:8081/unit/exists/" + itemDto.getUnitID();
-                // WITH GATEWAY :: String unitUrl = "http://unitservice:8080/unit/exists/" + itemDto.getUnitID();
+                //String unitUrl = "http://localhost:8081/unit/exists/" + itemDto.getUnitID();
+                String unitUrl = "http://unitservice:8080/unit/exists/" + itemDto.getUnitID();
                 ResponseEntity<Boolean> unitResponse = restTemplate.getForEntity(unitUrl, Boolean.class);
                 // check the response of the DB
                 if (unitResponse.getStatusCode().is2xxSuccessful()) {
@@ -90,6 +89,10 @@ public class ItemService {
 
     // Add item to a unit by the unitId
     public ItemDTO addItemToUnit(Long unitId, ItemDTO itemDTO){
+        logger.info("Recieved unitID:", unitId);
+        logger.info("Recieved itemDTO:", itemDTO);
+
+
         if (itemDTO.getUnitID() == null){
             throw new NullPointerException("Unit is null");
         }

@@ -29,6 +29,18 @@ services:
       - storage_manager
     restart: on-failure
 
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - storage_manager
 
   itemservice:
     image: itemservice:0.0.1-SNAPSHOT

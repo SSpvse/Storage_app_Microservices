@@ -3,11 +3,13 @@ import {useEffect, useState} from "react";
 import {Unit} from "../types/Unit.tsx";
 import {fetchAllUnits} from "../services/UnitService.tsx";
 import UnitTypeTest from "./UnitTypeTest.tsx";
+import {useNavigate} from "react-router-dom";
 
 interface UnitManagerTestProps {
     onUnitSelected: (unitId: number) => void;
 }
-const UnitManagerTest = ({ onUnitSelected }: UnitManagerTestProps) => {
+const UnitManagerTest = () => {
+    const navigate = useNavigate();
     const [unit, setUnit] = useState<Unit[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -28,6 +30,10 @@ const UnitManagerTest = ({ onUnitSelected }: UnitManagerTestProps) => {
         fetchUnits();
     }, []);
 
+    // Funksjonen som håndterer når en unit blir valgt
+    const onUnitSelected = (unitId: number) => {
+        navigate(`/unit/${unitId}`);
+    };
     return (
         <div>
             <h2>Available Storage Units</h2>
