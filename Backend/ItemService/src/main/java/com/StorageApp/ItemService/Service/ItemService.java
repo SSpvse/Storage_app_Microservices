@@ -49,17 +49,17 @@ public class ItemService {
             if (itemDto.getUnitID() != null) {
                 // check for the unit in database to see if we have it
                 //String unitUrl = "http://localhost:8081/unit/exists/" + itemDto.getUnitID();
-                String unitUrl = "http://unitservice:8080/unit/exists/" + itemDto.getUnitID();
+                String unitUrl = "http://localhost:8081/unit/exists/" + itemDto.getUnitID();
                 ResponseEntity<Boolean> unitResponse = restTemplate.getForEntity(unitUrl, Boolean.class);
                 // check the response of the DB
                 if (unitResponse.getStatusCode().is2xxSuccessful()) {
                     Boolean existingUnit = unitResponse.getBody();
-                    System.out.println("THIS HERE IS THE EXISTING UNIT::: ------: :::: " + existingUnit);
-                    if (existingUnit == true) {
-                        System.out.println("THIS IS THE TO STRING ITEM DTO INSIDE THE ITEM SERVICE::: ");
-                        itemDto.toString();
+                    logger.info("The existing unit:", existingUnit);
+
+                    if (existingUnit != null && existingUnit) {
+                        //itemDto.toString();
                         Item item = itemDto.DTO_to_Item();
-                        savedItem = itemRepository.save(item);// Save the item to the database first
+                        savedItem = itemRepository.save(item); // Save the item to the database first
                     } else {
                         throw new RuntimeException("Could not save item to database! ");
                     }
@@ -89,8 +89,8 @@ public class ItemService {
 
     // Add item to a unit by the unitId
     public ItemDTO addItemToUnit(Long unitId, ItemDTO itemDTO){
-        logger.info("Recieved unitID:", unitId);
-        logger.info("Recieved itemDTO:", itemDTO);
+        logger.info("Recieved unitID {}:", unitId);
+        logger.info("Recieved itemDTO {}:", itemDTO);
 
 
         if (itemDTO.getUnitID() == null){

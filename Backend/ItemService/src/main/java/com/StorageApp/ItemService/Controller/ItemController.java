@@ -37,8 +37,21 @@ public class ItemController {
         return ResponseEntity.ok(savedItem);
 
     }
+    @PostMapping("/add/{unitId}")
+    public ResponseEntity<ItemDTO> addItemToUnit(@PathVariable Long unitId, @RequestBody ItemDTO itemDTO) {
+        try {
+            // Set the unitId in the itemDTO and save it using the service
+            itemDTO.setUnitID(unitId);
+            ItemDTO savedItem = itemService.addItem(itemDTO);
 
-    @PostMapping("/units/{unitId}/items")
+            // Return the saved item as a response
+            return ResponseEntity.ok(savedItem);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    // Adding item to a specific unit
+    /*@PostMapping("/units/{unitId}/items")
     public ResponseEntity<ItemDTO> addItemToUnit(@PathVariable Long unitId, @RequestBody ItemDTO itemDTO){
         try{
             // Log the incoming request
@@ -57,7 +70,7 @@ public class ItemController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-    }
+    }*/
 
     // ---- GET
 

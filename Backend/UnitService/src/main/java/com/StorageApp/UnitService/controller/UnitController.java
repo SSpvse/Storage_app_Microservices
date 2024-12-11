@@ -40,11 +40,11 @@ public class UnitController {
     }
 
     // Check if unit exists
-    @GetMapping("/exists/{id}")
-    public ResponseEntity<Boolean> checkUnitExists(@PathVariable Long id) {
+    @GetMapping("/exists/{unitId}")
+    public ResponseEntity<Boolean> checkUnitExists(@PathVariable Long unitId) {
 
         try {
-            boolean exists = unitService.unitExists(id);
+            boolean exists = unitService.unitExists(unitId);
             return ResponseEntity.ok(exists);
         } catch (Exception e){
             log.error("Error checking if unit exists", e);

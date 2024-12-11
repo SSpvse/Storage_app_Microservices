@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {addItem} from "../services/itemService.tsx";
+import {NewItem} from "../types/NewItem.tsx";
 
 interface AddItemProps {
     unitId: number;
@@ -31,20 +32,22 @@ const AddItem = ({ unitId, unitType, onItemAdded }: AddItemProps) => {
             return;
         }
 
-        const newItem = {
+        const newItem: NewItem = {
             name,
             description,
             date: unitType === 'fridge' ? date : undefined, // Add date only if the type is fridge
-            quantity: unitType === 'fridge' ? quantity : undefined, // Add quantity only if the type is fridge
+            quantity: unitType === 'fridge' ? Number(quantity) : undefined, // Add quantity only if the type is fridge
             unitId,
-            type: unitType,
+            unitType,
         };
 
         try {
-            //await addItem(newItem);
-            onItemAdded(newItem);
+            const savedItem = await addItem(newItem);
+            onItemAdded(savedItem);
             alert('Item added successfully');
             navigate(`/unit/${unitId}`);
+
+            //clear the form fields
             setName('');
             setDescription('');
             setDate('');

@@ -55,13 +55,15 @@ export const fetchItemsByUnitId = async (unitId: number): Promise<{items: Item[]
 
         if (!responseBody) {
             console.warn("Empty response body");
-            return {items: [], unitType: ''};
+            console.log("Response body:", responseBody);
+            return {
+                items: [],
+                unitType: '',
+            };
         }
 
         //const data = await response.json();
-
         const data = JSON.parse(responseBody);
-
 
         return {
             items: data.items || [],
@@ -86,7 +88,7 @@ export const addItem = async (newItem: NewItem): Promise<Item | null> => {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to add item');
+            throw new Error('Failed to add item from ItemService (Add a new item )');
         }
         const data = await response.json();
         return data;

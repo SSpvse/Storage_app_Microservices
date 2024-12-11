@@ -19,7 +19,7 @@ const ItemManager = () => {
                 setError(null);
                 const fetchedData = await fetchItemsByUnitId(Number(unitId));
 
-                // Ensure the response has items and unitType before updating state
+                // Ensuring the response has items and unitType before updating state
                 if (fetchedData && Array.isArray(fetchedData.items)) {
                     setItems(fetchedData.items);
                     setUnitType(fetchedData.unitType || "");
@@ -36,6 +36,9 @@ const ItemManager = () => {
         handleFetchItems();
     }, [unitId]);
 
+    /*const handleItemAdded = (newItem: Item) => {
+        setItems((prevItems) => [...prevItems, newItem]);
+    }*/
     const handleItemAdded = async (newItem: Item) => {
         try {
             const response = await fetch(`http://localhost:8000/item/units/${unitId}/items`, {
@@ -47,11 +50,11 @@ const ItemManager = () => {
             });
 
             if (!response.ok) {
-                throw new Error("Failed to add item to backend.");
+                throw new Error("Failed to add item to backend");
             }
 
             const savedItem = await response.json();
-            setItems((prevItems) => (Array.isArray(prevItems) ? [...prevItems, newItem] : [newItem]));
+            setItems((prevItems) => [...prevItems, savedItem]);
         } catch (err) {
             console.error("Failed to add item:", err);
             setError("Failed to add idem. Please try again");
