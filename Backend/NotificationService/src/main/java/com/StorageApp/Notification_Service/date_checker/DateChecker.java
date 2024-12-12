@@ -5,6 +5,7 @@ import com.StorageApp.Notification_Service.eventdriven.ItemEventPublisher;
 import com.StorageApp.Notification_Service.model.DTO.DateDTO;
 import com.StorageApp.Notification_Service.repository.NotificationRepository;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class DateChecker {
 
     private final ItemEventPublisher itemEventPublisher;
     private final NotificationRepository notificationRepository;
+
+    @Autowired
     private final RabbitTemplate rabbitTemplate;
     private final String exchangeName;
 
@@ -31,7 +34,7 @@ public class DateChecker {
 
     // this method runs every 24 hours
 
-    @Scheduled(fixedRate = 15000)
+    @Scheduled(fixedRate = 36000)
     public void checkItems() {
 
         System.out.println("CHECK IF CHECKS (ItemEventPublisher, checkItems()  ) .............");
@@ -42,6 +45,7 @@ public class DateChecker {
         List<DateDTO> itemsToSend = notificationRepository.findByDate(tomorrowLocalDate);
 
         System.out.println("CHECKING TOMORROW DATE AND ITEMSTO SEND LENGTH==== " + itemsToSend.size());
+        System.out.println("AND DATATYPE IS : ~ : ~ :" + itemsToSend.getClass().getName());
 
         itemEventPublisher.testSendRabbit(itemsToSend);
 

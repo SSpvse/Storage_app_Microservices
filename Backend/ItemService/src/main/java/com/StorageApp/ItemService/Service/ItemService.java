@@ -1,6 +1,7 @@
 package com.StorageApp.ItemService.Service;
 
 import com.StorageApp.ItemService.Controller.ItemController;
+import com.StorageApp.ItemService.Model.DTO.DateDTO;
 import com.StorageApp.ItemService.Model.DTO.ItemDTO;
 import com.StorageApp.ItemService.Model.Item;
 import com.StorageApp.ItemService.Repository.ItemRepository;
@@ -9,10 +10,13 @@ import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,14 +39,7 @@ public class ItemService {
 
     // add item
     @Transactional
-    // Save the item to the database
-    public ItemDTO addItem(ItemDTO itemDTO) {
-        Item item = itemDTO.DTO_to_Item(); // Convert DTO to Entity
-        Item savedItem = itemRepository.save(item); // Save the item in the database
-        return new ItemDTO(savedItem.getName(), savedItem.getDescription(), savedItem.getDate(),
-                savedItem.getQuantity(), savedItem.getUnitId(), savedItem.getUserId());
-    }
-    /*public ItemDTO addItem(ItemDTO itemDto) {
+    public ItemDTO addItem(ItemDTO itemDto) {
 
         if (itemDto == null) {
             throw new NullPointerException("Item is null");
@@ -50,10 +47,12 @@ public class ItemService {
         Item savedItem = null;
 
         try {
-            if (itemDto.getUnitID() != null) {
+            if (itemDto.getUnitId() != null) {
                 // check for the unit in database to see if we have it
-                //String unitUrl = "http://localhost:8081/unit/exists/" + itemDto.getUnitID();
-                String unitUrl = "http://localhost:8081/unit/exists/" + itemDto.getUnitID();
+
+                // String unitUrl = "http://localhost:8081/unit/exists/" + itemDto.getUnitID();
+                String unitUrl = "http://gateway:8000/unit/exists/" + itemDto.getUnitId();
+
                 ResponseEntity<Boolean> unitResponse = restTemplate.getForEntity(unitUrl, Boolean.class);
                 // check the response of the DB
                 if (unitResponse.getStatusCode().is2xxSuccessful()) {
@@ -75,10 +74,12 @@ public class ItemService {
                 System.out.println("INSIDE ITEM_SERVICE / ADDITEM METHOD / itemDto.getDate != null :: getdate::" + savedItem.getDate());
 
                 assert savedItem != null;
-                DateDTO timeDto = new DateDTO(savedItem.getId(),savedItem.getName(), savedItem.getDate(), savedItem.getUserID(), savedItem.getUnitID());
+                DateDTO timeDto = new DateDTO(savedItem.getId(),savedItem.getName(), savedItem.getDate(), savedItem.getUserId(), savedItem.getUnitId());
 
                 System.out.println("BEFORE SENDING TO THE RESTTEMPLATE POSTFORENTTITY, timeDto.getDate:::: " + timeDto.getDate());
-                String notificationUrl = "http://localhost:8000/notification/add";
+              // for localhost :
+                //String notificationUrl = "http://localhost:8000/notification/add";
+                String notificationUrl = "http://gateway:8000/notification/add";
                 ResponseEntity<String> response = restTemplate.postForEntity(notificationUrl, timeDto, String.class);
                 if (!response.getStatusCode().is2xxSuccessful()) {
                     throw new RuntimeException("Failed to add dateDTO  to notification/add ");
@@ -90,7 +91,7 @@ public class ItemService {
             throw e;
         }
     }
-*/
+
     // Add item to a unit by the unitId
     public ItemDTO addItemToUnit(Long unitId, ItemDTO itemDTO){
         logger.info("Recieved unitID {}:", unitId);
@@ -111,7 +112,6 @@ public class ItemService {
 
         // Converting back to DTO to return
         return savedItem.to_ItemDTO();
-
 
     }
 

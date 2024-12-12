@@ -1,66 +1,6 @@
 version: "3.8"
 
 services:
-  gateway:
-    image: gateway:0.0.1-SNAPSHOT
-    container_name: gateway
-    ports:
-      - "8000:8000"
-    environment:
-      - SPRING_CLOUD_CONSUL_HOST=consul
-    networks:
-      - storage_manager
-    depends_on:
-      - consul-dev
-      - rabbitmq-dev
-
-  postgres:
-    image: postgres:13
-    container_name: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - docker_postgres_data:/var/lib/postgresql/data
-    networks:
-      - storage_manager
-    restart: on-failure
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "8080:80"
-    depends_on:
-      - postgres
-    networks:
-      - storage_manager
-
-  itemservice:
-    image: itemservice:0.0.1-SNAPSHOT
-    container_name: item_service
-    ports:
-      - '8082:8082'
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_CLOUD_CONSUL_HOST=consul
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/itemstorage
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    depends_on:
-      - postgres
-      - consul-importer
-      - rabbitmq-dev
-    networks:
-      - storage_manager
-    restart: on-failure
 
   unitservice:
     image: unitservice:0.0.1-SNAPSHOT
@@ -80,14 +20,139 @@ services:
       - rabbitmq-dev
     networks:
       - storage_manager
+    build:
+      context: ../UnitService
+      dockerfile: Dockerfile
     restart: on-failure
 
+<<<<<<< HEAD
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - storage_manager
+
+=======
+>>>>>>> origin/main
+  itemservice:
+    image: itemservice:0.0.1-SNAPSHOT
+    container_name: item_service
+    ports:
+      - '8082:8082'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/itemstorage
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - storage_manager
+    restart: on-failure
+    build:
+      context: ../ItemService
+      dockerfile: Dockerfile
+
+  notificationservice:
+    image: notificationservice:0.0.1-SNAPSHOT
+    container_name: notification_service
+    ports:
+      - '8083:8083'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/notificationstorage
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - storage_manager
+    build:
+      context: ../NotificationService
+      dockerfile: Dockerfile
+    restart: on-failure
+
+  emailservice:
+    image: emailservice:0.0.1-SNAPSHOT
+    container_name: email_service
+    ports:
+      - '8084:8084'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/emailstorage
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - notificationservice
+      - postgres
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - storage_manager
+    build:
+      context: ../EmailService
+      dockerfile: Dockerfile
+    restart: on-failure
+
+
+  gateway:
+    image: gateway:0.0.1-SNAPSHOT
+    container_name: gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - SPRING_CLOUD_CONSUL_HOST=consul
+    networks:
+      - storage_manager
+    depends_on:
+      - consul-dev
+      - rabbitmq-dev
+    build:
+        context: ../Gateway
+        dockerfile: Dockerfile
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - docker_postgres_data:/var/lib/postgresql/data
+    networks:
+      - storage_manager
+    restart: on-failure
+
+
   rabbitmq-dev:
-    image: rabbitmq:3-management
+    image: rabbitmq:4-management
     container_name: rabbitmq
     ports:
       - '5672:5672'
       - '15672:15672'
+    environment:
+        RABBITMQ_DEFAULT_USER: guest
+        RABBITMQ_DEFAULT_PASS: guest
     networks:
       - storage_manager
 
@@ -107,6 +172,9 @@ services:
     networks:
       - storage_manager
     restart: on-failure
+    build:
+        context: ./consul
+        dockerfile: Dockerfile
 
 networks:
   storage_manager:

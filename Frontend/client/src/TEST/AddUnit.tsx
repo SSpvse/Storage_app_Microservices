@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { addUnit } from "../services/UnitService";
-import UnitTypeTest from "./UnitTypeTest.tsx";
 import {useNavigate} from "react-router-dom";
 
 const AddUnit = () => {

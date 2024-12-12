@@ -7,5 +7,5 @@ export interface NewItem {
     date: string // | LocalDate;
     unitId: number;
     //unitType: string;
-    userId: 1;
+    userId: number;
 }
