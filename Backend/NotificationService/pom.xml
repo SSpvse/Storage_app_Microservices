@@ -11,7 +11,7 @@
 	<groupId>com.StorageApp</groupId>
 	<artifactId>notificationservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>NotificationService</name>
+	<name>notificationService</name>
 	<description>NotificationService for StorageApp</description>
 	<url/>
 	<licenses>

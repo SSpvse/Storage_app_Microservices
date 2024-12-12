@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import  { ReactNode } from "react";
+import {Link, useNavigate} from "react-router-dom";
 import {Home, Settings, User, Warehouse} from "lucide-react";
 
 interface LayoutProps {
@@ -7,6 +7,7 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+    const navigate = useNavigate();
     return (
         <div>
             {/* Navbar */}

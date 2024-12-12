@@ -1,6 +1,5 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Package, PlusCircle, Warehouse, Home, Settings, User } from "lucide-react";
+import { Package, PlusCircle} from "lucide-react";
 
 const MainPage = () => {
     const navigate = useNavigate();

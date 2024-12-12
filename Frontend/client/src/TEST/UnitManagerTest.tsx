@@ -4,10 +4,12 @@ import {Unit} from "../types/Unit.tsx";
 import {fetchAllUnits} from "../services/UnitService.tsx";
 import UnitTypeTest from "./UnitTypeTest.tsx";
 import {useNavigate} from "react-router-dom";
-
+/*
 interface UnitManagerTestProps {
     onUnitSelected: (unitId: number) => void;
 }
+*/
+
 const UnitManagerTest = () => {
     const navigate = useNavigate();
     const [unit, setUnit] = useState<Unit[]>([]);
