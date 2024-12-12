@@ -25,7 +25,7 @@ services:
       dockerfile: Dockerfile
     restart: on-failure
 
-<<<<<<< HEAD
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
@@ -39,8 +39,7 @@ services:
     networks:
       - storage_manager
 
-=======
->>>>>>> origin/main
+
   itemservice:
     image: itemservice:0.0.1-SNAPSHOT
     container_name: item_service

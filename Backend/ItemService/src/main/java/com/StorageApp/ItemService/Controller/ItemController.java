@@ -65,27 +65,6 @@ public class ItemController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }*/
-    // Adding item to a specific unit
-    @PostMapping("/units/{unitId}/items")
-    public ResponseEntity<ItemDTO> addItemToUnit(@PathVariable Long unitId, @RequestBody ItemDTO itemDTO){
-        try{
-            // Log the incoming request
-            logger.info("Adding item to unit ID: {}", unitId);
-            logger.info("Item details: {}", itemDTO);
-
-            ItemDTO addedItem = itemService.addItemToUnit(unitId, itemDTO);
-
-            // Returning the added item as respons
-            return new ResponseEntity<>(addedItem, HttpStatus.CREATED);
-        } catch (EntityNotFoundException e) {
-            logger.error("Unit not found: {}", e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            logger.error("Failed to add item to unit: {}", e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
 
     // ---- GET
 

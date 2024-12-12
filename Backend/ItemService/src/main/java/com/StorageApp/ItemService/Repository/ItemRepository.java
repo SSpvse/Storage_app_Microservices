@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    List<Item> findByUnitID(Long unitID);
+    List<Item> findByUnitId(Long unitID);
     List<Item> findByName(String name);
     List<Item> findByNameContaining(String name);
 }

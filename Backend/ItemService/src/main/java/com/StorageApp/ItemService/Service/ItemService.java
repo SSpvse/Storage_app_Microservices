@@ -16,7 +16,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,7 +69,7 @@ public class ItemService {
                     throw new RuntimeException("Failed to retrieve unit from UnitService");
                 }
             }
-            if (itemDto.getDate() != null) {
+            if (itemDto.getDate() != null||savedItem!=null) {
                 System.out.println("INSIDE ITEM_SERVICE / ADDITEM METHOD / itemDto.getDate != null :: getdate::" + savedItem.getDate());
 
                 assert savedItem != null;
@@ -143,7 +142,7 @@ public class ItemService {
 
         List<ItemDTO> dtoList = new ArrayList<>();
         List<Item> itemList;
-        itemList = itemRepository.findByUnitID(unitId);
+        itemList = itemRepository.findByUnitId(unitId);
         if (itemList.isEmpty()) {
             return null;
         }
