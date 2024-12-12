@@ -20,11 +20,7 @@ public class DateDTO {
 
     @Id
     private Long id;
-
-
     private String name;
-
-   // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private String date;
     private Long userID;
 

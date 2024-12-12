@@ -1,4 +1,4 @@
-package com.email.emailservice;
+package com.email.emailservice.controller;
 
 
 import com.email.emailservice.model.DTO.DateDTO;

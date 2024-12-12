@@ -28,24 +28,24 @@ public class ItemEventPublisher {
     }
 
 
-
-
     public void testSendRabbit(@RequestBody List<DateDTO> dateDTOList) {
 
         System.out.println("TESTING FOR testSendRabbit method::: " + dateDTOList);
 
-        if (dateDTOList == null) {
-            throw new IllegalArgumentException("TimeItemDto list cannot be null");
+        if (dateDTOList == null||dateDTOList.isEmpty()) {
+            throw new IllegalArgumentException(" : ~ : ~ : testSendRabbit list is null or empty! ");
         }
         List<RabbitDateDTO> rabbitList = new ArrayList<>();
+       //  RabbitDateDTO dto;
         for (DateDTO dateDTO : dateDTOList) {
             rabbitList.add(new RabbitDateDTO(dateDTO.getId(), dateDTO.getName(), dateDTO.getDate().toString(),dateDTO.getUnitID()));
+            System.out.println("PRINTING DTO IN ITEMEVENTPUBLISHER : ~ : ~ :" +dateDTO.getName() + dateDTO.getDate().toString());
         }
         // Send the message to RabbitMQ
         rabbitTemplate.convertAndSend(exchangeName, routingKey, rabbitList);
 
         // Log and return the sent object for confirmation
-        log.info("Sent message to RabbitMQ: " + dateDTOList);
+        log.info(": ~  ~ : Sent message to RabbitMQ: " + dateDTOList);
         ResponseEntity.ok(dateDTOList);
     }
 

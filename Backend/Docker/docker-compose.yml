@@ -128,13 +128,15 @@ services:
     restart: on-failure
 
 
-
   rabbitmq-dev:
-    image: rabbitmq:3-management
+    image: rabbitmq:4-management
     container_name: rabbitmq
     ports:
       - '5672:5672'
       - '15672:15672'
+    environment:
+        RABBITMQ_DEFAULT_USER: guest
+        RABBITMQ_DEFAULT_PASS: guest
     networks:
       - storage_manager
 

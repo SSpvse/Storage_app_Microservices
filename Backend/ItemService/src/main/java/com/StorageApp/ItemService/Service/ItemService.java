@@ -40,7 +40,6 @@ public class ItemService {
     @Transactional
     public ItemDTO addItem(ItemDTO itemDto) {
 
-
         if (itemDto == null) {
             throw new NullPointerException("Item is null");
         }
@@ -50,7 +49,6 @@ public class ItemService {
             if (itemDto.getUnitID() != null) {
                 // check for the unit in database to see if we have it
                 // String unitUrl = "http://localhost:8081/unit/exists/" + itemDto.getUnitID();
-
                 String unitUrl = "http://gateway:8000/unit/exists/" + itemDto.getUnitID();
                 ResponseEntity<Boolean> unitResponse = restTemplate.getForEntity(unitUrl, Boolean.class);
                 // check the response of the DB
@@ -76,7 +74,9 @@ public class ItemService {
                 DateDTO timeDto = new DateDTO(savedItem.getId(),savedItem.getName(), savedItem.getDate(), savedItem.getUserID(), savedItem.getUnitID());
 
                 System.out.println("BEFORE SENDING TO THE RESTTEMPLATE POSTFORENTTITY, timeDto.getDate:::: " + timeDto.getDate());
-                String notificationUrl = "http://localhost:8000/notification/add";
+              // for localhost :
+                //String notificationUrl = "http://localhost:8000/notification/add";
+                String notificationUrl = "http://gateway:8000/notification/add";
                 ResponseEntity<String> response = restTemplate.postForEntity(notificationUrl, timeDto, String.class);
                 if (!response.getStatusCode().is2xxSuccessful()) {
                     throw new RuntimeException("Failed to add dateDTO  to notification/add ");
@@ -105,7 +105,6 @@ public class ItemService {
 
         // Converting back to DTO to return
         return savedItem.to_ItemDTO();
-
 
     }
 
