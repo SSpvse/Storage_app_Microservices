@@ -39,42 +39,46 @@ const AddUnit = () => {
     };
 
     return (
-        <div>
-            <h2>Add a new unit</h2>
-            <form onSubmit={handleAddUnit}>
-                <div>
-                    <label>Unit Name:</label>
+        <div className="form-container">
+            <h2 className="form-title">Add a new unit</h2>
+            <form onSubmit={handleAddUnit} className="form">
+                <div className="form-group">
+                    <label className="label">Unit Name:</label>
                     <input
                         type="text"
                         value={unitName}
                         onChange={(e) => setUnitName(e.target.value)}
                         required
+                        className="input"
                     />
                 </div>
-                <div>
-                    <label>Unit Description:</label>
+                <div className="form-group">
+                    <label className="label">Unit Description:</label>
                     <input
                         type="text"
                         value={unitDescription}
                         onChange={(e) => setUnitDescription(e.target.value)}
                         required
+                        className="input"
                     />
                 </div>
-                <div>
-                    <label>Location:</label>
+                <div className="form-group">
+                    <label className="label">Location:</label>
                     <input
                         type="text"
                         value={unitLocation}
                         onChange={(e) => setUnitLocation(e.target.value)}
                         required
+                        className="input"
                     />
                 </div>
-                <div>
-                    <label>Unit Type:</label>
+                <div className="form-group">
+                    <label className="label">Unit Type:</label>
                     <select
                         value={unitType}
                         onChange={(e) => setUnitType(e.target.value)}
                         required
+                        className="input"
                     >
                         <option value="">Select a unit type</option>
                         <option value="refrigerator">Refrigerator</option>
@@ -82,10 +86,9 @@ const AddUnit = () => {
                         <option value="closet">Closet</option>
                     </select>
                 </div>
-                {unitType && <UnitTypeTest unit={{ id: 0, name: unitType, type: unitType }} onSelect={() => {}} />}
-                <button type="submit">Add Unit</button>
+                <button type="submit" className="btn-primary">Add Unit</button>
             </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
         </div>
     );
 };

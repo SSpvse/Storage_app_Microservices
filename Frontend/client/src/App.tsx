@@ -6,6 +6,7 @@ import ItemManagerTest from "./TEST/ItemManagerTest.tsx";
 import {BrowserRouter as Router, Route, Routes, useNavigate} from "react-router-dom";
 import UnitManagerTest from "./TEST/UnitManagerTest.tsx";
 import AddUnit from "./TEST/AddUnit.tsx";
+import Layout from "./TEST/Layout.tsx";
 
 
 function App() {
@@ -14,10 +15,10 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<MainPageTest/>}/>
-                <Route path="/my-storage" element={<UnitManagerTest />} />
-                <Route path="/add-unit" element={<AddUnit/>}/>
-                <Route path="/unit/:unitId" element={<ItemManagerTest/>}/>
+                <Route path="/" element={<Layout><MainPageTest/></Layout>}/>
+                <Route path="/my-storage" element={<Layout><UnitManagerTest /></Layout>} />
+                <Route path="/add-unit" element={<Layout><AddUnit/></Layout>}/>
+                <Route path="/unit/:unitId" element={<Layout><ItemManagerTest/></Layout>}/>
             </Routes>
         </Router>
     );

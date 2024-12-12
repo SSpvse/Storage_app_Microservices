@@ -7,7 +7,6 @@ import AddItem from "./AddItem.tsx";
 const ItemManager = () => {
     const { unitId } = useParams<{ unitId: string }>();
     const [items, setItems] = useState<Item[]>([]);
-    const [unitType, setUnitType] = useState <string>('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -22,7 +21,6 @@ const ItemManager = () => {
                 // Ensuring the response has items and unitType before updating state
                 if (fetchedData && Array.isArray(fetchedData.items)) {
                     setItems(fetchedData.items);
-                    setUnitType(fetchedData.unitType || "");
                 } else {
                     throw new Error("Invalid data format received");
                 }
@@ -40,21 +38,13 @@ const ItemManager = () => {
         setItems((prevItems) => [...prevItems, newItem]);
     }*/
     const handleItemAdded = async (newItem: Item) => {
+        if (!unitId){
+            setError("Unit ID is missing. Cannot add item");
+        }
         try {
-            const response = await fetch(`http://localhost:8000/item/units/${unitId}/items`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newItem),
-            });
-
-            if (!response.ok) {
-                throw new Error("Failed to add item to backend");
-            }
-
-            const savedItem = await response.json();
+            const savedItem = await addItem(newItem);
             setItems((prevItems) => [...prevItems, savedItem]);
+            setError(null);
         } catch (err) {
             console.error("Failed to add item:", err);
             setError("Failed to add idem. Please try again");
@@ -62,11 +52,12 @@ const ItemManager = () => {
     };
 
     return (
-        <div>
-            <h3>Items in Selected Unit {unitId}</h3>
-            {loading && <p>Loading...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <div>
+        <div className="item-manager">
+            <h3>Items in this Unit {unitId}</h3>
+            {loading && <p className="loading-message">Loading...</p>}
+            {error && <p className="error-message">{error}</p>}
+
+            <div className="item-list">
                 {items.length > 0 ? (
                     <ul>
                         {items.map((item) => (
@@ -79,7 +70,8 @@ const ItemManager = () => {
                     <p>No items available in this unit.</p>
                 )}
             </div>
-            <AddItem unitId={Number(unitId)} unitType={unitType} onItemAdded={handleItemAdded} />
+
+            <AddItem unitId={Number(unitId)} onItemAdded={handleItemAdded} />
         </div>
     );
 };

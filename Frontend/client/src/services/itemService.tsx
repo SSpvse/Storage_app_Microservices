@@ -27,11 +27,12 @@ export const fetchAllItems = async (): Promise<Item[]> => {
         return data;
     } catch (error) {
         console.error('Error fetching items:', error);
+        alert('Failed to fetch items. Please try again later');
     }
 };
 
 // Fetching items from specific unit id
-export const fetchItemsByUnitId = async (unitId: number): Promise<{items: Item[]; unitType:string}> => {
+export const fetchItemsByUnitId = async (unitId: number): Promise<{items: Item[]}> => {
     console.log("This is the id:" + unitId)
     try {
                                                     // `http://localhost:8000/item/byid/${id}`
@@ -49,54 +50,49 @@ export const fetchItemsByUnitId = async (unitId: number): Promise<{items: Item[]
         //Handling empty response:
         if (response.status === 204) {
             console.warn(`No content returned from API, unit ID: ${unitId}`);
-            return {items: [], unitType: ''};
+            return {items: []};
         }
-        const responseBody = await response.text();
+        const responseBody = await response.json();
 
         if (!responseBody) {
             console.warn("Empty response body");
             console.log("Response body:", responseBody);
             return {
                 items: [],
-                unitType: '',
             };
         }
 
         //const data = await response.json();
         const data = JSON.parse(responseBody);
 
+        console.log("responce DATA :: : :: "+data)
         return {
-            items: data.items || [],
-            unitType:  data.unitType || '',
+            items: data.items || []
         };
     } catch (error) {
         console.error('Error fetching items:', error);
-        return {items: [], unitType: ''}; // returning default empty values
+        return {items: []}; // returning default empty values
     }
 };
 
 // Add a new item
-export const addItem = async (newItem: NewItem): Promise<Item | null> => {
-    try {
-        console.log("Adding item:", newItem)
-        const response = await fetch(`${ITEM_SERVICE_URL}/additem`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newItem),
-        });
+export const addItem = async (newItem: NewItem): Promise<Item> => {
+    console.log("Adding item:", newItem)
+    const response = await fetch(`${ITEM_SERVICE_URL}/additem`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newItem),
+    });
 
-        if (!response.ok) {
-            throw new Error('Failed to add item from ItemService (Add a new item )');
-        }
-        const data = await response.json();
-        return data;
-    } catch (e){
-        console.error("Failed adding item", e);
-        return null;
+    if (!response.ok) {
+        throw new Error('Failed to add item from ItemService (Add a new item )');
     }
-};
+    const savedItem = await response.json();
+    return savedItem;
+}
+
 // Add an item to a specific unit
 export const addItemToUnit = async (unitId: number, newItem: NewItem): Promise<Item> => {
     try {

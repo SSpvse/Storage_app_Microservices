@@ -1,23 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {addItem} from "../services/itemService.tsx";
-import {NewItem} from "../types/NewItem.tsx";
+import { addItem } from "../services/itemService";
+import { NewItem } from "../types/NewItem";
 
 interface AddItemProps {
     unitId: number;
-    unitType: string;
     onItemAdded: (newItem: any) => void;
 }
 
-const AddItem = ({ unitId, unitType, onItemAdded }: AddItemProps) => {
+const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
     const [quantity, setQuantity] = useState('');
-    //const [unitType, setUnitType] = useState('');
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
-
 
     const handleAddItem = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,18 +24,13 @@ const AddItem = ({ unitId, unitType, onItemAdded }: AddItemProps) => {
             return;
         }
 
-        if (unitType === "fridge" && (!date || !quantity)) {
-            setError("Date and Quantity are required for fridge items.");
-            return;
-        }
-
         const newItem: NewItem = {
             name,
             description,
-            date: unitType === 'fridge' ? date : undefined, // Add date only if the type is fridge
-            quantity: unitType === 'fridge' ? Number(quantity) : undefined, // Add quantity only if the type is fridge
+            date,
+            quantity: quantity ? Number(quantity) : undefined,
             unitId,
-            unitType,
+            userId: 1,
         };
 
         try {
@@ -47,7 +39,6 @@ const AddItem = ({ unitId, unitType, onItemAdded }: AddItemProps) => {
             alert('Item added successfully');
             navigate(`/unit/${unitId}`);
 
-            //clear the form fields
             setName('');
             setDescription('');
             setDate('');
@@ -59,58 +50,63 @@ const AddItem = ({ unitId, unitType, onItemAdded }: AddItemProps) => {
     };
 
     return (
-        <div>
-            <h2>Add a new item</h2>
-            <form onSubmit={handleAddItem}>
-                <div>
-                    <label>Name:</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                </div>
+        <div className="min-h-screen">
+            <div className="container">
+                <div className="form-container">
+                    <h2 className="form-title">Add a new item</h2>
+                    <form onSubmit={handleAddItem} className="form">
+                        <div className="form-group">
+                            <label className="label">Name:</label>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                                className="input"
+                            />
+                        </div>
 
-                <div>
-                    <label>Description:</label>
-                    <input
-                        type="text"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                    />
-                </div>
+                        <div className="form-group">
+                            <label className="label">Description:</label>
+                            <input
+                                type="text"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                required
+                                className="input"
+                            />
+                        </div>
 
-                {/* If type is fridge show Date and Quanity */}
-                {unitType === 'fridge' && (
-                    <>
-                        <div>
-                            <label>Date:</label>
+                        <div className="form-group">
+                            <label className="label">Date:</label>
                             <input
                                 type="date"
                                 value={date}
                                 onChange={(e) => setDate(e.target.value)}
                                 required
+                                className="input"
                             />
                         </div>
 
-                        <div>
-                            <label>Quantity:</label>
+                        <div className="form-group">
+                            <label className="label">Quantity:</label>
                             <input
                                 type="number"
                                 value={quantity}
                                 onChange={(e) => setQuantity(e.target.value)}
                                 required
+                                className="input"
                             />
                         </div>
-                    </>
-                )}
 
-                <button type="submit">Add Item</button>
-            </form>
+                        <button type="submit" className="btn-primary">
+                            Add Item
+                        </button>
+                    </form>
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+                    {error && <p className="error-message">{error}</p>}
+                </div>
+            </div>
         </div>
     );
 };

@@ -4,8 +4,8 @@ export interface NewItem {
     name: string;
     description: string;
     quantity?: number | null;
-    date?: string // | LocalDate;
+    date: string // | LocalDate;
     unitId: number;
-    unitType: string;
-    //userId: number;
+    //unitType: string;
+    userId: 1;
 }

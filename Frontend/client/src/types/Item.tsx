@@ -5,7 +5,6 @@ export interface Item {
     quantity: number;
     date: string;
     unitId: number; // ID of the storage unit the item belongs to
-    unitType: string;
    // userID: number; // ID of the user who added the item
 }
 

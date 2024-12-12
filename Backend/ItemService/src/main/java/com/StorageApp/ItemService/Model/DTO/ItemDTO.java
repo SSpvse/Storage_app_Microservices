@@ -1,7 +1,6 @@
 package com.StorageApp.ItemService.Model.DTO;
 
 import com.StorageApp.ItemService.Model.Item;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,22 +17,23 @@ public class ItemDTO {
 
     private String name;
     private String description;
-    private String location;
     private Long quantity;
     private LocalDate date;
-    private Long unitID;
-    private Long userID;
+    private Long unitId;
+    private Long userId;
+
+    public ItemDTO(String name, String description, LocalDate date, Long quantity, Long unitId, Long userId) {
+    }
 
     @Override
     public String toString() {
         return "ItemDTO{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", location='" + location + '\'' +
                 ", quantity=" + quantity +
                 ", date=" + date +
-                ", unitID=" + unitID +
-               ", userID=" + userID +
+                ", unitID=" + unitId +
+               ", userID=" + userId +
                 '}';
     }
 
@@ -41,11 +41,10 @@ public class ItemDTO {
         Item item = new Item();
         item.setName(name);
         item.setDescription(description);
-        item.setLocation(location);
         item.setQuantity(quantity);
         item.setDate(date);
-        item.setUnitID(unitID);
-        item.setUserID(userID);
+        item.setUnitId(unitId);
+        item.setUserId(userId);
         return item;
     }
 

@@ -35,11 +35,11 @@ const UnitManagerTest = () => {
         navigate(`/unit/${unitId}`);
     };
     return (
-        <div>
+        <div className={"unit-manager"}>
             <h2>Available Storage Units</h2>
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
-            <div>
+            <div className="unit-list">
                 {unit.map((unit) => (
                     <UnitTypeTest key={unit.id} unit={unit} onSelect={onUnitSelected} />
                 ))}

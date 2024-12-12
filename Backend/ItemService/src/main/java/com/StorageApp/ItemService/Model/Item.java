@@ -25,7 +25,6 @@ public class Item {
     private String name;
 
     private String description;
-    private String location;
 
     @Column(nullable = false)
     private Long quantity;
@@ -33,27 +32,26 @@ public class Item {
     private LocalDate date;
 
     @Column(nullable = false)
-    private Long unitID;
+    private Long unitId;
 
     @Column(nullable = false)
-    private Long userID;
+    private Long userId;
 
     public DateDTO to_DateDTO() {
         DateDTO dateDTO = new DateDTO();
         dateDTO.setId(id);
         dateDTO.setDate(date);
-        dateDTO.setUserID(userID);
+        dateDTO.setUserID(userId);
         return dateDTO;
     }
     public ItemDTO to_ItemDTO() {
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setName(name);
         itemDTO.setDescription(description);
-        itemDTO.setLocation(location);
         itemDTO.setQuantity(quantity);
         itemDTO.setDate(date);
-        itemDTO.setUnitID(unitID);
-        itemDTO.setUserID(userID);
+        itemDTO.setUnitId(unitId);
+        itemDTO.setUserId(userId);
         return itemDTO;
     }
 
@@ -63,11 +61,10 @@ public class Item {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", location='" + location + '\'' +
                 ", quantity=" + quantity +
                 ", date=" + date +
-                ", unitID=" + unitID +
-                ", userID=" + userID +
+                ", unitID=" + unitId +
+                ", userID=" + userId +
                 '}';
     }
 }

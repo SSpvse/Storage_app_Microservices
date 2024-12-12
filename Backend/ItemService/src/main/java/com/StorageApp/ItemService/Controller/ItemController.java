@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -28,15 +30,28 @@ public class ItemController {
     // add item
     @PostMapping("/additem")
     public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO itemDTO) {
-        System.out.println("HERE IS THE ITEM :::::: " + itemDTO.toString());
+        System.out.println("Recived Item DTO in itemcontroller" + itemDTO.toString());
 
+        try {
+            //  If the date is provided as a string, convert it to LocalDate
+            if (itemDTO.getDate() != null && itemDTO.getDate().toString().matches("\\d{4}-\\d{2}-\\d{2}")) {
+                LocalDate date = LocalDate.parse(itemDTO.getDate().toString(), DateTimeFormatter.ISO_DATE);
+                itemDTO.setDate(date);
+            }
 
-        ItemDTO savedItem = itemService.addItem(itemDTO);
-        System.out.println("FROM CONTROLLER: " + savedItem.toString());
-        //return new ResponseEntity<>(savedItem.to_ItemDTO(), HttpStatus.CREATED);
-        return ResponseEntity.ok(savedItem);
+            ItemDTO savedItem = itemService.addItem(itemDTO);
+            System.out.println("FROM CONTROLLER: saved item:" + savedItem.toString());
+            //return new ResponseEntity<>(savedItem.DTO_to_Item().to_ItemDTO(), HttpStatus.CREATED);
+            return ResponseEntity.ok(savedItem);
+
+        } catch (Exception e){
+            logger.error("Error occurred while adding item: ",e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
 
     }
+    /*
     @PostMapping("/add/{unitId}")
     public ResponseEntity<ItemDTO> addItemToUnit(@PathVariable Long unitId, @RequestBody ItemDTO itemDTO) {
         try {
@@ -49,9 +64,9 @@ public class ItemController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-    }
+    }*/
     // Adding item to a specific unit
-    /*@PostMapping("/units/{unitId}/items")
+    @PostMapping("/units/{unitId}/items")
     public ResponseEntity<ItemDTO> addItemToUnit(@PathVariable Long unitId, @RequestBody ItemDTO itemDTO){
         try{
             // Log the incoming request
@@ -70,7 +85,7 @@ public class ItemController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-    }*/
+    }
 
     // ---- GET
 

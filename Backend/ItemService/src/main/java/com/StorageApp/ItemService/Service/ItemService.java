@@ -1,7 +1,6 @@
 package com.StorageApp.ItemService.Service;
 
 import com.StorageApp.ItemService.Controller.ItemController;
-import com.StorageApp.ItemService.Model.DTO.DateDTO;
 import com.StorageApp.ItemService.Model.DTO.ItemDTO;
 import com.StorageApp.ItemService.Model.Item;
 import com.StorageApp.ItemService.Repository.ItemRepository;
@@ -10,9 +9,7 @@ import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -38,7 +35,14 @@ public class ItemService {
 
     // add item
     @Transactional
-    public ItemDTO addItem(ItemDTO itemDto) {
+    // Save the item to the database
+    public ItemDTO addItem(ItemDTO itemDTO) {
+        Item item = itemDTO.DTO_to_Item(); // Convert DTO to Entity
+        Item savedItem = itemRepository.save(item); // Save the item in the database
+        return new ItemDTO(savedItem.getName(), savedItem.getDescription(), savedItem.getDate(),
+                savedItem.getQuantity(), savedItem.getUnitId(), savedItem.getUserId());
+    }
+    /*public ItemDTO addItem(ItemDTO itemDto) {
 
         if (itemDto == null) {
             throw new NullPointerException("Item is null");
@@ -86,14 +90,14 @@ public class ItemService {
             throw e;
         }
     }
-
+*/
     // Add item to a unit by the unitId
     public ItemDTO addItemToUnit(Long unitId, ItemDTO itemDTO){
         logger.info("Recieved unitID {}:", unitId);
         logger.info("Recieved itemDTO {}:", itemDTO);
 
 
-        if (itemDTO.getUnitID() == null){
+        if (itemDTO.getUnitId() == null){
             throw new NullPointerException("Unit is null");
         }
 
@@ -101,7 +105,7 @@ public class ItemService {
         Item item = itemDTO.DTO_to_Item();
 
         // Setting the unitID
-        item.setUnitID(unitId);
+        item.setUnitId(unitId);
 
         Item savedItem = itemRepository.save(item);
 
