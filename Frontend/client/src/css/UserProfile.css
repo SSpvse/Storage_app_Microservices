@@ -1,0 +1,74 @@
+body {
+    display: block;
+    margin: 0px;
+    height: 100%;
+    background-color: #ffffff;
+
+}
+.profile-card {
+    background: #ffffff;
+    padding: 25px 35px;
+    border-radius: 15px; /* Slightly more rounded edges */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
+    text-align: center;
+    width: 100%;
+    max-width: 450px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Profile card hover effect */
+.profile-card:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Enhanced hover effect */
+    transform: translateY(-5px);
+}
+
+/* Profile image styles for circular shape */
+.profile-image {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+    color: #007bff; /* Default icon color */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Profile name styles */
+.profile-name {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin: 12px 0 8px;
+}
+
+/* Profile details (email, location) */
+.profile-details p {
+    font-size: 14px;
+    color: #555;
+    margin: 8px 0;
+}
+
+.profile-details strong {
+    color: #333;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .profile-card {
+        padding: 20px 25px;
+    }
+
+    .profile-name {
+        font-size: 24px;
+    }
+
+    .profile-image {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-details p {
+        font-size: 13px;
+    }
+}

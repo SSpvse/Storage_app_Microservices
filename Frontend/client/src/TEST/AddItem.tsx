@@ -1,21 +1,46 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
+
 import { addItem } from "../services/itemService";
 import { NewItem } from "../types/NewItem";
+import {useNavigate, useParams} from "react-router-dom";
+import {fetchUnitById} from "../services/UnitService.tsx";
 
 interface AddItemProps {
-    unitId: number;
-    onItemAdded: (newItem: any) => void;
+    unitId: string;
+    onItemAdded: (newItem: NewItem) => void;
 }
 
 const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
+    const { unitId: paramUnitId } = useParams<{ unitId: string }>();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
+    const [unitType, setUnitType] = useState<string | null>(null);
     const [quantity, setQuantity] = useState('');
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
+    console.log("UNIT ID FROM URRRL", unitId);
+    // Converting the unitId from url from string to number
+    const unitIdNumber = paramUnitId ? parseInt(paramUnitId) : NaN;
+
+    useEffect(() => {
+
+        const fetchUnitType = async () => {
+            try{
+                if (!unitId){
+                    throw new Error("Unit ID is missing");
+                }
+                const unit = await fetchUnitById(unitIdNumber);
+                console.log("Fetched Unit Type:", unit);
+                setUnitType(unit.type);
+            } catch (err){
+                console.error("Error fetching unit:", err);
+                setError("Failed to fetch unit info")
+            }
+        };
+        fetchUnitType();
+    }, [unitIdNumber]);
     const handleAddItem = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -28,8 +53,8 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
             name,
             description,
             date,
-            quantity: quantity ? Number(quantity) : undefined,
-            unitId,
+            quantity: quantity? parseInt(quantity):0,
+            unitId: unitIdNumber,
             userId: 1,
         };
 
@@ -65,7 +90,6 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
                                 className="input"
                             />
                         </div>
-
                         <div className="form-group">
                             <label className="label">Description:</label>
                             <input
@@ -76,18 +100,6 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
                                 className="input"
                             />
                         </div>
-
-                        <div className="form-group">
-                            <label className="label">Date:</label>
-                            <input
-                                type="date"
-                                value={date}
-                                onChange={(e) => setDate(e.target.value)}
-                                required
-                                className="input"
-                            />
-                        </div>
-
                         <div className="form-group">
                             <label className="label">Quantity:</label>
                             <input
@@ -98,12 +110,26 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
                                 className="input"
                             />
                         </div>
+                        {unitType === "refrigerator" && (
+                            <>
+                                <div className="form-group">
+                                    <label className="label">Date:</label>
+                                    <input
+                                        type="date"
+                                        value={date}
+                                        onChange={(e) => setDate(e.target.value)}
+                                        required
+                                        className="input"
+                                    />
+                                </div>
+
+                            </>
+                        )}
 
                         <button type="submit" className="btn-primary">
                             Add Item
                         </button>
                     </form>
-
                     {error && <p className="error-message">{error}</p>}
                 </div>
             </div>

@@ -12,6 +12,14 @@ export const fetchAllUnits = async (): Promise<Unit[]> => {
     return await response.json();
 };
 
+// Fetch a specific unit by ID
+export const fetchUnitById = async (unitId: number): Promise<Unit> => {
+    const response = await fetch(`${UNIT_SERVICE_URL}/byid/${unitId}`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch unit with ID ${unitId}`);
+    }
+    return await response.json();
+};
 // Add a new unit
 export const addUnit = async (newUnit: { name: string }): Promise<Unit> => {
     try {

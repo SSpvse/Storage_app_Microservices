@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchItemsByUnitId, addItem } from "../services/itemService";
+import {fetchItemsByUnitId, addItem, fetchAllItems} from "../services/itemService";
 import { Item } from "../types/Item";
 import AddItem from "./AddItem.tsx";
 
@@ -12,15 +12,14 @@ const ItemManager = () => {
 
     useEffect(() => {
         const handleFetchItems = async () => {
-            if (!unitId) return;
             try {
                 setLoading(true);
                 setError(null);
                 const fetchedData = await fetchItemsByUnitId(Number(unitId));
 
                 // Ensuring the response has items and unitType before updating state
-                if (fetchedData && Array.isArray(fetchedData.items)) {
-                    setItems(fetchedData.items);
+                if (fetchedData && Array.isArray(fetchedData)) {
+                    setItems(fetchedData);
                 } else {
                     throw new Error("Invalid data format received");
                 }
@@ -34,16 +33,12 @@ const ItemManager = () => {
         handleFetchItems();
     }, [unitId]);
 
-    /*const handleItemAdded = (newItem: Item) => {
-        setItems((prevItems) => [...prevItems, newItem]);
-    }*/
+
     const handleItemAdded = async (newItem: Item) => {
-        if (!unitId){
-            setError("Unit ID is missing. Cannot add item");
-        }
+
         try {
-            const savedItem = await addItem(newItem);
-            setItems((prevItems) => [...prevItems, savedItem]);
+            //const savedItem = await addItem(newItem);
+            setItems((prevItems) => [...prevItems, newItem]); // TODO TIdligere var det savedItems og ikke newItem
             setError(null);
         } catch (err) {
             console.error("Failed to add item:", err);
@@ -71,7 +66,7 @@ const ItemManager = () => {
                 )}
             </div>
 
-            <AddItem unitId={Number(unitId)} onItemAdded={handleItemAdded} />
+            <AddItem unitId={unitId} onItemAdded={handleItemAdded} />
         </div>
     );
 };

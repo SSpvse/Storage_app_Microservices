@@ -1,6 +1,7 @@
 import  { ReactNode } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {Home, Settings, User, Warehouse} from "lucide-react";
+import '../css/Layout.css';
 
 interface LayoutProps {
     children: ReactNode;
@@ -24,7 +25,7 @@ const Layout = ({ children }: LayoutProps) => {
                         </button>
                         <button onClick={() => navigate("/profile")} className="nav-btn">
                             <User className="icon" size={20} />
-                            Profile
+                            Profile/Login
                         </button>
                         <button onClick={() => navigate("/settings")} className="nav-btn">
                             <Settings className="icon" size={20} />

@@ -1,9 +1,9 @@
 import { Unit } from "../types/Unit";
 import { addUnit, fetchAllUnits } from "../services/UnitService";
 import { useEffect, useState } from "react";
-import fridgeImage from "../assets/fridge.png";
-import boxImage from "../assets/box.png";
-import closetImage from "../assets/closet.png";
+import fridgeImage from "../assets/oldfridge.png";
+import boxImage from "../assets/oldbox.png";
+import closetImage from "../assets/oldcloset.png";
 import {Item} from "../types/Item.tsx";
 import {addItemToUnit, fetchItemsByUnitId} from "../services/itemService.tsx";
 import {NewItem} from "../types/NewItem.tsx";
