@@ -42,21 +42,22 @@ public class UnitService {
         return unitRepository.findUnitByid(unitId).Unit_to_DTO();
     }
 
+
+    /*
     // Updating a unit
     public UnitDTO updateUnit(Long unitId, UnitDTO unitDTO) {
         // Fetch the existing unit from the repository
-        Unit existingUnit = unitRepository.findById(unitId)
+        unitRepository.findById(unitId)
                 .orElseThrow(() -> new Error("Unit not found with ID: " + unitId));
 
-        // Update the existing unit's properties with values from the DTO
-        existingUnit.setName(unitDTO.getName());
+        Unit newUnit = unitDTO.DTO_to_Unit();
+        //Unit updatedUnit = unitRepository.updateUnitByid(unitId, newUnit);
 
-        // Save the updated unit in the repository
-        Unit updatedUnit = unitRepository.save(existingUnit);
-
-        // Convert the updated unit back to DTO and return
+        //Convert the updated unit back to DTO and return
         return updatedUnit.Unit_to_DTO();
     }
+
+     */
 
     // Deleting a unit by the ID
     public void deleteUnit(Long unitId){

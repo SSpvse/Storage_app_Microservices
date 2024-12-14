@@ -60,15 +60,26 @@ public class UnitController {
         return ResponseEntity.ok(createdUnit);
     }
 
+
+
+    /*
     // Update an existing unit by id
     @PutMapping("/byid/{id}")
     public ResponseEntity<UnitDTO> updateUnit(@PathVariable("id") Long id, @RequestBody UnitDTO unitDTO) {
+
+
+        System.out.println("new unit to be printned : :: :  ::   " + unitDTO.toString());
         // Call the service method to update the unit
         UnitDTO updatedUnitDTO = unitService.updateUnit(id, unitDTO);
+
+        System.out.println("updated unit to be printned : :: :  ::   " + updatedUnitDTO.toString());
 
         // Return the updated unit
         return new ResponseEntity<>(updatedUnitDTO, HttpStatus.OK);
     }
+
+
+     */
 
     // Delete a unit by ID
     @DeleteMapping("/byid/{id}")

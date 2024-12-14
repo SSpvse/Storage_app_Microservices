@@ -1,7 +1,6 @@
 package com.StorageApp.ItemService.Controller;
 
 import com.StorageApp.ItemService.Model.DTO.ItemDTO;
-import com.StorageApp.ItemService.Model.Item;
 import com.StorageApp.ItemService.Service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
