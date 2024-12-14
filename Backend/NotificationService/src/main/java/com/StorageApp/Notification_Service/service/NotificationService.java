@@ -30,6 +30,7 @@ public class NotificationService {
                 System.out.println("No id on the item... nothing to store");
                 return null;
             }else {
+                System.out.println("Saving the item to the database : :: : : :"+ timeItemDto.getName() + "and" + timeItemDto.getDate());
                 notificationRepository.save(timeItemDto);
                 return timeItemDto;
             }

@@ -49,30 +49,4 @@ public class ItemEventPublisher {
         ResponseEntity.ok(dateDTOList);
     }
 
-
-/*
-
-    public ResponseEntity<List<DateDTO>> testSendRabbit(@RequestBody List<DateDTO> dateDTOList) {
-
-        System.out.println("TESTING FOR testSendRabbit method::: " + dateDTOList);
-
-        if (dateDTOList == null) {
-            throw new IllegalArgumentException("TimeItemDto list cannot be null");
-        }
-        List<RabbitDateDTO> rabbitList = new ArrayList<>();
-        for (DateDTO dateDTO : dateDTOList) {
-            rabbitList.add(new RabbitDateDTO(dateDTO.getId(), dateDTO.getName(), dateDTO.getDate().toString(),dateDTO.getUnitID()));
-        }
-
-        String text = "Hello rabbitMQ";
-
-        // Send the message to RabbitMQ
-        rabbitTemplate.convertAndSend(exchangeName, routingKey, text);
-
-        // Log and return the sent object for confirmation
-        log.info("Sent message to RabbitMQ: " + dateDTOList);
-        return ResponseEntity.ok(dateDTOList);
-    }
- */
-
 }

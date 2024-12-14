@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,12 +38,30 @@ public class ItemService {
     // ---- ADD ITEMS
 
     // add item
+
+
     @Transactional
-    public ItemDTO addItem(ItemDTO itemDto) {
+    public ItemDTO addItem(ItemDTO itemDto) throws NoSuchMethodException {
 
         if (itemDto == null) {
             throw new NullPointerException("Item is null");
         }
+
+        Method getNameMethod = itemDto.getClass().getMethod("getName");
+        Method getDateMethod = itemDto.getClass().getMethod("getDate");
+        Method getUserIDMethod = itemDto.getClass().getMethod("getUserID");
+        Method getUnitIDMethod = itemDto.getClass().getMethod("getUnitID");
+
+        // Print the data types of each field
+        System.out.println("~ : ~ : ~ : C H E C K I N G  --- T H E  --- I T E M  ---  F R O M   C- AL ALLL   ~ : ~ : ~ : ");
+        System.out.println("HERE::::: " +
+                itemDto.getName() + " (" + getNameMethod.getReturnType().getName() + ") " +
+                itemDto.getDate() + " (" + getDateMethod.getReturnType().getName() + ") " +
+                itemDto.getUserID() + " (" + getUserIDMethod.getReturnType().getName() + ") " +
+                itemDto.getUnitID() + " (" + getUnitIDMethod.getReturnType().getName() + ")");
+
+
+        System.out.println(" END ---------- END ----------- END ----------------END");
         Item savedItem = null;
 
         try {
@@ -68,7 +87,7 @@ public class ItemService {
                 }
             }
             if (itemDto.getDate() != null) {
-                System.out.println("INSIDE ITEM_SERVICE / ADDITEM METHOD / itemDto.getDate != null :: getdate::" + savedItem.getDate());
+                // System.out.println("INSIDE ITEM_SERVICE / ADDITEM METHOD / itemDto.getDate != null :: getdate::" + savedItem.getDate());
 
                 assert savedItem != null;
                 DateDTO timeDto = new DateDTO(savedItem.getId(),savedItem.getName(), savedItem.getDate(), savedItem.getUserID(), savedItem.getUnitID());
@@ -87,25 +106,6 @@ public class ItemService {
             logger.error("Error adding item", e);
             throw e;
         }
-    }
-
-    // Add item to a unit by the unitId
-    public ItemDTO addItemToUnit(Long unitId, ItemDTO itemDTO){
-        if (itemDTO.getUnitID() == null){
-            throw new NullPointerException("Unit is null");
-        }
-
-        // Convert ItemDTO to Item
-        Item item = itemDTO.DTO_to_Item();
-
-        // Setting the unitID
-        item.setUnitID(unitId);
-
-        Item savedItem = itemRepository.save(item);
-
-        // Converting back to DTO to return
-        return savedItem.to_ItemDTO();
-
     }
 
     // ---- GET ITEMS

@@ -33,7 +33,7 @@ public class ItemDTO {
                 ", quantity=" + quantity +
                 ", date=" + date +
                 ", unitID=" + unitID +
-               ", userID=" + userID +
+                ", userID=" + userID +
                 '}';
     }
 

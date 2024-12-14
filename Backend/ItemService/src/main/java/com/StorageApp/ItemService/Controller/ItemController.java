@@ -26,7 +26,7 @@ public class ItemController {
 
     // add item
     @PostMapping("/additem")
-    public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO itemDTO) {
+    public ResponseEntity<ItemDTO> addItem(@RequestBody ItemDTO itemDTO) throws NoSuchMethodException {
         System.out.println("HERE IS THE ITEM :::::: " + itemDTO.toString());
 
         ItemDTO savedItem = itemService.addItem(itemDTO);
@@ -36,17 +36,6 @@ public class ItemController {
 
     }
 
-    @PostMapping("/units/{unitId}/items")
-    public ResponseEntity<ItemDTO> addItemToUnit(@PathVariable Long unitId, @RequestBody ItemDTO itemDTO){
-        // Log the incoming request
-        logger.info("Adding item to unit ID: {}", unitId);
-        logger.info("Item details: {}", itemDTO);
-
-        ItemDTO addedItem = itemService.addItemToUnit(unitId, itemDTO);
-
-        // Returning the added item as respons
-        return new ResponseEntity<>(addedItem, HttpStatus.CREATED);
-    }
 
     // ---- GET
 
@@ -68,9 +57,9 @@ public class ItemController {
 
     // get items_dtos by UNIT_ID
     @GetMapping("/byid/{unitId}")
-    public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long id) {
+    public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long unitId) {
 
-        List<ItemDTO> dto_list = itemService.getItemListBy_UnitID(id);
+        List<ItemDTO> dto_list = itemService.getItemListBy_UnitID(unitId);
         return new ResponseEntity<>(dto_list, HttpStatus.OK);
     }
 
