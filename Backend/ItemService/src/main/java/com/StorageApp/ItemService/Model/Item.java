@@ -32,16 +32,16 @@ public class Item {
     private LocalDate date;
 
     @Column(nullable = false)
-    private Long unitId;
+    private Long unitID;
 
     @Column(nullable = false)
-    private Long userId;
+    private Long userID;
 
     public DateDTO to_DateDTO() {
         DateDTO dateDTO = new DateDTO();
         dateDTO.setId(id);
         dateDTO.setDate(date);
-        dateDTO.setUserID(userId);
+        dateDTO.setUserID(userID);
         return dateDTO;
     }
     public ItemDTO to_ItemDTO() {
@@ -50,8 +50,8 @@ public class Item {
         itemDTO.setDescription(description);
         itemDTO.setQuantity(quantity);
         itemDTO.setDate(date);
-        itemDTO.setUnitId(unitId);
-        itemDTO.setUserId(userId);
+        itemDTO.setUnitID(unitID);
+        itemDTO.setUserID(userID);
         return itemDTO;
     }
 
@@ -63,8 +63,8 @@ public class Item {
                 ", description='" + description + '\'' +
                 ", quantity=" + quantity +
                 ", date=" + date +
-                ", unitID=" + unitId +
-                ", userID=" + userId +
+                ", unitID=" + unitID +
+                ", userID=" + userID +
                 '}';
     }
 }

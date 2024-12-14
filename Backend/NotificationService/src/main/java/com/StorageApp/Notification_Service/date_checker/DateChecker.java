@@ -34,7 +34,7 @@ public class DateChecker {
 
     // this method runs every 24 hours
 
-    @Scheduled(fixedRate = 36000)
+    @Scheduled(fixedRate = 60000)
     public void checkItems() {
 
         System.out.println("CHECK IF CHECKS (ItemEventPublisher, checkItems()  ) .............");
@@ -44,7 +44,7 @@ public class DateChecker {
 
         List<DateDTO> itemsToSend = notificationRepository.findByDate(tomorrowLocalDate);
 
-        System.out.println("CHECKING TOMORROW DATE AND ITEMSTO SEND LENGTH==== " + itemsToSend.size());
+        System.out.println("CHECKING TOMORROW DATE AND ITEMS TO SEND list.size()LENGTH==== " + itemsToSend.size());
         System.out.println("AND DATATYPE IS : ~ : ~ :" + itemsToSend.getClass().getName());
 
         itemEventPublisher.testSendRabbit(itemsToSend);

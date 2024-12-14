@@ -54,8 +54,8 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
             description,
             date,
             quantity: quantity? parseInt(quantity):0,
-            unitId: unitIdNumber,
-            userId: 1,
+            unitID: unitIdNumber,
+            userID: 1,
         };
 
         try {
@@ -113,7 +113,7 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
                         {unitType === "refrigerator" && (
                             <>
                                 <div className="form-group">
-                                    <label className="label">Date:</label>
+                                    <label className="label">Expiry Date:</label>
                                     <input
                                         type="date"
                                         value={date}

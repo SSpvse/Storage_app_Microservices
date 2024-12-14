@@ -18,7 +18,7 @@ public class EmailEventHandler {
     @RabbitListener(queues = "item.date.queue") // SpEL to reference the bean
     public void handleDateItems(List<DateDTO> dateItems) throws InterruptedException {
 
-        Thread.sleep(60000);
+        Thread.sleep(30000);
 
         // just to trouble shoot and get list printed for the logs:
         if (dateItems == null || dateItems.isEmpty()) {

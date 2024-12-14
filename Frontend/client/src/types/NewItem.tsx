@@ -5,6 +5,6 @@ export interface NewItem {
     description: string;
     quantity?: number;
     date?: string
-    unitId: number;
-    userId: number;
+    unitID: number;
+    userID: number;
 }
