@@ -1,0 +1,17 @@
+[
+  {
+    "key": "config/",
+    "flags": 0,
+    "value": ""
+  },
+  {
+    "key": "config/itemservice,docker/",
+    "flags": 0,
+    "value": ""
+  },
+  {
+    "key": "config/itemservice,docker/application.yml",
+    "flags": 0,
+    "value": "c3ByaW5nOgogcmFiYml0bXE6CiAgaG9zdDogcmFiYml0bXEKICBwb3J0OiA1Njcy"
+  }
+]

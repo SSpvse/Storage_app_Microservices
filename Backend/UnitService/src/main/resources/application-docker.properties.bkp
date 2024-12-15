@@ -1,0 +1,40 @@
+spring.application.name=UnitService
+server.port=8081
+
+# POSTGRES
+spring.datasource.url=jdbc:postgresql://postgres:5432/StorageApp
+spring.datasource.username=postgres
+spring.datasource.password=root
+
+# FLYWAY
+spring.flyway.enabled=true
+spring.flyway.locations=classpath:db/migration
+spring.flyway.validate-on-migrate=true
+spring.flyway.schemas=StorageApp
+
+spring.jpa.hibernate.ddl-auto=create
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.format_sql=true
+spring.datasource.driver-class-name=org.postgresql.Driver
+# logging.level.org.springframework=DEBUG
+
+# To use different schema on same database!
+spring.jpa.properties.hibernate.default_schema=UnitServiceSchema
+
+# CONSUL: Health check for consul
+management.endpoints.web.exposure.include=health,info
+spring.config.import=optional:consul:
+spring.cloud.consul.host=consul
+spring.cloud.consul.port=8500
+
+# RABBITMQ
+#spring.rabbitmq.host=rabbitmq
+#spring.rabbitmq.port=5672
+#spring.rabbitmq.username=guest
+#spring.rabbitmq.password=guest
+
+
+
+
+
