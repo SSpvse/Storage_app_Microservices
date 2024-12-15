@@ -76,7 +76,19 @@ export const fetchItemsByUnitId = async (unitId: number): Promise<{Item}> => {
             return {items: []}; // returning default empty values
         }*/
 };
-
+// Fetch a specific item by its ID
+export const fetchItemById = async (itemId: number): Promise<Item> => {
+    try {
+        const response = await fetch(`${ITEM_SERVICE_URL}/get/${itemId}`); //TODO THIS SHOULD BE id not itemID !!!! (see backend)
+        if (!response.ok) {
+            throw new Error(`Failed to fetch item with ID ${itemId}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching item:', error);
+        throw new Error('Failed to fetch item');
+    }
+};
 // Add a new item
 export const addItem = async (newItem: NewItem): Promise<Item> => {
     console.log("Adding item:", newItem)
@@ -94,6 +106,23 @@ export const addItem = async (newItem: NewItem): Promise<Item> => {
     const savedItem = await response.json();
     return savedItem;
 }
+
+// delete an item by its ID
+export const deleteItem = async (itemId: number): Promise<void> => {
+    try {
+        const response = await fetch(`${ITEM_SERVICE_URL}/delete/${itemId}`, {
+            method: "DELETE",
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to delete item with ID ${itemId}`);
+        }
+    } catch (error) {
+        console.error("Error deleting item:", error);
+        throw new Error("Failed to delete item");
+    }
+};
+
 /*
 // Add an item to a specific unit
 export const addItemToUnit = async (unitId: number, newItem: NewItem): Promise<Item> => {

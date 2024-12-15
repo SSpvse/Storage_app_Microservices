@@ -32,7 +32,7 @@ const UnitManagerTest = () => {
         fetchUnits();
     }, []);
 
-    // Funksjonen som håndterer når en unit blir valgt
+
     const onUnitSelected = (unitId: number) => {
         navigate(`/unit/${unitId}`);
     };

@@ -10,6 +10,7 @@ import AddUnit from "./TEST/AddUnit.tsx";
 import Layout from "./TEST/Layout.tsx";
 import UserProfile from "./TEST/UserProfile.tsx";
 import SearchFunction from "./TEST/SearchFunction.tsx";
+import ItemDetail from "./TEST/ItemDetail.tsx";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/my-storage" element={<Layout><UnitManagerTest /></Layout>} />
                 <Route path="/add-unit" element={<Layout><AddUnit/></Layout>}/>
                 <Route path="/unit/:unitId" element={<Layout><ItemManagerTest/></Layout>}/>
+                <Route path="/item/:itemId" element={<ItemDetail />} />
             </Routes>
         </Router>
     );

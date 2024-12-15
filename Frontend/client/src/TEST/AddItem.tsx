@@ -5,6 +5,11 @@ import { NewItem } from "../types/NewItem";
 import {useNavigate, useParams} from "react-router-dom";
 import {fetchUnitById} from "../services/UnitService.tsx";
 
+const itemTypes = {
+    food: "Food",
+    thing: "Thing",
+    clothes: "Clothes",
+};
 interface AddItemProps {
     unitId: string;
     onItemAdded: (newItem: NewItem) => void;
@@ -16,6 +21,7 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
     const [unitType, setUnitType] = useState<string | null>(null);
+    const [itemType, setItemType] = useState <string | null> (null);
     const [quantity, setQuantity] = useState('');
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();

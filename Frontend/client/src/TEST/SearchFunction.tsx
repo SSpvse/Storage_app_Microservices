@@ -48,13 +48,17 @@ const Search = () => {
 
     return (
         <div>
-            {/* Search box */}
-            <input
-                type="text"
-                placeholder="Søk etter item..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-            />
+            <h2>Search through all your items</h2>
+            <div className={"searchingInputBox"}>
+                {/* Search box */}
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                />
+            </div>
+
 
             {/* List of matching items */}
             <ul>

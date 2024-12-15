@@ -69,7 +69,7 @@ public class ItemController {
     // get items_dtos by UNIT_ID
     @GetMapping("/byid/{unitId}")
     public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long unitId) {
-        logger.info("This is the unitIDDDDD from ItemCONTROLLER:", unitId);
+        logger.info("This is the unitIDDDDD from ItemCONTROLLER {}:", unitId);
         List<ItemDTO> dto_list = itemService.getItemListBy_UnitID(unitId);
         return new ResponseEntity<>(dto_list, HttpStatus.OK);
     }
