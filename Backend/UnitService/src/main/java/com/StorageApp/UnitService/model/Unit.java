@@ -16,10 +16,13 @@ public class Unit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
     private String name;
     private String description;
     private String location;
     private String type;
+
 
 
     public UnitDTO Unit_to_DTO(){
