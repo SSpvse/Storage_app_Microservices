@@ -26,7 +26,6 @@ public class Item {
 
     private String description;
 
-
     @Column(nullable = false)
     private Long quantity;
 
@@ -37,6 +36,7 @@ public class Item {
 
     @Column(nullable = false)
     private Long userID;
+
 
     public DateDTO to_DateDTO() {
         DateDTO dateDTO = new DateDTO();
