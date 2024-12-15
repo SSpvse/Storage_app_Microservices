@@ -112,50 +112,78 @@ public class ItemService {
 
     // get all items_dto
     @Transactional
-    public List<ItemDTO> getAllItems() {
-        List<ItemDTO> dtoList = new ArrayList<>();
+    public List<Item> getAllItems() {
+        List<Item> dtoList = new ArrayList<>();
         List<Item> itemList = itemRepository.findAll();
         for (Item item : itemList) {
-            ItemDTO itemDto = item.to_ItemDTO();
+            Item itemDto = item;
             dtoList.add(itemDto);
         }
         return dtoList;
     }
 
     // get itemDto by ID
-    public ItemDTO getItemById(Long id) {
+    public Item getItemById(Long id) {
         Optional<Item> item = itemRepository.findById(id);
         if (item.isPresent()) {
-            return item.get().to_ItemDTO(); // If a value is present, returns the value, otherwise throws NoSuchElementException.
+            return item.get(); // If a value is present, returns the value, otherwise throws NoSuchElementException.
         }
         return null;
     }
 
     // get item_dto LIST by Unit_ID
-    public List<ItemDTO> getItemListBy_UnitID(Long unitId) {
+    public List<Item> getItemListBy_UnitID(Long unitId) {
 
-        List<ItemDTO> dtoList = new ArrayList<>();
+        List<Item> dtoList = new ArrayList<>();
         List<Item> itemList;
         itemList = itemRepository.findByUnitID(unitId);
         if (itemList.isEmpty()) {
             return null;
         }
         for (Item item : itemList) {
-            ItemDTO itemDto = item.to_ItemDTO();
+            Item itemDto = item;
             dtoList.add(itemDto);
         }
         return dtoList;
     }
 
     // get item_dto LIST by Item_NAME
-    public List<ItemDTO> getItemListBy_Name(String name) {
+    public List<Item> getItemListBy_Name(String name) {
 
         List<Item> itemList = itemRepository.findByNameContaining(name);
-        List<ItemDTO> dtoList = new ArrayList<>();
+        List<Item> dtoList = new ArrayList<>();
         for (Item item : itemList) {
-            ItemDTO itemDto = item.to_ItemDTO();
+            Item itemDto = item;
             dtoList.add(itemDto);
         }
         return dtoList;
     }
+
+    // update item
+    @Transactional
+    public Item updateItem(Item item, Long id) {
+        Optional<Item> oldItem = itemRepository.findById(id);
+        if (oldItem.isPresent()) {
+            itemRepository.deleteById(id);
+
+            return itemRepository.save(item);
+        }else {
+            return null;
+        }
+    }
+
+    // delete item by id
+
+    @Transactional
+    public void deleteItem(Long id) {
+        Optional<Item> item = itemRepository.findById(id);
+        if (item.isEmpty()) {
+            throw new RuntimeException("Item not found with ID: " + id);
+        }else {
+            itemRepository.deleteById(id);
+        }
+    }
+
+
+
 }

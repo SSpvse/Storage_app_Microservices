@@ -16,6 +16,7 @@ import java.time.LocalDate;
 public class ItemDTO {
 
     @NotNull
+    private Long id;
     private String name;
     private String description;
     private String location;
@@ -39,9 +40,9 @@ public class ItemDTO {
 
     public Item DTO_to_Item() {
         Item item = new Item();
+        item.setId(id);
         item.setName(name);
         item.setDescription(description);
-        item.setLocation(location);
         item.setQuantity(quantity);
         item.setDate(date);
         item.setUnitID(unitID);

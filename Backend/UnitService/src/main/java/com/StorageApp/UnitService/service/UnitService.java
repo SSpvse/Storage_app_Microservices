@@ -3,10 +3,12 @@ package com.StorageApp.UnitService.service;
 import com.StorageApp.UnitService.dto.UnitDTO;
 import com.StorageApp.UnitService.model.Unit;
 import com.StorageApp.UnitService.repository.UnitRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UnitService {
@@ -39,7 +41,7 @@ public class UnitService {
     }
 
     public UnitDTO getUnitById(Long unitId){
-        return unitRepository.findUnitByid(unitId).Unit_to_DTO();
+        return unitRepository.findUnitById(unitId).Unit_to_DTO();
     }
 
 
@@ -59,8 +61,28 @@ public class UnitService {
 
      */
 
-    // Deleting a unit by the ID
-    public void deleteUnit(Long unitId){
-        unitRepository.deleteById(unitId);
+    // update unit
+    @Transactional
+    public Unit updateUnit(Unit unit, Long id) {
+        Optional<Unit> oldUnit = unitRepository.findById(id);
+        if (oldUnit.isPresent()) {
+            unitRepository.deleteById(id);
+
+            return unitRepository.save(unit);
+        }else {
+            return null;
+        }
     }
+
+    @Transactional
+    public void deleteUnit(Long id) {
+        Optional<Unit> item = unitRepository.findById(id);
+        if (item.isEmpty()) {
+            throw new RuntimeException("Item not found with ID: " + id);
+        }else {
+            unitRepository.deleteById(id);
+        }
+    }
+
+
 }

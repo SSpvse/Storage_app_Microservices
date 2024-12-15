@@ -25,7 +25,7 @@ public class Item {
     private String name;
 
     private String description;
-    private String location;
+
 
     @Column(nullable = false)
     private Long quantity;
@@ -47,9 +47,9 @@ public class Item {
     }
     public ItemDTO to_ItemDTO() {
         ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setId(id);
         itemDTO.setName(name);
         itemDTO.setDescription(description);
-        itemDTO.setLocation(location);
         itemDTO.setQuantity(quantity);
         itemDTO.setDate(date);
         itemDTO.setUnitID(unitID);
@@ -63,7 +63,6 @@ public class Item {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", location='" + location + '\'' +
                 ", quantity=" + quantity +
                 ", date=" + date +
                 ", unitID=" + unitID +

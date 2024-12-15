@@ -1,6 +1,7 @@
 package com.StorageApp.ItemService.Controller;
 
 import com.StorageApp.ItemService.Model.DTO.ItemDTO;
+import com.StorageApp.ItemService.Model.Item;
 import com.StorageApp.ItemService.Service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,39 +35,53 @@ public class ItemController {
 
     }
 
-
     // ---- GET
 
     // get all items
     @GetMapping("/getall")
-    public ResponseEntity<List<ItemDTO>> getAllItems() {
+    public ResponseEntity<List<Item>> getAllItems() {
 
-        List<ItemDTO> itemDTO_list = itemService.getAllItems();
+        List<Item> itemDTO_list = itemService.getAllItems();
         return new ResponseEntity<>(itemDTO_list, HttpStatus.OK);
     }
 
     // get item by ID
     @GetMapping("/get/{id}")
-    public ResponseEntity<ItemDTO> getItemBy_Id(@PathVariable Long id) {
+    public ResponseEntity<Item> getItemBy_Id(@PathVariable Long id) {
 
-        ItemDTO dto = itemService.getItemById(id);
+        Item dto = itemService.getItemById(id);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     // get items_dtos by UNIT_ID
     @GetMapping("/byid/{unitId}")
-    public ResponseEntity<List<ItemDTO>> getItemListBy_unitID(@PathVariable Long unitId) {
+    public ResponseEntity<List<Item>> getItemListBy_unitID(@PathVariable Long unitId) {
 
-        List<ItemDTO> dto_list = itemService.getItemListBy_UnitID(unitId);
+        List<Item> dto_list = itemService.getItemListBy_UnitID(unitId);
         return new ResponseEntity<>(dto_list, HttpStatus.OK);
     }
 
     // get items_dtos by ITEM_NAME
     @GetMapping("/get_name/{name}")
-    public ResponseEntity<List<ItemDTO>> getItemListBy_name(@PathVariable String name) {
+    public ResponseEntity<List<Item>> getItemListBy_name(@PathVariable String name) {
 
-        List<ItemDTO> dto_list = itemService.getItemListBy_Name(name);
+        List<Item> dto_list = itemService.getItemListBy_Name(name);
         return new ResponseEntity<>(dto_list, HttpStatus.OK);
+    }
+
+    // update item by ID
+    @PostMapping("/update/{id}")
+    public ResponseEntity<Item> updateItem(@RequestBody Item itemDTO, @PathVariable Long id) {
+
+        Item updatedItem = itemService.updateItem(itemDTO, id);
+        return new ResponseEntity<>(updatedItem, HttpStatus.OK);
+    }
+
+    // delete item by ID
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
+        itemService.deleteItem(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

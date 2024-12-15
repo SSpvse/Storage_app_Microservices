@@ -5,6 +5,7 @@ import {NewItem} from "../types/NewItem.tsx";
 const ITEM_SERVICE_URL = "http://localhost:8000/item";
 
 // Fetch all items
+// @ts-ignore
 export const fetchAllItems = async (): Promise<Item[]> => {
     try {
         const response = await fetch(`${ITEM_SERVICE_URL}/getall`, {

@@ -81,15 +81,23 @@ public class UnitController {
 
      */
 
-    // Delete a unit by ID
-    @DeleteMapping("/byid/{id}")
-    public ResponseEntity<Void> deleteUnit(@PathVariable("id") Long id) {
-        if (!unitService.unitExists(id)) {
-            // Return 404 if unit doesn't exist
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
 
-        unitService.deleteUnit(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    // update unit by ID
+    @PostMapping("/update/{id}")
+    public ResponseEntity<Unit> updateItem(@RequestBody Unit unitDto, @PathVariable Long id) {
+
+        Unit updatedUnit = unitService.updateUnit(unitDto, id);
+        return new ResponseEntity<>(updatedUnit, HttpStatus.OK);
     }
+
+
+    // delete unit by ID
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteUnit(@PathVariable Long id) {
+        unitService.deleteUnit(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
