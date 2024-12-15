@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {fetchItemsByUnitId, addItem, fetchAllItems} from "../services/itemService";
 import { Item } from "../types/Item";
 import AddItem from "./AddItem.tsx";
@@ -10,6 +10,7 @@ const ItemManager = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    const navigate = useNavigate();
     useEffect(() => {
         const handleFetchItems = async () => {
             try {
@@ -46,23 +47,37 @@ const ItemManager = () => {
         }
     };
 
+
+    const handleItemClick = async (item)=>{
+        navigate(`/item/${item.itemId}`);
+    }
     return (
         <div className="item-manager">
-            <h3>Items in this Unit {unitId}</h3>
+            <h3>Your items in chosen Unit {unitId}</h3>
             {loading && <p className="loading-message">Loading...</p>}
             {error && <p className="error-message">{error}</p>}
 
             <div className="item-list">
                 {items.length > 0 ? (
-                    <ul>
+                    <div className="items-container">
                         {items.map((item) => (
-                            <li key={item.itemId}>
-                                <strong>{item.name}</strong>: {item.description}
-                            </li>
+                            <div
+                                key={item.itemId}
+                                className="item-box"
+                                onClick={() => handleItemClick(item)}
+                            >
+                                {/* Picture <img src={item.imageUrl} alt={item.name} className="item-image" />*/}
+
+                                {/* Name */}
+                                <h3 className="item-name">{item.name}</h3>
+
+                                {/* Description */}
+                                <p className="item-description">{item.description}</p>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 ) : (
-                    <p>No items available in this unit.</p>
+                    <p className="itemsAvailable">No items available in this unit.</p>
                 )}
             </div>
 

@@ -18,6 +18,7 @@
     "react-dom": "^18.3.1",
     "react-feather": "^2.0.10",
     "react-router-dom": "^7.0.2",
+    "router-dom": "^3.0.1",
     "shadcn-ui": "^0.9.4",
     "tailwind-merge": "^2.5.5"
   },

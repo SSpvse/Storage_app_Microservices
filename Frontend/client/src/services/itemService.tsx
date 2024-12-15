@@ -5,7 +5,6 @@ import {NewItem} from "../types/NewItem.tsx";
 const ITEM_SERVICE_URL = "http://localhost:8000/item";
 
 // Fetch all items
-// @ts-ignore
 export const fetchAllItems = async (): Promise<Item[]> => {
     try {
         const response = await fetch(`${ITEM_SERVICE_URL}/getall`, {
@@ -33,49 +32,63 @@ export const fetchAllItems = async (): Promise<Item[]> => {
 };
 
 // Fetching items from specific unit id
-export const fetchItemsByUnitId = async (unitId: number): Promise<{items: Item[]}> => {
+export const fetchItemsByUnitId = async (unitId: number): Promise<{Item}> => {
     console.log("This is the id:" + unitId)
-    try {
-                                                    // `http://localhost:8000/item/byid/${id}`
-                                                    // `http://unitservice:8081/item/byid/${id}`
-        const response = await fetch(`${ITEM_SERVICE_URL}/byid/${unitId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+    const response = await fetch(`${ITEM_SERVICE_URL}/byid/${unitId}`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch item with ID ${unitId}`);
+    }
+    return await response.json();
+    /*
+        try {
+                                                        // `http://localhost:8000/item/byid/${id}`
+                                                        // `http://unitservice:8081/item/byid/${id}`
+            const response = await fetch(`${ITEM_SERVICE_URL}/byid/${unitId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
 
-        console.log("Response status:", response.status);
-        console.log("Response headers:", response.headers);
+    /*
 
-        //Handling empty response:
-        if (response.status === 204) {
-            console.warn(`No content returned from API, unit ID: ${unitId}`);
-            return {items: []};
-        }
-        const responseBody = await response.json();
+            //Handling empty response:
+            if (response.status === 204) {
+                console.warn(`No content returned from API, unit ID: ${unitId}`);
+                return {items: []};
+            }
 
-        if (!responseBody) {
-            console.warn("Empty response body");
-            console.log("Response body:", responseBody);
+            const data = await response.json();
+            if (!data || data.length === 0) {
+                console.log("Empty Response body:", data);
+                return {
+                    items: [],
+                };
+            }
+
+
+            console.log("responce DATA :: : :: "+data)
             return {
-                items: [],
+                items: data.items || data,
             };
+        } catch (error) {
+            console.error('Error fetching items:', error);
+            return {items: []}; // returning default empty values
+        }*/
+};
+// Fetch a specific item by its ID
+export const fetchItemById = async (itemId: number): Promise<Item> => {
+    try {
+        const response = await fetch(`${ITEM_SERVICE_URL}/get/${itemId}`); //TODO THIS SHOULD BE id not itemID !!!! (see backend)
+        if (!response.ok) {
+            throw new Error(`Failed to fetch item with ID ${itemId}`);
         }
-
-        //const data = await response.json();
-        const data = JSON.parse(responseBody);
-
-        console.log("responce DATA :: : :: "+data)
-        return {
-            items: data.items || []
-        };
+        return await response.json();
     } catch (error) {
-        console.error('Error fetching items:', error);
-        return {items: []}; // returning default empty values
+        console.error('Error fetching item:', error);
+        throw new Error('Failed to fetch item');
     }
 };
-
 // Add a new item
 export const addItem = async (newItem: NewItem): Promise<Item> => {
     console.log("Adding item:", newItem)
@@ -94,6 +107,23 @@ export const addItem = async (newItem: NewItem): Promise<Item> => {
     return savedItem;
 }
 
+// delete an item by its ID
+export const deleteItem = async (itemId: number): Promise<void> => {
+    try {
+        const response = await fetch(`${ITEM_SERVICE_URL}/delete/${itemId}`, {
+            method: "DELETE",
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to delete item with ID ${itemId}`);
+        }
+    } catch (error) {
+        console.error("Error deleting item:", error);
+        throw new Error("Failed to delete item");
+    }
+};
+
+/*
 // Add an item to a specific unit
 export const addItemToUnit = async (unitId: number, newItem: NewItem): Promise<Item> => {
     try {
@@ -115,3 +145,4 @@ export const addItemToUnit = async (unitId: number, newItem: NewItem): Promise<I
         throw e;
     }
 };
+*/
