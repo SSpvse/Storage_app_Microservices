@@ -26,6 +26,7 @@ public class ItemDTO {
     private Long userID;
     private String type;
 
+
     @Override
     public String toString() {
         return "ItemDTO{" +
@@ -37,6 +38,7 @@ public class ItemDTO {
                 ", unitID=" + unitID +
                 ", userID=" + userID +
                 ", type=" + type +
+
                 '}';
     }
 

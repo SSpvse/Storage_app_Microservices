@@ -51,6 +51,7 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
         e.preventDefault();
 
         if (!name || !description || !itemType) {
+
             setError("Name and Description are required.");
             return;
         }
@@ -132,6 +133,7 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
 
                             </>
                         )}
+
                         <div className="form-group">
                             <label className="label">Item Type:</label>
                             <select

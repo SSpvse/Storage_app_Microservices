@@ -44,6 +44,7 @@ const Search = () => {
         setSelectedItem(item);
         // Navigate to the item's detailed page
         navigate(`/item/${item.id}`);
+
     };
 
     return (
@@ -64,6 +65,7 @@ const Search = () => {
             <ul>
                 {filteredItems.map(item => (
                     <li key={item.id} onClick={() => handleItemClick(item)}>
+
                         {item.name}
                     </li>
                 ))}

@@ -26,6 +26,7 @@ function App() {
                 <Route path="/add-unit" element={<Layout><AddUnit/></Layout>}/>
                 <Route path="/unit/:unitId" element={<Layout><ItemManagerTest/></Layout>}/>
                 <Route path="/item/:id" element={<ItemDetail />} />
+
             </Routes>
         </Router>
     );

@@ -48,10 +48,16 @@ const ItemManager = () => {
     };
 
 
+
     const handleItemClick = async (item) => {
         console.log("Clicked item:", item); // Log the item to check if itemId exists
         navigate(`/item/${item.id}`);
     };
+
+    const handleItemClick = async (item)=>{
+        navigate(`/item/${item.itemId}`);
+    }
+
     return (
         <div className="item-manager">
             <h3>Your items in chosen Unit {unitId}</h3>
@@ -64,6 +70,7 @@ const ItemManager = () => {
                         {items.map((item) => (
                             <div
                                 key={item.id}
+
                                 className="item-box"
                                 onClick={() => handleItemClick(item)}
                             >

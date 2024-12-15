@@ -19,7 +19,6 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-    private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
 
     // ---- CREATE
 
@@ -45,7 +44,8 @@ public class ItemController {
         return new ResponseEntity<>(itemDTO_list, HttpStatus.OK);
     }
 
-    // get item by ID
+
+    // get item by itemID
     @GetMapping("/get/{id}")
     public ResponseEntity<Item> getItemBy_Id(@PathVariable Long id) {
 
@@ -69,7 +69,8 @@ public class ItemController {
         return new ResponseEntity<>(dto_list, HttpStatus.OK);
     }
 
-    // update item by ID
+
+    // update item by itemID
     @PostMapping("/update/{id}")
     public ResponseEntity<Item> updateItem(@RequestBody Item itemDTO, @PathVariable Long id) {
 
@@ -77,7 +78,8 @@ public class ItemController {
         return new ResponseEntity<>(updatedItem, HttpStatus.OK);
     }
 
-    // delete item by ID
+
+    // delete item by itemID
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
         itemService.deleteItem(id);

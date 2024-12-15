@@ -9,6 +9,7 @@ const ItemDetail = () => {
     const [item, setItem] = useState<Item | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
     console.log('Received id from URL:', id);
     const numericId = Number(id); //Convering numericId string to number
 
@@ -26,6 +27,7 @@ const ItemDetail = () => {
                     console.log("FETCHED ITEM BY IDDD::", numericId);
                     const fetchedItem = await fetchItemById(numericId); // Getting item based on numericId
                     console.log("This is the type of fetchedITem in itemDetail.tsx" + fetchedItem.type);
+
                     setItem(fetchedItem);
                 }
             } catch (err) {
@@ -36,16 +38,19 @@ const ItemDetail = () => {
         };
 
         getItemDetails();
+
     }, [numericId]);
 
     const handleDelete = async () => {
         try {
             await deleteItem(Number(numericId));
             navigate("/"); // Naviagte to homepage
+
         } catch (err) {
             setError("Error deleting item");
         }
     };
+
 
     const renderIcon = (type: string) => {
         switch (type) {
@@ -57,6 +62,7 @@ const ItemDetail = () => {
                 return <i className="fa fa-cogs icon other"></i>; // Default icon for "Other"
         }
     };
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p style={{ color: "red" }}>{error}</p>;
 
@@ -75,6 +81,7 @@ const ItemDetail = () => {
                     <p><strong>Quantity:</strong> {item.quantity}</p>
                     <p>Type: {item.type}</p>
                     <button className="delete-btn" onClick={handleDelete}>Delete Item</button>
+
                 </>
             ) : (
                 <p>Item not found.</p>

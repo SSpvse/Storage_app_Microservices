@@ -39,6 +39,7 @@ export const fetchItemsByUnitId = async (unitId: number): Promise<{Item}> => {
     }
     return await response.json();
 
+
 };
 // Fetch a specific item by its ID
 export const fetchItemById = async (id: number): Promise<Item> => {
@@ -55,6 +56,7 @@ export const fetchItemById = async (id: number): Promise<Item> => {
 };
 // Add a new item
 export const addItem = async (newItem: NewItem): Promise<NewItem> => {
+
     console.log("Adding item:", newItem)
     const response = await fetch(`${ITEM_SERVICE_URL}/additem`, {
         method: 'POST',

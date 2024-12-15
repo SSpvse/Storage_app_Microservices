@@ -41,6 +41,7 @@ public class Item {
     @Column(nullable = false)
     private String type;
 
+
     public DateDTO to_DateDTO() {
         DateDTO dateDTO = new DateDTO();
         dateDTO.setId(id);
@@ -58,6 +59,7 @@ public class Item {
         itemDTO.setUnitID(unitID);
         itemDTO.setUserID(userID);
         itemDTO.setType(type);
+
         return itemDTO;
     }
 

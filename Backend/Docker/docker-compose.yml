@@ -2,6 +2,30 @@ version: "3.8"
 
 services:
 
+
+  loginservice:
+    image: loginservice:0.0.1-SNAPSHOT
+    container_name: login_service
+    ports:
+      - '8080:8080'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/loginstorage
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - storage_manager
+    build:
+      context: ../LoginService
+      dockerfile: Dockerfile
+    restart: on-failure
+
   unitservice:
     image: unitservice:0.0.1-SNAPSHOT
     container_name: unit_service
