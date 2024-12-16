@@ -22,16 +22,18 @@ export const fetchAllItems = async (): Promise<Item[]> => {
         // Checking if the data is empty or not
         if (!data || data.length === 0) {
             console.log("Not items found for this unit.");
+            return [];
         }
         return data;
     } catch (error) {
         console.error('Error fetching items:', error);
         alert('Failed to fetch items. Please try again later');
+        return [];
     }
 };
 
 // Fetching items from specific unit id
-export const fetchItemsByUnitId = async (unitId: number): Promise<{Item}> => {
+export const fetchItemsByUnitId = async (unitId: number): Promise<Item[]> => {
     console.log("This is the id:" + unitId)
     const response = await fetch(`${ITEM_SERVICE_URL}/byid/${unitId}`);
     if (!response.ok) {

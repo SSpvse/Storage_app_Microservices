@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addUnit } from "../services/UnitService";
+import { addUnit } from "../services/UnitService.tsx";
 import {useNavigate} from "react-router-dom";
 
 const AddUnit = () => {

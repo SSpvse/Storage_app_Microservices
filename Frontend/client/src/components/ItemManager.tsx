@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {fetchItemsByUnitId, addItem, fetchAllItems} from "../services/itemService";
+import {fetchItemsByUnitId} from "../services/itemService";
 import { Item } from "../types/Item";
 import AddItem from "./AddItem.tsx";
 import clothingIcon from "../assets/clothing.png";
 import foodIcon from "../assets/food.png";
 import thingIcon from "../assets/thing.png";
+import {NewItem} from "../types/NewItem.tsx";
 
 const ItemManager = () => {
-    const { unitId } = useParams<{ unitId: string }>();
+    const { unitId } = useParams<{ unitId: string | undefined }>();
     const [items, setItems] = useState<Item[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
+    // Fallback to empty string if unitId is undefined
+    const unitIdString: string = unitId ?? "";
+    // Converting unitIdString to number
+    const unitIdNumber = unitIdString ? Number(unitIdString) : NaN;
+
     useEffect(() => {
+        if (isNaN(unitIdNumber)) return;
         const handleFetchItems = async () => {
             try {
                 setLoading(true);
-                setError(null);
-                const fetchedData = await fetchItemsByUnitId(Number(unitId));
+                setError(null);                                 // Number (unitId)
+                const fetchedData = await fetchItemsByUnitId(unitIdNumber);
 
                 // Ensuring the response has items and unitType before updating state
                 if (fetchedData && Array.isArray(fetchedData)) {
@@ -36,14 +43,18 @@ const ItemManager = () => {
         };
 
         handleFetchItems();
-    }, [unitId]);
+        // unitId
+    }, [unitIdNumber]);
 
 
-    const handleItemAdded = async (newItem: Item) => {
+                                    //(newItem: Item)
+    const handleItemAdded = async (newItem: NewItem) => {
 
+        // Calculate the next ID based on existing items
+        const maxId = items.reduce((max, item) => (item.id > max ? item.id : max), 0);
+        const itemToAdd: Item = { ...newItem, id: maxId + 1 };
         try {
-            //const savedItem = await addItem(newItem);
-            setItems((prevItems) => [...prevItems, newItem]); // TODO TIdligere var det savedItems og ikke newItem
+            setItems((prevItems) => [...prevItems, itemToAdd]);
             setError(null);
         } catch (err) {
             console.error("Failed to add item:", err);
@@ -53,7 +64,7 @@ const ItemManager = () => {
 
 
 
-    const handleItemClick = async (item) => {
+    const handleItemClick = async (item:Item) => {
         console.log("Clicked item:", item); // Log the item to check if itemId exists
         navigate(`/item/${item.id}`);
     };
@@ -93,13 +104,14 @@ const ItemManager = () => {
 
                             </div>
                         ))}
-                        <div className={"add-new-item-box"}>
-                            <AddItem unitId={unitId} onItemAdded={handleItemAdded} />
-                        </div>
+
                     </div>
                 ) : (
                     <p className="itemsAvailable">No items available in this unit.</p>
                 )}
+            </div>
+            <div className={"add-new-item-box"}>
+                <AddItem unitId={unitId || ""} onItemAdded={handleItemAdded} />
             </div>
 
         </div>

@@ -2,7 +2,7 @@
 import {useEffect, useState} from "react";
 import {Unit} from "../types/Unit.tsx";
 import {fetchAllUnits} from "../services/UnitService.tsx";
-import UnitTypeTest from "./UnitTypeTest.tsx";
+import UnitType from "./UnitType.tsx";
 import {useNavigate} from "react-router-dom";
 /*
 interface UnitManagerTestProps {
@@ -10,7 +10,7 @@ interface UnitManagerTestProps {
 }
 */
 
-const UnitManagerTest = () => {
+const UnitManager = () => {
     const navigate = useNavigate();
     const [unit, setUnit] = useState<Unit[]>([]);
     const [loading, setLoading] = useState(false);
@@ -43,11 +43,11 @@ const UnitManagerTest = () => {
             {error && <p style={{ color: "red" }}>{error}</p>}
             <div className="unit-list">
                 {unit.map((unit) => (
-                    <UnitTypeTest key={unit.id} unit={unit} onSelect={onUnitSelected} />
+                    <UnitType key={unit.id} unit={unit} onSelect={onUnitSelected} />
                 ))}
             </div>
         </div>
     );
 };
 
-export default UnitManagerTest;
+export default UnitManager;

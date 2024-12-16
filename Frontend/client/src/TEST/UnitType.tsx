@@ -14,7 +14,7 @@ interface UnitTypeTestProps {
     onSelect: (unitId: number) => void;
 }
 
-const UnitTypeTest: React.FC<UnitTypeTestProps> = ({ unit, onSelect }) => {
+const UnitType: React.FC<UnitTypeTestProps> = ({ unit, onSelect }) => {
     const images: Record<string, string> = {
         refrigerator: fridgeImage,
         box: boxImage,
@@ -57,4 +57,4 @@ const UnitTypeTest: React.FC<UnitTypeTestProps> = ({ unit, onSelect }) => {
 };
 
 
-export default UnitTypeTest;
+export default UnitType;

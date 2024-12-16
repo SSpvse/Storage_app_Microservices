@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
-import { addItem } from "../services/itemService";
-import { NewItem } from "../types/NewItem";
+import { addItem } from "../services/itemService.tsx";
+import { NewItem } from "../types/NewItem.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {fetchUnitById} from "../services/UnitService.tsx";
 
 const itemTypes = {
     food: "food",
-    thing: "thing",
+    other: "other",
     clothes: "clothes",
 };
 interface AddItemProps {
@@ -148,13 +148,16 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
                                     Select item type
                                 </option>
                                 {unitType === "refrigerator" ? (
-                                    // Only 'food' option for refrigerator
-                                    <option value={itemTypes.food}>Food</option>
+                                    <>
+                                        // Only 'food' option for refrigerator
+                                        <option value={itemTypes.food}>Food</option>
+                                        <option value={itemTypes.other}>Other</option>
+                                    </>
                                 ) : (
                                     <>
-                                        {/* For non-refrigerator units, show all types */}
-                                        <option value={itemTypes.thing}>Thing</option>
+                                        {/* For non-refrigerator units, show these types */}
                                         <option value={itemTypes.clothes}>Clothes</option>
+                                        <option value={itemTypes.other}>Other</option>
                                     </>
                                 )}
                             </select>

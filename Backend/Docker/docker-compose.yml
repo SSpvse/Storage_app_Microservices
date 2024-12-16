@@ -1,6 +1,18 @@
 version: "3.8"
 
 services:
+  frontend:
+    build:
+      context: ../../Frontend/client
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "80:80" # nginx
+    environment:
+      - VITE_API_URL=http://gateway:8000
+    networks:
+      - storage_manager
+    restart: always
 
 
   loginservice:

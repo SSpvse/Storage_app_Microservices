@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchItemById, deleteItem } from "../services/itemService";
 import { Item } from "../types/Item";
@@ -48,8 +48,8 @@ const ItemDetail = () => {
 
     const handleDelete = async () => {
         try {
-            await deleteItem(Number(numericId));
-            navigate("/"); // Naviagte to homepage
+            await deleteItem(numericId);
+            navigate(`/unit/${item?.unitID}`);
 
         } catch (err) {
             setError("Error deleting item");
@@ -64,7 +64,7 @@ const ItemDetail = () => {
             case 'food':
                 return <img src={foodIcon} alt="Food" className="item-detail-icon" />;
             case 'thing':
-                return <img src={thingIcon} alt="Thing" className="item-detail-icon" />;
+                return <img src={thingIcon} alt="Other" className="item-detail-icon" />;
             default:
                 return <img src={thingIcon} alt="Other" className="item-detail-icon" />;
         }
