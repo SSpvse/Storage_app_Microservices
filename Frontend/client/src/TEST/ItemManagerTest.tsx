@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {fetchItemsByUnitId, addItem, fetchAllItems} from "../services/itemService";
+import {fetchItemsByUnitId} from "../services/itemService";
 import { Item } from "../types/Item";
 import AddItem from "./AddItem.tsx";
 
@@ -48,9 +48,12 @@ const ItemManager = () => {
     };
 
 
-    const handleItemClick = async (item)=>{
-        navigate(`/item/${item.itemId}`);
-    }
+    const handleItemClick = async (item: Item) => {
+        console.log("Clicked item:", item); // Log the item to check if itemId exists
+        navigate(`/item/${item.id}`);
+    };
+    // @ts-ignore
+    // @ts-ignore
     return (
         <div className="item-manager">
             <h3>Your items in chosen Unit {unitId}</h3>
@@ -62,7 +65,8 @@ const ItemManager = () => {
                     <div className="items-container">
                         {items.map((item) => (
                             <div
-                                key={item.itemId}
+
+                                key={item.id}
                                 className="item-box"
                                 onClick={() => handleItemClick(item)}
                             >

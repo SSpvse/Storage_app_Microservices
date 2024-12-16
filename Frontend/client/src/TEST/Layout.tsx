@@ -1,6 +1,6 @@
 import  { ReactNode } from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {Home, Search, Settings, User, Warehouse} from "lucide-react";
+import {Home, Search, User, Warehouse} from "lucide-react";
 import '../css/Layout.css';
 
 interface LayoutProps {

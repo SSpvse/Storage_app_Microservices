@@ -1,6 +1,6 @@
 package com.StorageApp.UnitService.controller;
 
-import com.StorageApp.UnitService.dto.UnitDTO;
+import com.StorageApp.UnitService.model.dto.UnitDTO;
 import com.StorageApp.UnitService.model.Unit;
 import com.StorageApp.UnitService.service.UnitService;
 import lombok.extern.slf4j.Slf4j;

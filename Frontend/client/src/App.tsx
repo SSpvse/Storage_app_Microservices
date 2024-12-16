@@ -25,7 +25,11 @@ function App() {
                 <Route path="/my-storage" element={<Layout><UnitManagerTest /></Layout>} />
                 <Route path="/add-unit" element={<Layout><AddUnit/></Layout>}/>
                 <Route path="/unit/:unitId" element={<Layout><ItemManagerTest/></Layout>}/>
+<<<<<<< HEAD
                 <Route path="/item/:itemId" element={<ItemDetail />} />
+=======
+                <Route path="/item/:id" element={<ItemDetail />} />
+>>>>>>> jovanafrontend
             </Routes>
         </Router>
     );

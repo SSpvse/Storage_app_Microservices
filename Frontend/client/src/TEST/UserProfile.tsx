@@ -1,4 +1,3 @@
-import React from 'react';
 import { User } from 'react-feather'; // Import the User icon from react-feather
 import '../css/UserProfile.css';
 

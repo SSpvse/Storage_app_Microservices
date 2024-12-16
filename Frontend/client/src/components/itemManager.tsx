@@ -1,3 +1,4 @@
+/*
 import { useEffect, useState } from "react";
 import {addItem, fetchAllItems, fetchItemsByUnitId} from "../services/itemService";
 import {Item} from "../types/Item.tsx";
@@ -9,7 +10,7 @@ import {NewItem} from "../types/NewItem.tsx";
 // /item/{itemid}
 //
 
-/*
+
 
 interface ItemManagerProps {
     unitId: number;

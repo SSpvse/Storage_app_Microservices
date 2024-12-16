@@ -37,7 +37,8 @@ public class Item {
     @Column(nullable = false)
     private Long userID;
 
-
+    @Column(nullable = false)
+    private String type;
 
     public DateDTO to_DateDTO() {
         DateDTO dateDTO = new DateDTO();
@@ -55,6 +56,7 @@ public class Item {
         itemDTO.setDate(date);
         itemDTO.setUnitID(unitID);
         itemDTO.setUserID(userID);
+        itemDTO.setType(type);
         return itemDTO;
     }
 
@@ -68,6 +70,7 @@ public class Item {
                 ", date=" + date +
                 ", unitID=" + unitID +
                 ", userID=" + userID +
+                ", type" + type +
                 '}';
     }
 }

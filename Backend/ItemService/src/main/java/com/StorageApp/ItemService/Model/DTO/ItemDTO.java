@@ -19,22 +19,23 @@ public class ItemDTO {
     private Long id;
     private String name;
     private String description;
-    private String location;
     private Long quantity;
     private LocalDate date;
     private Long unitID;
     private Long userID;
+    private String type;
+
 
     @Override
     public String toString() {
         return "ItemDTO{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", location='" + location + '\'' +
                 ", quantity=" + quantity +
                 ", date=" + date +
                 ", unitID=" + unitID +
                 ", userID=" + userID +
+                ", type=" + type +
                 '}';
     }
 
@@ -47,6 +48,8 @@ public class ItemDTO {
         item.setDate(date);
         item.setUnitID(unitID);
         item.setUserID(userID);
+        item.setType(type);
+
         return item;
     }
 

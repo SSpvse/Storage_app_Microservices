@@ -1,6 +1,6 @@
 package com.StorageApp.UnitService.model;
 
-import com.StorageApp.UnitService.dto.UnitDTO;
+import com.StorageApp.UnitService.model.dto.UnitDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,12 +17,13 @@ public class Unit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String name;
     private String description;
     private String location;
     private String type;
+    private Role role;
 
+    private List<UnitUserAccess> userAcessList;
 
 
     public UnitDTO Unit_to_DTO(){

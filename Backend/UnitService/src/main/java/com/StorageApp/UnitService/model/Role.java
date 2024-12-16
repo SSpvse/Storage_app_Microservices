@@ -1,4 +1,4 @@
-package com.StorageApp.LoginService.model;
+package com.StorageApp.UnitService.model;
 
 public enum Role {
     OWNER,

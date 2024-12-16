@@ -1,4 +1,4 @@
-package com.StorageApp.UnitService.dto;
+package com.StorageApp.UnitService.model.dto;
 
 import com.StorageApp.UnitService.model.Unit;
 import lombok.Getter;

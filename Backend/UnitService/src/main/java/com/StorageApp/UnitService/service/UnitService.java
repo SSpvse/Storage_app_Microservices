@@ -1,6 +1,6 @@
 package com.StorageApp.UnitService.service;
 
-import com.StorageApp.UnitService.dto.UnitDTO;
+import com.StorageApp.UnitService.model.dto.UnitDTO;
 import com.StorageApp.UnitService.model.Unit;
 import com.StorageApp.UnitService.repository.UnitRepository;
 import jakarta.transaction.Transactional;

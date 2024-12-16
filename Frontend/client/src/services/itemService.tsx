@@ -1,10 +1,10 @@
 import {Item} from "../types/Item.tsx";
 import {NewItem} from "../types/NewItem.tsx";
 
-//const ITEM_SERVICE_URL = "http://itemservice:8082/item";
 const ITEM_SERVICE_URL = "http://localhost:8000/item";
 
 // Fetch all items
+// @ts-ignore
 export const fetchAllItems = async (): Promise<Item[]> => {
     try {
         const response = await fetch(`${ITEM_SERVICE_URL}/getall`, {
@@ -32,56 +32,21 @@ export const fetchAllItems = async (): Promise<Item[]> => {
 };
 
 // Fetching items from specific unit id
-export const fetchItemsByUnitId = async (unitId: number): Promise<{Item}> => {
+export const fetchItemsByUnitId = async (unitId: number): Promise<{Item: any}> => {
     console.log("This is the id:" + unitId)
     const response = await fetch(`${ITEM_SERVICE_URL}/byid/${unitId}`);
     if (!response.ok) {
         throw new Error(`Failed to fetch item with ID ${unitId}`);
     }
     return await response.json();
-    /*
-        try {
-                                                        // `http://localhost:8000/item/byid/${id}`
-                                                        // `http://unitservice:8081/item/byid/${id}`
-            const response = await fetch(`${ITEM_SERVICE_URL}/byid/${unitId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
 
-    /*
-
-            //Handling empty response:
-            if (response.status === 204) {
-                console.warn(`No content returned from API, unit ID: ${unitId}`);
-                return {items: []};
-            }
-
-            const data = await response.json();
-            if (!data || data.length === 0) {
-                console.log("Empty Response body:", data);
-                return {
-                    items: [],
-                };
-            }
-
-
-            console.log("responce DATA :: : :: "+data)
-            return {
-                items: data.items || data,
-            };
-        } catch (error) {
-            console.error('Error fetching items:', error);
-            return {items: []}; // returning default empty values
-        }*/
 };
 // Fetch a specific item by its ID
-export const fetchItemById = async (itemId: number): Promise<Item> => {
+export const fetchItemById = async (id: number): Promise<Item> => {
     try {
-        const response = await fetch(`${ITEM_SERVICE_URL}/get/${itemId}`); //TODO THIS SHOULD BE id not itemID !!!! (see backend)
+        const response = await fetch(`${ITEM_SERVICE_URL}/get/${id}`); //TODO THIS SHOULD BE id not itemID !!!! (see backend)
         if (!response.ok) {
-            throw new Error(`Failed to fetch item with ID ${itemId}`);
+            throw new Error(`Failed to fetch item with ID ${id}`);
         }
         return await response.json();
     } catch (error) {
@@ -90,7 +55,7 @@ export const fetchItemById = async (itemId: number): Promise<Item> => {
     }
 };
 // Add a new item
-export const addItem = async (newItem: NewItem): Promise<Item> => {
+export const addItem = async (newItem: NewItem): Promise<NewItem> => {
     console.log("Adding item:", newItem)
     const response = await fetch(`${ITEM_SERVICE_URL}/additem`, {
         method: 'POST',

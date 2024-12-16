@@ -11,8 +11,8 @@ const itemTypes = {
     clothes: "Clothes",
 };
 interface AddItemProps {
-    unitId: string;
-    onItemAdded: (newItem: NewItem) => void;
+    unitId: any;
+    onItemAdded: (newItem: NewItem) => Promise<void>;
 }
 
 const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
@@ -50,7 +50,7 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
     const handleAddItem = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!name || !description) {
+        if (!name || !description || !itemType) {
             setError("Name and Description are required.");
             return;
         }
@@ -62,6 +62,7 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
             quantity: quantity? parseInt(quantity):0,
             unitID: unitIdNumber,
             userID: 1,
+            type: itemType,
         };
 
         try {
@@ -131,6 +132,21 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
 
                             </>
                         )}
+                        <div className="form-group">
+                            <label className="label">Item Type:</label>
+                            <select
+                                value={itemType || ''}
+                                onChange={(e) => setItemType(e.target.value)}
+                                required
+                                className="input"
+                            >
+                                <option value="" disabled>Select item type</option>
+                                <option value={itemTypes.food}>Food</option>
+                                <option value={itemTypes.thing}>Thing</option>
+                                <option value={itemTypes.clothes}>Clothes</option>
+                            </select>
+                        </div>
+
 
                         <button type="submit" className="btn-primary">
                             Add Item

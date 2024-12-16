@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Item } from "../types/Item"; // Importing the correct Item type
 
@@ -43,7 +43,7 @@ const Search = () => {
     const handleItemClick = (item: Item) => {
         setSelectedItem(item);
         // Navigate to the item's detailed page
-        navigate(`/item/${item.itemId}`);
+        navigate(`/item/${item.id}`);
     };
 
     return (
@@ -63,7 +63,7 @@ const Search = () => {
             {/* List of matching items */}
             <ul>
                 {filteredItems.map(item => (
-                    <li key={item.itemId} onClick={() => handleItemClick(item)}>
+                    <li key={item.id} onClick={() => handleItemClick(item)}>
                         {item.name}
                     </li>
                 ))}
