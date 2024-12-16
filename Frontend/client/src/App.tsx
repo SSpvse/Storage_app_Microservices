@@ -11,6 +11,7 @@ import Layout from "./TEST/Layout.tsx";
 import UserProfile from "./TEST/UserProfile.tsx";
 import SearchFunction from "./TEST/SearchFunction.tsx";
 import ItemDetail from "./TEST/ItemDetail.tsx";
+import LoginProfile from "./TEST/LoginProfile.tsx";
 
 
 function App() {
@@ -22,10 +23,11 @@ function App() {
                 <Route path="/" element={<Layout><MainPageTest/></Layout>}/>
                 <Route path="/search" element={<Layout><SearchFunction/></Layout>}/>
                 <Route path="/profile" element={<Layout><UserProfile/></Layout>}/>
+                <Route path="/login" element={<Layout><LoginProfile/></Layout>} />
                 <Route path="/my-storage" element={<Layout><UnitManagerTest /></Layout>} />
                 <Route path="/add-unit" element={<Layout><AddUnit/></Layout>}/>
                 <Route path="/unit/:unitId" element={<Layout><ItemManagerTest/></Layout>}/>
-                <Route path="/item/:id" element={<ItemDetail />} />
+                <Route path="/item/:id" element={<Layout><ItemDetail/></Layout>} />
 
             </Routes>
         </Router>

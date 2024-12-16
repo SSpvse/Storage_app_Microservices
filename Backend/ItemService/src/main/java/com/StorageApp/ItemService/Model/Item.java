@@ -38,7 +38,7 @@ public class Item {
     @Column(nullable = false)
     private Long userID;
 
-    @Column(nullable = false)
+
     private String type;
 
 

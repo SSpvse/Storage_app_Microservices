@@ -89,26 +89,3 @@ export const deleteItem = async (itemId: number): Promise<void> => {
     }
 };
 
-/*
-// Add an item to a specific unit
-export const addItemToUnit = async (unitId: number, newItem: NewItem): Promise<Item> => {
-    try {
-        const response = await fetch(`${ITEM_SERVICE_URL}/units/${unitId}/items`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newItem),
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to add item to unit');
-        }
-        const data = await response.json();
-        return data;
-    } catch (e) {
-        console.error("Failed adding item to unit", e);
-        throw e;
-    }
-};
-*/

@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchItemById, deleteItem } from "../services/itemService";
 import { Item } from "../types/Item";
+import 'font-awesome/css/font-awesome.min.css';
+import clothingIcon from "../assets/clothing.png";
+import foodIcon from "../assets/food.png";
+import thingIcon from "../assets/thing.png";
 
 const ItemDetail = () => {
     const { id } = useParams <{id: string}>(); // Getting item numericId from URL as string
@@ -10,7 +14,7 @@ const ItemDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-    console.log('Received id from URL:', id);
+    console.log('Received id from URL.ITEMDETAIL {}:', id);
     const numericId = Number(id); //Convering numericId string to number
 
     useEffect(() => {
@@ -24,8 +28,9 @@ const ItemDetail = () => {
             try {
                 setLoading(true);
                 if (numericId) {
-                    console.log("FETCHED ITEM BY IDDD::", numericId);
+                    console.log("FETCHED ITEM BY IDDD: {}", numericId);
                     const fetchedItem = await fetchItemById(numericId); // Getting item based on numericId
+                    console.log("This is the fetchedItem in itemDetail.tsx" + fetchedItem.name)
                     console.log("This is the type of fetchedITem in itemDetail.tsx" + fetchedItem.type);
 
                     setItem(fetchedItem);
@@ -53,13 +58,15 @@ const ItemDetail = () => {
 
 
     const renderIcon = (type: string) => {
-        switch (type) {
-            case 'Clothing':
-                return <i className="fa fa-tshirt icon clothing"></i>; // Clothing icon
-            case 'Food':
-                return <i className="fa fa-apple-alt icon food"></i>; // Food icon
-            case 'Thing':
-                return <i className="fa fa-cogs icon other"></i>; // Default icon for "Other"
+        switch (type.toLowerCase()) {
+            case 'clothes':
+                return <img src={clothingIcon} alt="Clothing" className="item-detail-icon" />;
+            case 'food':
+                return <img src={foodIcon} alt="Food" className="item-detail-icon" />;
+            case 'thing':
+                return <img src={thingIcon} alt="Thing" className="item-detail-icon" />;
+            default:
+                return <img src={thingIcon} alt="Other" className="item-detail-icon" />;
         }
     };
 
@@ -71,15 +78,15 @@ const ItemDetail = () => {
             <h2>Item Details</h2>
             {item ? (
                 <>
-                    <div className="item-header">
-                        <h3>{item.name}</h3>
-                        <div className="item-icon">
-                            {renderIcon(item.type)}
-                        </div>
+                    <div className="item-icon">
+                        {renderIcon(item.type)}
                     </div>
+                    <p><strong>Item name:</strong> {item.name}</p>
                     <p><strong>Description:</strong> {item.description}</p>
                     <p><strong>Quantity:</strong> {item.quantity}</p>
-                    <p>Type: {item.type}</p>
+                    <p><strong>Type:</strong> {item.type}</p>
+                    <p><strong>In Unit:</strong> {item.unitID}</p>
+
                     <button className="delete-btn" onClick={handleDelete}>Delete Item</button>
 
                 </>

@@ -1,8 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {fetchItemsByUnitId, addItem, fetchAllItems} from "../services/itemService";
 import { Item } from "../types/Item";
 import AddItem from "./AddItem.tsx";
+import clothingIcon from "../assets/clothing.png";
+import foodIcon from "../assets/food.png";
+import thingIcon from "../assets/thing.png";
 
 const ItemManager = () => {
     const { unitId } = useParams<{ unitId: string }>();
@@ -21,6 +24,7 @@ const ItemManager = () => {
                 // Ensuring the response has items and unitType before updating state
                 if (fetchedData && Array.isArray(fetchedData)) {
                     setItems(fetchedData);
+                    console.log("FetchedDaTTTA itemmanagertest:::" + fetchedData);
                 } else {
                     throw new Error("Invalid data format received");
                 }
@@ -54,13 +58,22 @@ const ItemManager = () => {
         navigate(`/item/${item.id}`);
     };
 
-    const handleItemClick = async (item)=>{
-        navigate(`/item/${item.itemId}`);
-    }
+    const renderIcon = (type: string) => {
+        switch (type.toLowerCase()) {
+            case 'clothes':
+                return <img src={clothingIcon} alt="Clothing" className="item-detail-icon" />;
+            case 'food':
+                return <img src={foodIcon} alt="Food" className="item-detail-icon" />;
+            case 'thing':
+                return <img src={thingIcon} alt="Thing" className="item-detail-icon" />;
+            default:
+                return <img src={thingIcon} alt="Other" className="item-detail-icon" />;
+        }
+    };
 
     return (
         <div className="item-manager">
-            <h3>Your items in chosen Unit {unitId}</h3>
+            <h3 className="title-items-in-unit">Your items in chosen Unit {unitId}</h3>
             {loading && <p className="loading-message">Loading...</p>}
             {error && <p className="error-message">{error}</p>}
 
@@ -74,22 +87,21 @@ const ItemManager = () => {
                                 className="item-box"
                                 onClick={() => handleItemClick(item)}
                             >
-                                {/* Picture <img src={item.imageUrl} alt={item.name} className="item-image" />*/}
 
-                                {/* Name */}
                                 <h3 className="item-name">{item.name}</h3>
+                                <div className="render-icon">{renderIcon(item.type)}</div>
 
-                                {/* Description */}
-                                <p className="item-description">{item.description}</p>
                             </div>
                         ))}
+                        <div className={"add-new-item-box"}>
+                            <AddItem unitId={unitId} onItemAdded={handleItemAdded} />
+                        </div>
                     </div>
                 ) : (
                     <p className="itemsAvailable">No items available in this unit.</p>
                 )}
             </div>
 
-            <AddItem unitId={unitId} onItemAdded={handleItemAdded} />
         </div>
     );
 };

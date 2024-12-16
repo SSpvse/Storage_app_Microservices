@@ -19,7 +19,6 @@ public class ItemDTO {
     private Long id;
     private String name;
     private String description;
-    private String location;
     private Long quantity;
     private LocalDate date;
     private Long unitID;
@@ -32,7 +31,6 @@ public class ItemDTO {
         return "ItemDTO{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", location='" + location + '\'' +
                 ", quantity=" + quantity +
                 ", date=" + date +
                 ", unitID=" + unitID +
