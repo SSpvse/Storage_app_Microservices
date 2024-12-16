@@ -1,35 +1,21 @@
-# Build stage
+
 FROM node:18-alpine AS build
 
-# Set working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
 COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN npm install --silent
+RUN npm install
 
-# Copy the rest of the application files
 COPY . .
 
-# Build the app for production
 RUN npm run build
 
-# Production stage
 FROM nginx:alpine
 
-# Set the working directory
-WORKDIR /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Remove the default nginx index page
-RUN rm -rf ./*
+COPY runtime-env.js /usr/share/nginx/html/runtime-env.js
 
-# Copy the build files from the build stage to the nginx directory
-COPY --from=build /app/dist .
-
-# Expose port 80 to access the app
-EXPOSE 80
-
-# Start nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]

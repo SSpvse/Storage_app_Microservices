@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {fetchItemsByUnitId} from "../services/itemService";
-import { Item } from "../types/Item";
+import {fetchItemsByUnitId} from "../services/itemService.tsx";
+import { Item } from "../types/Item.tsx";
 import AddItem from "./AddItem.tsx";
 import clothingIcon from "../assets/clothing.png";
 import foodIcon from "../assets/food.png";

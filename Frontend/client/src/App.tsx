@@ -3,15 +3,15 @@ import './App.css';
 
 
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import UnitManager from "./TEST/UnitManager.tsx";
+import UnitManager from "./components/UnitManager.tsx";
 import AddUnit from "./components/AddUnit.tsx";
-import Layout from "./TEST/Layout.tsx";
-import UserProfile from "./TEST/UserProfile.tsx";
-import SearchFunction from "./TEST/SearchFunction.tsx";
-import ItemDetail from "./TEST/ItemDetail.tsx";
-import LoginProfile from "./TEST/LoginProfile.tsx";
+import Layout from "./components/Layout.tsx";
+import UserProfile from "./components/UserProfile.tsx";
+import SearchFunction from "./components/SearchFunction.tsx";
+import ItemDetail from "./components/ItemDetail.tsx";
+import LoginProfile from "./components/LoginProfile.tsx";
 import ItemManager from "./components/ItemManager.tsx";
-import MainPage from "./TEST/MainPage.tsx";
+import MainPage from "./components/MainPage.tsx";
 
 
 function App() {
