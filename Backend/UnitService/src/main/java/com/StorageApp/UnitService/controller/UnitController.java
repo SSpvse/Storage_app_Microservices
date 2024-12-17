@@ -1,5 +1,7 @@
 package com.StorageApp.UnitService.controller;
 
+import com.StorageApp.UnitService.model.UnitUserAccess;
+import com.StorageApp.UnitService.model.dto.InviteGuestDTO;
 import com.StorageApp.UnitService.model.dto.UnitDTO;
 import com.StorageApp.UnitService.model.Unit;
 import com.StorageApp.UnitService.service.UnitService;
@@ -61,43 +63,26 @@ public class UnitController {
     }
 
 
-
-    /*
-    // Update an existing unit by id
-    @PutMapping("/byid/{id}")
-    public ResponseEntity<UnitDTO> updateUnit(@PathVariable("id") Long id, @RequestBody UnitDTO unitDTO) {
-
-
-        System.out.println("new unit to be printned : :: :  ::   " + unitDTO.toString());
-        // Call the service method to update the unit
-        UnitDTO updatedUnitDTO = unitService.updateUnit(id, unitDTO);
-
-        System.out.println("updated unit to be printned : :: :  ::   " + updatedUnitDTO.toString());
-
-        // Return the updated unit
-        return new ResponseEntity<>(updatedUnitDTO, HttpStatus.OK);
-    }
-
-
-     */
-
-
-
     // update unit by ID
     @PostMapping("/update/{id}")
-    public ResponseEntity<Unit> updateItem(@RequestBody Unit unitDto, @PathVariable Long id) {
+    public ResponseEntity<Unit> updateItem(@RequestBody Unit unitDto, @PathVariable Long userID) {
 
-        Unit updatedUnit = unitService.updateUnit(unitDto, id);
+        Unit updatedUnit = unitService.updateUnit(unitDto, userID);
         return new ResponseEntity<>(updatedUnit, HttpStatus.OK);
     }
 
 
     // delete unit by ID
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUnit(@PathVariable Long id) {
         unitService.deleteUnit(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // invite guest to unit
+    @PostMapping("/invite")
+    public ResponseEntity<UnitUserAccess> inviteGuest(@RequestBody InviteGuestDTO invDTO) {
+       UnitUserAccess unitUserAccess = unitService.inviteGuest(invDTO);
+       return ResponseEntity.ok(unitUserAccess);
+    }
 }

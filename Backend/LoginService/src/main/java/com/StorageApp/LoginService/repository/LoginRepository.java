@@ -11,4 +11,7 @@ public interface LoginRepository extends JpaRepository<User, Long> {
     User findByUsernameAndPassword(String username, String password);
     User findByEmailAndPassword(String email, String password);
     User save(User user);
+
+    User findByEmail(String email);
 }
+

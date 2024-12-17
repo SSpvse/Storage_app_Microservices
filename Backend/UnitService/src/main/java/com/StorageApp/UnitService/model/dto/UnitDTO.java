@@ -13,6 +13,8 @@ public class UnitDTO {
     private String description;
     private String location;
     private String type;
+    private Boolean editPermission;
+    private Long ownerId;
 
     public Unit DTO_to_Unit(){
         Unit unit = new Unit();
@@ -21,6 +23,8 @@ public class UnitDTO {
         unit.setDescription(description);
         unit.setLocation(location);
         unit.setType(type);
+        unit.setEditPermission(editPermission);
+        unit.setOwnerId(ownerId);
         return unit;
     }
 

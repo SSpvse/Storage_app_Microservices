@@ -36,5 +36,12 @@ public class LoginController {
         return ResponseEntity.ok(respUserDTO);
     }
 
+    // GETTING ID BY EMAIL
+    @GetMapping("/email")
+    public ResponseEntity<Long> getEmailById(@RequestBody String mail) {
+        Long id = loginService.getIdByEmail(mail);
+        return ResponseEntity.ok(id);
+    }
+
 
 }

@@ -1,15 +1,17 @@
 package com.StorageApp.UnitService.model;
 
 import com.StorageApp.UnitService.model.dto.UnitDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Unit {
 
@@ -17,13 +19,20 @@ public class Unit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
     private String description;
     private String location;
     private String type;
-    private Role role;
 
-    private List<UnitUserAccess> userAcessList;
+    @Column(nullable = false)
+    private Boolean editPermission;
+
+    @Column(nullable = false)
+    private Long ownerId;
+
+    @OneToMany(mappedBy = "unit", cascade = CascadeType.ALL)
+    private List<UnitUserAccess> userAccessList;
 
 
     public UnitDTO Unit_to_DTO(){
@@ -33,6 +42,8 @@ public class Unit {
         unitDTO.setDescription(description);
         unitDTO.setLocation(location);
         unitDTO.setType(type);
+        unitDTO.setEditPermission(editPermission);
+        unitDTO.setOwnerId(ownerId);
         return unitDTO;
     }
 }

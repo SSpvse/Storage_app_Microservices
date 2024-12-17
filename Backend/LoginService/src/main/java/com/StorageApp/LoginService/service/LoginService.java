@@ -1,6 +1,5 @@
 package com.StorageApp.LoginService.service;
 
-import com.StorageApp.LoginService.model.Role;
 import com.StorageApp.LoginService.model.User;
 import com.StorageApp.LoginService.model.dto.LoginDTO;
 import com.StorageApp.LoginService.model.dto.RegisterDTO;
@@ -33,7 +32,7 @@ public class LoginService {
         if (user == null) {
             throw new IllegalArgumentException("User not found");
         }
-        return new UserDTO(user.getId(), user.getUsername(), user.getRole());
+        return new UserDTO(user.getId(), user.getUsername());
     }
 
 
@@ -46,12 +45,21 @@ public class LoginService {
             String username = registerDTO.getUsername();
             String email = registerDTO.getEmail();
             String password = registerDTO.getPassword();
-            String role = registerDTO.getRole();
-            Role enumRole = Role.valueOf(role);
+            // String role = registerDTO.getRole();
+            // Role enumRole = Role.valueOf(role);
 
 
-            User user = loginRepository.save(new User(username, email, password, enumRole));
-            return new UserDTO(user.getId(), user.getUsername(), user.getRole());
+            User user = loginRepository.save(new User(username, email, password));
+            return new UserDTO( user.getUsername(),user.getEmail());
         }
+    }
+
+    // get id by email
+    public Long getIdByEmail(String email) {
+        User user = loginRepository.findByEmail(email);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found! ( with ID: " + email +")");
+        }
+        return user.getId();
     }
 }
