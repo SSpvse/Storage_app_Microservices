@@ -44,6 +44,7 @@ const Search = () => {
         setSelectedItem(item);
         // Navigate to the item's detailed page
         navigate(`/item/${item.id}`);
+
     };
 
     return (

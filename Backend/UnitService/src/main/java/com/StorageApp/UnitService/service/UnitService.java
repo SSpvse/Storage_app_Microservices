@@ -74,7 +74,7 @@ public class UnitService {
 
     // update unit
     @Transactional
-    public Unit updateUnit(Unit unit, Long userID) {
+    public UnitDTO updateUnit(UnitDTO unit, Long userID) {
 
         System.out.println("INSIDE UPDATE UNIT SERVICE");
         System.out.println("UNIT ID: " + unit.getId());
@@ -103,7 +103,7 @@ public class UnitService {
             if (unit.getType() != null && !unit.getType().isEmpty()) {
                 existingUnit.setType(unit.getType());
             }
-            return existingUnit;
+            return existingUnit.Unit_to_DTO();
         }
 
         // IF OWNER ID IS NOT SAME AS USER ID of the unit then check if the user has access to the unit through the UnitUserAccess table
@@ -127,8 +127,8 @@ public class UnitService {
                 existingUnit.setType(unit.getType());
             }
         }
-
-        return unitRepository.save(existingUnit);
+        existingUnit.Unit_to_DTO();
+        return unitRepository.save(existingUnit).Unit_to_DTO();
     }
 
     //delete unit

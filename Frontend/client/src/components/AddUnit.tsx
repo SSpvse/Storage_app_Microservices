@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addUnit } from "../services/UnitService";
+import { addUnit } from "../services/UnitService.tsx";
 import {useNavigate} from "react-router-dom";
 
 const AddUnit = () => {
@@ -24,7 +24,6 @@ const AddUnit = () => {
         try {
             //await addUnit(newUnit);
             const createdUnit = await addUnit(newUnit);
-            // After adding the unit, navigate to the unit detail page
             navigate(`/unit/${createdUnit.id}`); // Redirect to the detail page of the new unit
             alert('Unit added successfully');
             setUnitName('');

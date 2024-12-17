@@ -1,16 +1,18 @@
 
 import './App.css';
 
-import MainPageTest from "./TEST/MainPageTest.tsx";
-import ItemManagerTest from "./TEST/ItemManagerTest.tsx";
 
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import UnitManagerTest from "./TEST/UnitManagerTest.tsx";
-import AddUnit from "./TEST/AddUnit.tsx";
-import Layout from "./TEST/Layout.tsx";
-import UserProfile from "./TEST/UserProfile.tsx";
-import SearchFunction from "./TEST/SearchFunction.tsx";
-import ItemDetail from "./TEST/ItemDetail.tsx";
+import UnitManager from "./components/UnitManager.tsx";
+import AddUnit from "./components/AddUnit.tsx";
+import Layout from "./components/Layout.tsx";
+import UserProfile from "./components/UserProfile.tsx";
+import SearchFunction from "./components/SearchFunction.tsx";
+import ItemDetail from "./components/ItemDetail.tsx";
+import LoginProfile from "./components/LoginProfile.tsx";
+import ItemManager from "./components/ItemManager.tsx";
+import MainPage from "./components/MainPage.tsx";
+import Register from "./components/Register.tsx";
 
 
 function App() {
@@ -19,17 +21,16 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Layout><MainPageTest/></Layout>}/>
+                <Route path="/" element={<Layout><MainPage/></Layout>}/>
                 <Route path="/search" element={<Layout><SearchFunction/></Layout>}/>
                 <Route path="/profile" element={<Layout><UserProfile/></Layout>}/>
-                <Route path="/my-storage" element={<Layout><UnitManagerTest /></Layout>} />
+                <Route path="/login" element={<Layout><LoginProfile/></Layout>} />
+                <Route path="/register" element={<Layout><Register/></Layout>} />
+                <Route path="/my-storage" element={<Layout><UnitManager /></Layout>} />
                 <Route path="/add-unit" element={<Layout><AddUnit/></Layout>}/>
-                <Route path="/unit/:unitId" element={<Layout><ItemManagerTest/></Layout>}/>
-<<<<<<< HEAD
-                <Route path="/item/:itemId" element={<ItemDetail />} />
-=======
-                <Route path="/item/:id" element={<ItemDetail />} />
->>>>>>> jovanafrontend
+                <Route path="/unit/:unitId" element={<Layout><ItemManager/></Layout>}/>
+                <Route path="/item/:id" element={<Layout><ItemDetail/></Layout>} />
+
             </Routes>
         </Router>
     );

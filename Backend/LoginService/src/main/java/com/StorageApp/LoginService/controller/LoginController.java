@@ -1,6 +1,5 @@
 package com.StorageApp.LoginService.controller;
 
-import com.StorageApp.LoginService.model.User;
 import com.StorageApp.LoginService.model.dto.*;
 import com.StorageApp.LoginService.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +29,21 @@ public class LoginController {
     // REGISTERING USER
     @PostMapping("/register")
     public ResponseEntity<UserDTO> register(@RequestBody RegisterDTO userDTO) {
+
+        // check if user already exists
+        ResponseEntity<UnitUserDTO> unitexists = getUserByEmail(new EmailDTO(userDTO.getEmail()));
+
+        if (unitexists.getBody() != null) {
+            System.out.println("USER ALREADY EXISTS");
+            return ResponseEntity.badRequest().build();
+        }
         UserDTO respUserDTO = loginService.register(userDTO);
         return ResponseEntity.ok(respUserDTO);
     }
 
     // GETTING USER(UNITUSER) BY EMAIL
     @PostMapping("/email")
-    public ResponseEntity<UnitUserDTO> getEmailById(@RequestBody EmailDTO mail) {
+    public ResponseEntity<UnitUserDTO> getUserByEmail(@RequestBody EmailDTO mail) {
         System.out.println("MAIL BEING CALLED WITH EMAIL : :: : : ::: " + mail);
         UnitUserDTO user = loginService.getIdByEmail(mail);
         System.out.println("ID BEING RETURNED : :: : : ::: " + user);

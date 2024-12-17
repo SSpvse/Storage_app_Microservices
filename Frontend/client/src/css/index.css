@@ -3,12 +3,13 @@
 /*-----------------------------------------*/
 
 .main-content {
-  padding-top: 7rem;
-  padding-bottom: 3rem;
+  min-height: 100vh; /* Sørger for at innholdet dekker hele høyden på skjermen */
+  padding-top: 5rem; /* Beholder den øverste marginen */
+  padding-bottom: 3rem; /* Beholder bunnmarginen */
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #d3a5a5;
+  background-color: #ffffff;
 }
 
 /*Container around "Add New StorageUnit" + "Your Storage Unit"*/
@@ -18,7 +19,7 @@
   justify-content: space-evenly;
   gap: 2rem;
   background-color: #ffffff;
-  /*background-color: white;*/
+  margin-top: -100px;
 }
 
 .card {
@@ -26,13 +27,13 @@
   border-radius: 0.75rem;
   box-shadow: 0 2px 8px rgba(134, 86, 86, 0.1);
   width: 100%;
-  max-width: 20rem;
+  max-width: 21rem;
 }
 
 .card-header {
   background-color: #1b92f6;
   color: white;
-  padding: 1.5rem;
+  padding: 2rem;
   text-align: center;
 
 }
@@ -48,7 +49,7 @@
 /* "Create New Unit" + "View My Units" buttons */
 .btn-primary {
   width: 100%;
-  padding: 1rem;
+  padding: 1.5rem;
   background-color: #1e90ff;
   color: white;
   border-radius: 0.75rem;
@@ -92,13 +93,17 @@
 /* ---------------Add A New Unit------------------*/
 /* -----------------------------------------------*/
 .form-container {
+  position: relative;
   background-color: white;
   border-radius: 0.75rem;
-  box-shadow: 0 2px 8px rgba(86, 141, 25, 0.37);
+  box-shadow: 0 2px 8px rgba(21, 146, 234, 0.37);
   max-width: 500px;
   width: 100%;
   padding: 2rem;
   text-align: center;
+  height: 557px;  /* Sett høyden til ønsket verdi */
+  bottom: 6px;
+
 }
 
 /* "Add a new unit" - title */
@@ -163,85 +168,80 @@
 
 }
 
+
+
 /********          -------         ********/
 /********          ItemManager         ********/
 /********          -------         ********/
 .item-manager {
-  padding: 1px;
+  padding: 1.5rem;
   text-align: center;
-  background-color: #155b94;
-  border-radius: 8px;
+  background-color: #208de8;
+  border-radius: 10px;
+  border: 2px solid #1c78c0;
   width: 100%;
-  max-width: 100%;
-
-}
-.itemsAvailable{
-  color: red;
-}
-
-h3 {
-  font-size: 1.5rem;
-  color: #e5e4da;
+  min-height: 590px;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-.loading-message {
-  color: #007bff;
-  font-style: italic;
+.item-manager .content-wrapper {
+  display: flex;
+  flex-direction: column; /* Ordne innhold vertikalt */
+  flex-grow: 1; /* Gjør at denne tar opp mer plass hvis nødvendig */
+  margin-bottom: 20px;
 }
 
-.error-message {
-  color: red;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-
-h3 {
-  font-size: 1.5rem;
-  color: #e5e4da;
-  margin: 0; /* Fjerner margin for å hindre ekstra plass */
-}
-
-.add-item-button {
-  padding: 0.5rem 1rem;
-  background-color: #1e90ff;
+.title-items-in-unit {
+  font-family: "Arial";
   color: white;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  font-size: 26px;
+  font-style: normal;
+  margin-top: -10px;
+  margin-left: -470px;
 }
 
-.add-item-button:hover {
-  background-color: #4682b4;
-}
+.add-new-item-box {
+  position: absolute;
+  left: 890px;
+  top: -1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  padding: 1.5rem; /* Padding rundt innholdet */
+  height: 590px;  /* Sett ønsket høyde på boksen */
 
-/* Container for items */
-.item-list {
-  margin-top: 20px;
-  width: 100%;
-  max-width: 1200px; /* Maks bredde for listen */
-  padding: 0 20px; /* Horisontalt mellomrom for listen */
 }
 
 .items-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start; /* Plassere varene til venstre */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  flex: 1;
+  max-width: 25%;
+  max-height: 35%;
+  margin-left: 20px;
 }
 
-/* Styling for item boxes */
 .item-box {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 15px;
+  height: 115px;
   width: 200px;
+  margin-top: 2px;
+  margin-left: 35px;
   border-radius: 8px;
+  font-size: 16px;
+  font-style: normal;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
+  border: 2px solid #1b92f6; /* Blå ramme rundt hver item-boks */
 }
 
 .item-box:hover {
@@ -250,12 +250,36 @@ h3 {
 }
 
 .itemsAvailable {
-  color: #888;
+  color: #3f3f3f;
   font-size: 16px;
   font-style: italic;
+  margin-right: 480px;
 }
 
+.render-icon {
+  height: 35px;
+}
 
+/*Delete unit button*/
+.unit-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-unit-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.delete-unit-btn:hover {
+  background-color: #c0392b;
+}
 
 /********          -------         ********/
 /********          Search         ********/
@@ -278,36 +302,52 @@ input[type="text"] {
 /********          -------         ********/
 /********          ItemDetailPage         ********/
 /********          -------         ********/
+.layout-wrapper {
+  min-height: 100vh;
+  padding-top: 80px;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 
 .item-detail {
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 8px;
   max-width: 600px;
-  margin: auto;
+  width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 .item-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: center; /* Juster elementene vertikalt */
+  justify-content: flex-start; /* Juster innholdet til venstre */
 }
 
 .item-header h3 {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 0;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+  margin-right: 10px; /* Litt avstand mellom teksten og ikonet */
 }
 
 .item-icon {
-  font-size: 30px;
-  color: #555;
+  display: flex;
+  justify-content: center; /* Juster ikonet til venstre */
+  align-items: center; /* Sentrer ikonet vertikalt */
+  width: 50px;
+  height: 50px;
+  margin-left: 270px;
 }
 
-.item-icon i {
-  font-size: 50px; /* Adjust icon size */
+.item-detail-icon {
+  width: 100%;  /* Sørg for at ikonet fyller containeren riktig */
+  height: 100%;
+  object-fit: contain; /* Behold ikonets aspektforhold */
 }
 
 .item-detail p {
@@ -331,15 +371,5 @@ input[type="text"] {
   background-color: #c0392b;
 }
 
-/* Icon styles for specific item types */
-.icon.clothing {
-  color: #2c3e50;  /* Dark blue for clothing */
-}
 
-.icon.food {
-  color: #27ae60;  /* Green for food */
-}
 
-.icon.other {
-  color: #f39c12;  /* Yellow for "Other" items */
-}

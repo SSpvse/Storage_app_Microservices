@@ -1,7 +1,6 @@
 
-// Define an interface for the new item structure
+// interface for the new item structure
 export interface NewItem {
-    id?: number;
     name: string;
     description: string;
     quantity?: number;
@@ -9,4 +8,5 @@ export interface NewItem {
     unitID: number;
     userID: number;
     type: string;
+
 }

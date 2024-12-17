@@ -23,14 +23,23 @@ const Layout = ({ children }: LayoutProps) => {
                             <Home className="icon" size={20} />
                             Home
                         </button>
-                        <button onClick={() => navigate("/profile")} className="nav-btn">
-                            <User className="icon" size={20} />
-                            Profile/Login
-                        </button>
                         <button onClick={() => navigate("/search")} className="nav-btn">
                             <Search className="icon" size={20} />
                             Search
                         </button>
+                        <button onClick={() => navigate("/profile")} className="nav-btn">
+                            <User className="icon" size={20} />
+                            Profile/Login
+                        </button>
+                        <button onClick={() => navigate("/login")} className="nav-btn">
+                            <User className="icon" size={20} />
+                            Login
+                        </button>
+                        <button onClick={() => navigate("/register")} className="nav-btn">
+                            <User className="icon" size={20} />
+                            Register
+                        </button>
+
                     </div>
                 </div>
             </nav>

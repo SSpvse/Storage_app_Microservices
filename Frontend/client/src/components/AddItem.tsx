@@ -1,18 +1,17 @@
 import {useEffect, useState} from "react";
-
-import { addItem } from "../services/itemService";
-import { NewItem } from "../types/NewItem";
+import { addItem } from "../services/itemService.tsx";
+import { NewItem } from "../types/NewItem.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {fetchUnitById} from "../services/UnitService.tsx";
 
 const itemTypes = {
-    food: "Food",
-    thing: "Thing",
-    clothes: "Clothes",
+    food: "food",
+    other: "other",
+    clothes: "clothes",
 };
 interface AddItemProps {
-    unitId: any;
-    onItemAdded: (newItem: NewItem) => Promise<void>;
+    unitId: string;
+    onItemAdded: (newItem: NewItem) => void;
 }
 
 const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
@@ -21,7 +20,7 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
     const [unitType, setUnitType] = useState<string | null>(null);
-    const [itemType, setItemType] = useState <string | null> (null);
+    const [itemType, setItemType] = useState ('');
     const [quantity, setQuantity] = useState('');
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -51,9 +50,11 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
         e.preventDefault();
 
         if (!name || !description || !itemType) {
-            setError("Name and Description are required.");
+
+            setError("Name, Description and type are required.");
             return;
         }
+        console.log("-----Item Type before submission:", itemType);
 
         const newItem: NewItem = {
             name,
@@ -75,6 +76,7 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
             setDescription('');
             setDate('');
             setQuantity('');
+            setItemType('');
         } catch (err) {
             setError('Failed to add item');
             console.error('Error adding item:', err);
@@ -132,18 +134,32 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
 
                             </>
                         )}
+
                         <div className="form-group">
                             <label className="label">Item Type:</label>
                             <select
-                                value={itemType || ''}
+                                value={itemType}
                                 onChange={(e) => setItemType(e.target.value)}
                                 required
                                 className="input"
+
                             >
-                                <option value="" disabled>Select item type</option>
-                                <option value={itemTypes.food}>Food</option>
-                                <option value={itemTypes.thing}>Thing</option>
-                                <option value={itemTypes.clothes}>Clothes</option>
+                                <option value="" disabled>
+                                    Select item type
+                                </option>
+                                {unitType === "refrigerator" ? (
+                                    <>
+                                        // Only 'food' option for refrigerator
+                                        <option value={itemTypes.food}>Food</option>
+                                        <option value={itemTypes.other}>Other</option>
+                                    </>
+                                ) : (
+                                    <>
+                                        {/* For non-refrigerator units, show these types */}
+                                        <option value={itemTypes.clothes}>Clothes</option>
+                                        <option value={itemTypes.other}>Other</option>
+                                    </>
+                                )}
                             </select>
                         </div>
 

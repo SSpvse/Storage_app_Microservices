@@ -68,7 +68,7 @@ public class UnitController {
 
     // update unit by userID
     @PostMapping("/update/{userID}")
-    public ResponseEntity<Unit> updateItem(@RequestBody Unit unit, @PathVariable Long userID) {
+    public ResponseEntity<Unit> updateItem(@RequestBody UnitDTO unit, @PathVariable Long userID) {
 
         Unit updatedUnit = unitService.updateUnit(unit, userID);
         return new ResponseEntity<>(updatedUnit, HttpStatus.OK);
