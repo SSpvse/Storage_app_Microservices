@@ -1,9 +1,7 @@
 package com.StorageApp.LoginService.service;
 
 import com.StorageApp.LoginService.model.User;
-import com.StorageApp.LoginService.model.dto.LoginDTO;
-import com.StorageApp.LoginService.model.dto.RegisterDTO;
-import com.StorageApp.LoginService.model.dto.UserDTO;
+import com.StorageApp.LoginService.model.dto.*;
 import com.StorageApp.LoginService.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,11 +53,15 @@ public class LoginService {
     }
 
     // get id by email
-    public Long getIdByEmail(String email) {
-        User user = loginRepository.findByEmail(email);
+    public UnitUserDTO getIdByEmail(EmailDTO email) {
+
+
+        User user = loginRepository.findByEmail(email.getEmail());
+
+        UnitUserDTO userDTO = new UnitUserDTO(user.getId(), user.getUsername(), user.getEmail());
         if (user == null) {
-            throw new IllegalArgumentException("User not found! ( with ID: " + email +")");
+            throw new IllegalArgumentException("User not found! ( with email: " + email +")");
         }
-        return user.getId();
+        return userDTO;
     }
 }

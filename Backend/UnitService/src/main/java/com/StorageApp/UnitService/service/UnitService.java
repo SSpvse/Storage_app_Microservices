@@ -3,11 +3,13 @@ package com.StorageApp.UnitService.service;
 import com.StorageApp.UnitService.model.Role;
 import com.StorageApp.UnitService.model.UnitUser;
 import com.StorageApp.UnitService.model.UnitUserAccess;
+import com.StorageApp.UnitService.model.dto.EmailDTO;
 import com.StorageApp.UnitService.model.dto.InviteGuestDTO;
 import com.StorageApp.UnitService.model.dto.UnitDTO;
 import com.StorageApp.UnitService.model.Unit;
 import com.StorageApp.UnitService.repository.UUAccessRepository;
 import com.StorageApp.UnitService.repository.UnitRepository;
+import com.StorageApp.UnitService.repository.UnitUserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -26,11 +28,13 @@ public class UnitService {
 
     private UUAccessRepository uuAccessRepository;
 
+    private UnitUserRepository unitUserRepository;
 
     @Autowired
-    public UnitService(UnitRepository unitRepository, UUAccessRepository uuAccessRepository) {
+    public UnitService(UnitRepository unitRepository, UUAccessRepository uuAccessRepository, UnitUserRepository unitUserRepository) {
         this.unitRepository = unitRepository;
         this.uuAccessRepository = uuAccessRepository;
+        this.unitUserRepository = unitUserRepository;
     }
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -138,29 +142,31 @@ public class UnitService {
     }
 
     // invite guest to unit
-    public UnitUserAccess inviteGuest(InviteGuestDTO invDTO) {
+    public Long inviteGuest(InviteGuestDTO invDTO) {
 
         System.out.println("--- - --- INVITING GUEST DTO : " + invDTO.toString());
-        String url = "http://gateway:8000/auth/email";
+        String url = "http://loginservice:8080/auth/email";
 
         // Set the body (email) to send
-        String emailBody = invDTO.getGuestEmail();
+        EmailDTO emailBody = new EmailDTO(invDTO.getGuestEmail());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         // Wrap the body and headers into an HttpEntity
-        HttpEntity<String> requestEntity = new HttpEntity<>(emailBody, headers);
+        HttpEntity<EmailDTO> requestEntity = new HttpEntity<>(emailBody, headers);
 
-        Long userId;
+
+        UnitUser user = null;
         try {
             // Send POST request to the AuthService
-            ResponseEntity<Long> response = restTemplate.postForEntity(url, requestEntity, Long.class);
+            ResponseEntity<UnitUser> response = restTemplate.postForEntity(url, requestEntity, UnitUser.class);
 
             // Check if the response is ok
             if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-                userId = response.getBody();
-                System.out.println("Received User ID: " + userId);
+                user = response.getBody();
+                System.out.println("Received User ID: " + user.toString());
+                unitUserRepository.save(user);
             } else {
                 throw new RuntimeException("Failed to retrieve User ID. Response: " + response.getStatusCode());
             }
@@ -179,14 +185,16 @@ public class UnitService {
         UnitUserAccess unitUserAccess = new UnitUserAccess();
 
         unitUserAccess.setUnit(unit);
-        unitUserAccess.setUser(new UnitUser(userId));
+        unitUserAccess.setUser(user);
 
         if (invDTO.getRole() == Role.GUEST) {
             unitUserAccess.setRole(Role.GUEST);
         } else if (invDTO.getRole() == Role.OWNER) {
             unitUserAccess.setRole(Role.OWNER);
         }
-        return uuAccessRepository.save(unitUserAccess);
+        uuAccessRepository.save(unitUserAccess);
+
+        return unitUserAccess.getId();
     }
 
 

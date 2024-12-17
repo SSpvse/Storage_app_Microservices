@@ -1,9 +1,7 @@
 package com.StorageApp.LoginService.controller;
 
 import com.StorageApp.LoginService.model.User;
-import com.StorageApp.LoginService.model.dto.LoginDTO;
-import com.StorageApp.LoginService.model.dto.RegisterDTO;
-import com.StorageApp.LoginService.model.dto.UserDTO;
+import com.StorageApp.LoginService.model.dto.*;
 import com.StorageApp.LoginService.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,10 +35,12 @@ public class LoginController {
     }
 
     // GETTING ID BY EMAIL
-    @GetMapping("/email")
-    public ResponseEntity<Long> getEmailById(@RequestBody String mail) {
-        Long id = loginService.getIdByEmail(mail);
-        return ResponseEntity.ok(id);
+    @PostMapping("/email")
+    public ResponseEntity<UnitUserDTO> getEmailById(@RequestBody EmailDTO mail) {
+        System.out.println("MAIL BEING CALLED WITH EMAIL : :: : : ::: " + mail);
+        UnitUserDTO user = loginService.getIdByEmail(mail);
+        System.out.println("ID BEING RETURNED : :: : : ::: " + user);
+        return ResponseEntity.ok(user);
     }
 
 

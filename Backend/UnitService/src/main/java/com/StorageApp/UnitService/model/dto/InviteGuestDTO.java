@@ -14,4 +14,14 @@ public class InviteGuestDTO {
     private Long ownerID;
     private String guestEmail;
     private Role role;
+
+    @Override
+    public String toString() {
+        return "InviteGuestDTO{" +
+                "unitID=" + unitID +
+                ", ownerID=" + ownerID +
+                ", guestEmail='" + guestEmail + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

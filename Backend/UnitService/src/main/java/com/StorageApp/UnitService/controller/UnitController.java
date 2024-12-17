@@ -81,8 +81,8 @@ public class UnitController {
 
     // invite guest to unit
     @PostMapping("/invite")
-    public ResponseEntity<UnitUserAccess> inviteGuest(@RequestBody InviteGuestDTO invDTO) {
-       UnitUserAccess unitUserAccess = unitService.inviteGuest(invDTO);
-       return ResponseEntity.ok(unitUserAccess);
+    public ResponseEntity<Long> inviteGuest(@RequestBody InviteGuestDTO invDTO) {
+       Long unitUserAccess_id = unitService.inviteGuest(invDTO);
+       return ResponseEntity.ok(unitUserAccess_id);
     }
 }
