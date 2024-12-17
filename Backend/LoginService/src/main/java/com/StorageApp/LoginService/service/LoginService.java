@@ -54,4 +54,6 @@ public class LoginService {
             return new UserDTO(user.getId(), user.getUsername(), user.getRole());
         }
     }
+
+
 }

@@ -1,6 +1,5 @@
 package com.StorageApp.LoginService.controller;
 
-import com.StorageApp.LoginService.model.User;
 import com.StorageApp.LoginService.model.dto.LoginDTO;
 import com.StorageApp.LoginService.model.dto.RegisterDTO;
 import com.StorageApp.LoginService.model.dto.UserDTO;

@@ -35,6 +35,10 @@ const Layout = ({ children }: LayoutProps) => {
                             <User className="icon" size={20} />
                             Login
                         </button>
+                        <button onClick={() => navigate("/register")} className="nav-btn">
+                            <User className="icon" size={20} />
+                            Register
+                        </button>
 
                     </div>
                 </div>

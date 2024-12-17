@@ -20,6 +20,10 @@ spring:
           uri: lb://NotificationService
           predicates:
             - Path=/notification, /notification/**
+        - id: LoginService
+          uri: lb://LoginService
+          predicates:
+            - Path=/auth, /auth/**
       globalcors:
         cors-configurations:
           '[/**]':
@@ -27,6 +31,8 @@ spring:
               - "http://localhost:3000"
             allowed-headers:
               - "*"
+            allow-credentials:
+            - true
             allowed-methods:
               - "GET"
               - "POST"
