@@ -19,8 +19,10 @@ public class LoginController {
     }
 
     // LOGGING IN USER
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
+        System.out.println("-x-x-x-x-x-x-x LOGIN CONTROLLER CALLED");
+        System.out.println("-x-x-x-x-x-x-x the login DTO ::: " + loginDTO.toString());
 
         UserDTO user = loginService.login(loginDTO);
         return ResponseEntity.ok(user);
@@ -46,7 +48,7 @@ public class LoginController {
     public ResponseEntity<UnitUserDTO> getUserByEmail(@RequestBody EmailDTO mail) {
         System.out.println("MAIL BEING CALLED WITH EMAIL : :: : : ::: " + mail);
         UnitUserDTO user = loginService.getIdByEmail(mail);
-        System.out.println("ID BEING RETURNED : :: : : ::: " + user);
+        System.out.println("-X-X USER BEING RETURNED fromo  getUserByEmail method : :: : : ::: " + user.toString());
         return ResponseEntity.ok(user);
     }
 

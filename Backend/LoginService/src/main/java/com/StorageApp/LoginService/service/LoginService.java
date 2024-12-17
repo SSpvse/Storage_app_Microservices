@@ -20,12 +20,18 @@ public class LoginService {
     // log in user with email and password
     public UserDTO login(LoginDTO loginDTO) {
 
+        System.out.println("-X-X-X-X-- LOGIN SERVICE CALLED");
+        System.out.println("-X-X-X-X-- the login DTO ::: " + loginDTO.toString());
+
+
         if (loginDTO == null) {
             throw new IllegalArgumentException("User cannot be null");
         }
         String email = loginDTO.getEmail();
         String password = loginDTO.getPassword();
 
+        System.out.println("-X-X-X-X-- the email AFTER ASSIGNING FROM DTO TO STRINGS::: " + email);
+        System.out.println("-X-X-X-X-- the password AFTER ASSIGNING FROM DTO TO STRINGS::: " + password);
         User user = loginRepository.findByEmailAndPassword(email, password);
         if (user == null) {
             throw new IllegalArgumentException("User not found");

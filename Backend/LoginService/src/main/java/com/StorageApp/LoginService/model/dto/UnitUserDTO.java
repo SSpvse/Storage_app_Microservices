@@ -29,4 +29,13 @@ public class UnitUserDTO {
     public UnitUserDTO(Long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "UnitUserDTO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

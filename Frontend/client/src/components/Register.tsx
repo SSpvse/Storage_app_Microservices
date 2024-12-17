@@ -28,15 +28,8 @@ const Register = () => {
                 return;
             }
 
-            // Hvis e-posten ikke finnes, set rolle til 'ADMIN' og registrer brukeren
-            const user = {
-                email,
-                username,
-                password,
-                role: 'ADMIN',  // Set role to Admin if the email doesn't exist
-            };
 
-            await registerUser(user);
+            await registerUser(email, username, password);
             console.log('User registered successfully');
             navigate('/login');
         } catch (error: any) {

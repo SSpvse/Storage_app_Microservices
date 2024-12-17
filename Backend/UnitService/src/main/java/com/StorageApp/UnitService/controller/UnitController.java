@@ -70,7 +70,7 @@ public class UnitController {
     @PostMapping("/update/{userID}")
     public ResponseEntity<Unit> updateItem(@RequestBody UnitDTO unit, @PathVariable Long userID) {
 
-        Unit updatedUnit = unitService.updateUnit(unit, userID);
+        Unit updatedUnit = (unitService.updateUnit(unit, userID)).DTO_to_Unit();
         return new ResponseEntity<>(updatedUnit, HttpStatus.OK);
     }
 

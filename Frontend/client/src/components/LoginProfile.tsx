@@ -2,16 +2,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LoginProfile = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = async () => {
-        const loginData = { username, password };
+        const loginData = { email, password };
 
         try {
-            const response = await fetch('http://localhost:8085/auth/login', {
+            const response = await fetch('http://localhost:8000/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,12 +41,12 @@ const LoginProfile = () => {
             <h2>Login</h2>
             <div className="login-form">
                 <div>
-                    <label htmlFor="username">Username:</label>
+                    <label htmlFor="username">Email:</label>
                     <input
                         type="text"
                         id="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
                 <div>
