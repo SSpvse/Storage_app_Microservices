@@ -1,7 +1,7 @@
 // src/components/Register.tsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {checkEmailExists, registerUser} from "../services/LoginService.tsx";
+import {registerUser} from "../services/LoginService.tsx";
 
 
 const Register = () => {
@@ -19,14 +19,7 @@ const Register = () => {
         }
 
         try {
-            // Først, sjekk om e-posten allerede finnes
-            const emailExists = await checkEmailExists(email);
-            console.log("FETCHED email exiztz" + emailExists);
-            if (emailExists) {
-                setError('Email already exists. Please log in.');
-                navigate('/login');  // Naviger til login
-                return;
-            }
+
 
             // Hvis e-posten ikke finnes, set rolle til 'ADMIN' og registrer brukeren
             const user = {

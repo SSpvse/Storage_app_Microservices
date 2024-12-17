@@ -5,6 +5,7 @@ import com.StorageApp.LoginService.model.dto.RegisterDTO;
 import com.StorageApp.LoginService.model.dto.UserDTO;
 import com.StorageApp.LoginService.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +25,19 @@ public class LoginController {
     }
 
     // LOGGING IN USER
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
 
-        UserDTO user = loginService.login(loginDTO);
-        return ResponseEntity.ok(user);
+        try{
+            UserDTO user = loginService.login(loginDTO);
+
+            if (user == null){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+            return ResponseEntity.ok(user);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     // REGISTERING USER

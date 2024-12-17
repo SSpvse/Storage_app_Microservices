@@ -1,4 +1,4 @@
-package com.StorageApp.LoginService.model;
+/*package com.StorageApp.LoginService.model;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,3 +13,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+*/
