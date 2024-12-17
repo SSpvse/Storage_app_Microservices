@@ -48,6 +48,7 @@ const ItemDetail = () => {
 
     const handleDelete = async () => {
         try {
+            console.log("AM I HERE ??? ITEM" + numericId);
             await deleteItem(numericId);
             navigate(`/unit/${item?.unitID}`);
 
@@ -55,7 +56,11 @@ const ItemDetail = () => {
             setError("Error deleting item");
         }
     };
-
+    const onUnitClick = () => {
+        if (item?.unitID) {
+            navigate(`/unit/${item.unitID}`);
+        }
+    };
 
     const renderIcon = (type: string) => {
         switch (type.toLowerCase()) {
@@ -85,7 +90,7 @@ const ItemDetail = () => {
                     <p><strong>Description:</strong> {item.description}</p>
                     <p><strong>Quantity:</strong> {item.quantity}</p>
                     <p><strong>Type:</strong> {item.type}</p>
-                    <p><strong>In Unit:</strong> {item.unitID}</p>
+                    <button onClick={onUnitClick}><strong>In Unit:</strong> {item.unitID}</button>
 
                     <button className="delete-btn" onClick={handleDelete}>Delete Item</button>
 

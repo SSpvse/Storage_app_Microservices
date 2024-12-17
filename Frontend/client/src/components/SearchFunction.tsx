@@ -65,7 +65,6 @@ const Search = () => {
             <ul>
                 {filteredItems.map(item => (
                     <li key={item.id} onClick={() => handleItemClick(item)}>
-
                         {item.name}
                     </li>
                 ))}

@@ -42,3 +42,24 @@ export const addUnit = async (newUnit: { name: string }): Promise<Unit> => {
         throw error;
     }
 };
+
+// Delete a unit by its ID
+export const deleteUnitById = async (id: number): Promise<void> => {
+
+    console.log("DELETEUNIT SERVICE in unit ?? Hello" + id) //Jeg kommer hit!!!
+    try {
+        const response = await fetch(`${UNIT_SERVICE_URL}/delete/${id}`, {
+            method: "DELETE",
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to delete unit with ID ${id}`);
+        }
+
+        console.log(`Unit with ID ${id} has been deleted.`);
+    } catch (error) {
+        console.error("Error deleting unit:", error);
+        alert("Failed to delete unit. Please try again later.");
+        throw error;
+    }
+};

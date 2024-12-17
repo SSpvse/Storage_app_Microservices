@@ -7,6 +7,7 @@ import clothingIcon from "../assets/clothing.png";
 import foodIcon from "../assets/food.png";
 import thingIcon from "../assets/thing.png";
 import {NewItem} from "../types/NewItem.tsx";
+import {deleteUnitById} from "../services/UnitService.tsx";
 
 const ItemManager = () => {
     const { unitId } = useParams<{ unitId: string | undefined }>();
@@ -62,12 +63,29 @@ const ItemManager = () => {
         }
     };
 
+    const handleDeleteUnit = async () => {
+        console.log("INSIDE HandleDelete")
+        if (!unitIdNumber || isNaN(unitIdNumber)){
+            setError("Invalid unit ID. Please provide a valid number.")
+            return;
+        }
+
+        try {
+            console.log("Am I HERE??" + unitIdNumber)
+            await deleteUnitById(unitIdNumber);
+            navigate("/"); // Redirect to the main page or units list after deletion
+
+        } catch (err) {
+            setError("Failed to delete unit. Please try again.");
+        }
+    };
 
 
     const handleItemClick = async (item:Item) => {
         console.log("Clicked item:", item); // Log the item to check if itemId exists
         navigate(`/item/${item.id}`);
     };
+
 
     const renderIcon = (type: string) => {
         switch (type.toLowerCase()) {
@@ -84,7 +102,11 @@ const ItemManager = () => {
 
     return (
         <div className="item-manager">
-            <h3 className="title-items-in-unit">Your items in chosen Unit {unitId}</h3>
+
+            <h3 className="title-items-in-unit"><button className="delete-unit-btn" onClick={handleDeleteUnit}>
+                Delete Unit
+            </button>Your items in chosen Unit {unitId}</h3>
+
             {loading && <p className="loading-message">Loading...</p>}
             {error && <p className="error-message">{error}</p>}
 

@@ -76,8 +76,8 @@ public class UnitService {
 
     @Transactional
     public void deleteUnit(Long id) {
-        Optional<Unit> item = unitRepository.findById(id);
-        if (item.isEmpty()) {
+        Optional<Unit> unit = unitRepository.findById(id);
+        if (unit.isEmpty()) {
             throw new RuntimeException("Item not found with ID: " + id);
         }else {
             unitRepository.deleteById(id);

@@ -3,13 +3,13 @@
 /*-----------------------------------------*/
 
 .main-content {
-  padding-top: 7rem;
-  padding-bottom: 3rem;
+  min-height: 100vh; /* Sørger for at innholdet dekker hele høyden på skjermen */
+  padding-top: 5rem; /* Beholder den øverste marginen */
+  padding-bottom: 3rem; /* Beholder bunnmarginen */
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #c53c3c;
-
+  background-color: #ffffff;
 }
 
 /*Container around "Add New StorageUnit" + "Your Storage Unit"*/
@@ -93,13 +93,17 @@
 /* ---------------Add A New Unit------------------*/
 /* -----------------------------------------------*/
 .form-container {
+  position: relative;
   background-color: white;
   border-radius: 0.75rem;
-  box-shadow: 0 2px 8px rgba(86, 141, 25, 0.37);
+  box-shadow: 0 2px 8px rgba(21, 146, 234, 0.37);
   max-width: 500px;
   width: 100%;
   padding: 2rem;
   text-align: center;
+  height: 557px;  /* Sett høyden til ønsket verdi */
+  bottom: 6px;
+
 }
 
 /* "Add a new unit" - title */
@@ -165,51 +169,53 @@
 }
 
 
+
 /********          -------         ********/
 /********          ItemManager         ********/
 /********          -------         ********/
 .item-manager {
-  padding: 1px;
+  padding: 1.5rem;
   text-align: center;
-  background-color: #4c88b9;
-  border-radius: 8px;
+  background-color: #208de8;
+  border-radius: 10px;
+  border: 2px solid #1c78c0;
   width: 100%;
-  height: 100%;
-  max-width: 100%;
+  min-height: 590px;
   position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-.item-manager h3 {
-  width: 100%;
-  text-align: center;
+.item-manager .content-wrapper {
+  display: flex;
+  flex-direction: column; /* Ordne innhold vertikalt */
+  flex-grow: 1; /* Gjør at denne tar opp mer plass hvis nødvendig */
   margin-bottom: 20px;
 }
 
 .title-items-in-unit {
   font-family: "Arial";
+  color: white;
   font-size: 26px;
   font-style: normal;
   margin-top: -10px;
   margin-left: -470px;
 }
 
-.item-list {
-  flex: 1;
-  max-width: 70%;
-  max-height: 50%;
-  margin-left: 20px;
-}
-
 .add-new-item-box {
-  position: fixed;
-  top: 80px;
-  left: 860px;
+  position: absolute;
+  left: 890px;
+  top: -1px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 350px;
-}
+  padding: 1.5rem; /* Padding rundt innholdet */
+  height: 590px;  /* Sett ønsket høyde på boksen */
 
+}
 
 .items-container {
   display: grid;
@@ -222,7 +228,7 @@
 }
 
 .item-box {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 15px;
   height: 115px;
   width: 200px;
@@ -235,6 +241,7 @@
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
+  border: 2px solid #1b92f6; /* Blå ramme rundt hver item-boks */
 }
 
 .item-box:hover {
@@ -243,13 +250,35 @@
 }
 
 .itemsAvailable {
-  color: #888;
+  color: #3f3f3f;
   font-size: 16px;
   font-style: italic;
+  margin-right: 480px;
 }
 
 .render-icon {
   height: 35px;
+}
+
+/*Delete unit button*/
+.unit-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-unit-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.delete-unit-btn:hover {
+  background-color: #c0392b;
 }
 
 /********          -------         ********/
@@ -274,21 +303,21 @@ input[type="text"] {
 /********          ItemDetailPage         ********/
 /********          -------         ********/
 .layout-wrapper {
-  min-height: 100vh; /* Full høyde av skjermen */
-  padding-top: 80px; /* Plass til navbaren */
-  padding-bottom: 60px; /* Plass til foten */
+  min-height: 100vh;
+  padding-top: 80px;
+  padding-bottom: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* ItemDetail-stilene */
+
 .item-detail {
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 8px;
   max-width: 600px;
-  width: 100%; /* Sørg for at det ikke blir for smalt */
+  width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }

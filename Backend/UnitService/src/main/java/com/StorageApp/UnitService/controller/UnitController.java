@@ -93,11 +93,18 @@ public class UnitController {
 
 
     // delete unit by ID
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUnit(@PathVariable Long id) {
-        unitService.deleteUnit(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        log.info("Reached Delete controller for ID: {}", id); // Logger når vi når controlleren
+        try {
+            unitService.deleteUnit(id);
+            log.info("Unit with ID {} successfully deleted.", id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error during delete operation: {}", e.getMessage()); // Logger feilen
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
 }
