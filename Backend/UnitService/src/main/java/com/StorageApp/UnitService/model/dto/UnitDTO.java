@@ -22,6 +22,8 @@ public class UnitDTO {
         unit.setDescription(description);
         unit.setLocation(location);
         unit.setType(type);
+        unit.setEditPermission(editPermission);
+        unit.setOwnerId(ownerId);
         return unit;
     }
 

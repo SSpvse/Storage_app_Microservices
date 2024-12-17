@@ -114,6 +114,7 @@ public class UnitService {
         if (uua.getRole() != Role.OWNER) {
             throw new RuntimeException("User with ID " + userID + " does not have permission to update unit with ID " + unit.getId());
         }else {
+
             if (unit.getDescription() != null && !unit.getDescription().isEmpty()) {
                 existingUnit.setDescription(unit.getDescription());
             }

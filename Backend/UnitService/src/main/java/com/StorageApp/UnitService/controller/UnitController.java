@@ -1,11 +1,8 @@
 package com.StorageApp.UnitService.controller;
 
-import com.StorageApp.UnitService.model.UnitUser;
-import com.StorageApp.UnitService.model.UnitUserAccess;
 import com.StorageApp.UnitService.model.dto.InviteGuestDTO;
 import com.StorageApp.UnitService.model.dto.UnitDTO;
 import com.StorageApp.UnitService.model.Unit;
-import com.StorageApp.UnitService.repository.UnitUserRepository;
 import com.StorageApp.UnitService.service.UnitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,5 +101,6 @@ public class UnitController {
         }
         return ResponseEntity.ok(dtoList);
     }
+
 
 }
