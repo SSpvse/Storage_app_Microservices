@@ -17,11 +17,13 @@ import java.util.List;
 @Slf4j
 public class NotificationController {
 
+// ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !THIS WHOLE CONTROLLER IS FOR TESTING PURPOSES ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
     @Autowired
     NotificationService notificationService;
     @Autowired
     AmqpTemplate amqpTemplate; // Inject the RabbitMQ template
 
+// ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !THIS WHOLE CONTROLLER IS FOR TESTING PURPOSES ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
     // ---- CREATE
 
@@ -65,12 +67,14 @@ public class NotificationController {
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
+    // for testing purposes
     @GetMapping("/getall")
     public ResponseEntity<List<DateDTO>> getAllTimeDto() {
         List<DateDTO> dtos = notificationService.getAllTimeDto();
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
+    // ---- DELETE
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteTimeDto(@PathVariable Long id) {
         notificationService.deleteTimeDto(id);

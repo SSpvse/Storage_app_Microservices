@@ -47,7 +47,7 @@ public class DateChecker {
         System.out.println("CHECKING TOMORROW DATE AND ITEMS TO SEND list.size()LENGTH==== " + itemsToSend.size());
         System.out.println("AND DATATYPE IS : ~ : ~ :" + itemsToSend.getClass().getName());
 
-        itemEventPublisher.testSendRabbit(itemsToSend);
+        itemEventPublisher.sendItemListToRabbit(itemsToSend);
 
     }
 

@@ -48,7 +48,7 @@ const ItemManager = () => {
     }, [unitIdNumber]);
 
 
-                                    //(newItem: Item)
+    //(newItem: Item)
     const handleItemAdded = async (newItem: NewItem) => {
 
         // Calculate the next ID based on existing items
@@ -81,6 +81,7 @@ const ItemManager = () => {
     };
 
 
+
     const handleItemClick = async (item:Item) => {
         console.log("Clicked item:", item); // Log the item to check if itemId exists
         navigate(`/item/${item.id}`);
@@ -103,9 +104,10 @@ const ItemManager = () => {
     return (
         <div className="item-manager">
 
-            <h3 className="title-items-in-unit"><button className="delete-unit-btn" onClick={handleDeleteUnit}>
-                Delete Unit
-            </button>Your items in chosen Unit {unitId}</h3>
+            <h3 className="title-items-in-unit">Your items in chosen Unit {unitId}
+                <button className="delete-unit-btn" onClick={handleDeleteUnit}>Delete Unit</button>
+                <button className="share-unit-btn" onClick={() => navigate(`/invite-guest`)}>Share</button>
+            </h3>
 
             {loading && <p className="loading-message">Loading...</p>}
             {error && <p className="error-message">{error}</p>}

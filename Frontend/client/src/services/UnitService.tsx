@@ -65,3 +65,35 @@ export const deleteUnitById = async (id: number): Promise<void> => {
         throw error;
     }
 };
+
+
+// Invite a guest to a unit
+export interface InviteGuestDTO {
+    unitID: number;
+    ownerID: number;
+    guestEmail: string;
+    role: "GUEST" | "OWNER";
+}
+
+export const inviteGuest = async (inviteData: InviteGuestDTO): Promise<number> => {
+    try {
+        const response = await fetch(`${UNIT_SERVICE_URL}/invite`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(inviteData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to invite guest');
+        }
+
+        const accessId: number = await response.json();
+        console.log('Guest invited successfully. Access ID:', accessId);
+        return accessId;
+    } catch (error) {
+        console.error('Error inviting guest:', error);
+        throw error;
+    }
+};

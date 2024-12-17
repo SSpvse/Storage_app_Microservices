@@ -12,6 +12,7 @@ import ItemManager from "./components/ItemManager.tsx";
 import MainPage from "./components/MainPage.tsx";
 import Register from "./components/Register.tsx";
 import {UserProvider} from "./types/UserContext.tsx";
+import InviteGuest from "./components/InviteGuest.tsx";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                     <Route path="/profile" element={<Layout><UserProfile/></Layout>}/>
                     <Route path="/login" element={<Layout><LoginProfile/></Layout>} />
                     <Route path="/register" element={<Layout><Register/></Layout>} />
+                    <Route path="/invite-guest" element={<Layout><InviteGuest /></Layout>} />
                     <Route path="/my-storage" element={<Layout><UnitManager /></Layout>} />
                     <Route path="/add-unit" element={<Layout><AddUnit/></Layout>}/>
                     <Route path="/unit/:unitId" element={<Layout><ItemManager/></Layout>}/>

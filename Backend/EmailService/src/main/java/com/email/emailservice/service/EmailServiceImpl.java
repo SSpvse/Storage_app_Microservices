@@ -30,6 +30,21 @@ public class EmailServiceImpl implements EmailService {
     }
 
 
+
+    public void sortingItemsForMail(List<DateDTO> dateDTOs) {
+
+        logger.info(": : : sortingItemsForMail method called with {} items", dateDTOs != null ? dateDTOs.size() : 0);
+
+        if (dateDTOs == null || dateDTOs.isEmpty()) {
+            logger.warn(": : : Empty or null list provided to sortingItemsForMail");
+            return;
+        }
+        
+
+
+    }
+
+
     @Override
     public void SendDateItemToEmail(List<DateDTO> dateDTOs) {
         logger.info(": : : SendDateItemToEmail method called with {} items", dateDTOs != null ? dateDTOs.size() : 0);

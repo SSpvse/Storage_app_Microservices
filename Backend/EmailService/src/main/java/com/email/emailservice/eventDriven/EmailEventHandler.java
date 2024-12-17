@@ -30,11 +30,10 @@ public class EmailEventHandler {
             }
         }
         System.out.println("INSIDE EVENT HANDLER, dateItems.size()::::: " + dateItems.size());
-        // log.info("handleItemDto: {}", dateItems);
-        // emailService.addDateItemToRepo(dateItems);
+
 
         emailService.SendDateItemToEmail(dateItems);
-        //emailService.SendDateItemToEmail(dateItems);
+
 
     }
 
