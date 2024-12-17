@@ -9,4 +9,8 @@ public interface UnitUserRepository extends JpaRepository<UnitUser, Long> {
     UnitUser findByUsername(String username);
     UnitUser save(UnitUser user);
     UnitUser findByEmail(String email);
+
+
+
+
 }

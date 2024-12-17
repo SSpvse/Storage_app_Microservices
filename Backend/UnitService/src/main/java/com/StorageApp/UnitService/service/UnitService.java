@@ -16,6 +16,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -196,6 +197,31 @@ public class UnitService {
 
         return unitUserAccess.getId();
     }
+
+
+
+
+    // GETTING UNITS FOR GUEST ROLE USER
+
+    public List<Unit> getUnitsForGuestRole(Long userID) {
+        List<UnitUserAccess> uuAccessList = uuAccessRepository.findByUserIdAndRole(userID, Role.GUEST);
+
+        List<Unit> unitList = new ArrayList<>();
+        Unit tempUnit;
+        for (UnitUserAccess uuAccess : uuAccessList) {
+            System.out.println(" INSIDE FORLOOP :: :: : :UNIT ID: " + uuAccess.getUnit().getId() + " -- UNIT NAME: " + uuAccess.getUnit().getName());
+            tempUnit = uuAccess.getUnit();
+            if (uuAccess.getRole()==Role.OWNER){
+                tempUnit.setEditPermission(true);
+            }else {
+                tempUnit.setEditPermission(false);
+            }
+            unitList.add(tempUnit);
+        }
+
+        return unitList;
+    }
+
 
 
 }

@@ -1,9 +1,11 @@
 package com.StorageApp.UnitService.controller;
 
+import com.StorageApp.UnitService.model.UnitUser;
 import com.StorageApp.UnitService.model.UnitUserAccess;
 import com.StorageApp.UnitService.model.dto.InviteGuestDTO;
 import com.StorageApp.UnitService.model.dto.UnitDTO;
 import com.StorageApp.UnitService.model.Unit;
+import com.StorageApp.UnitService.repository.UnitUserRepository;
 import com.StorageApp.UnitService.service.UnitService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,4 +87,14 @@ public class UnitController {
        Long unitUserAccess_id = unitService.inviteGuest(invDTO);
        return ResponseEntity.ok(unitUserAccess_id);
     }
+
+    // get units when user is guest
+
+    @GetMapping("/units-for-guest/{userId}")
+    public ResponseEntity<List<Unit>> getUnitsForGuest(@PathVariable Long userId) {
+        // Assuming you have a method to retrieve UnitUser by userId
+        List<Unit> unitList = unitService.getUnitsForGuestRole(userId);
+        return ResponseEntity.ok(unitList);
+    }
+
 }
