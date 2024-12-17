@@ -1,4 +1,4 @@
-package com.StorageApp.LoginService.service;
+/*package com.StorageApp.LoginService.service;
 
 import com.StorageApp.LoginService.model.Role;
 import com.StorageApp.LoginService.model.User;
@@ -89,3 +89,4 @@ public class LoginServiceTest {
         return loginRepositoryTest.existsByEmail(email);
     }
 }
+*/

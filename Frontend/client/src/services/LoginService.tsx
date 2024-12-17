@@ -1,11 +1,12 @@
 
-const API_URL = "http://localhost:8085/auth/test";
+const API_URL = "http://localhost:8000/auth/test";
 
 // Funksjon for å sjekke om e-posten allerede finnes
 export const checkEmailExists = async (email: string): Promise<boolean> => {
     try {
         console.log("This is the EMAIL in CHeckEmailExists" + email); // I get correct email here
-        const response = await fetch(`${API_URL}/check-email?email=${email}`);
+        //const response = await fetch(`${API_URL}/check-email?email=${email}`);
+        const response = await fetch(`${API_URL}/check-email/${email}`);
         if (response.ok) {
             const data = await response.json();
             return data.exists;

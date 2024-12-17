@@ -55,5 +55,9 @@ public class LoginService {
         }
     }
 
+    // Checking if email exists
+    public boolean checkIfEmailExists(String email) {
+        return loginRepository.existsByEmail(email);
+    }
 
 }

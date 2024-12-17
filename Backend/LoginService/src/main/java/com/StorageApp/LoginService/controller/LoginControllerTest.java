@@ -1,4 +1,4 @@
-package com.StorageApp.LoginService.controller;
+/*package com.StorageApp.LoginService.controller;
 
 import com.StorageApp.LoginService.model.dto.LoginDTO;
 import com.StorageApp.LoginService.model.dto.RegisterDTO;
@@ -51,11 +51,12 @@ public class LoginControllerTest {
         boolean emailExists = loginServiceTest.checkIfEmailExists(email);
         return ResponseEntity.ok(emailExists);
     }*/
-
-    @GetMapping("/check-email")
-    public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam String email) {
+/*
+    @GetMapping("/check-email/{email}")
+    public ResponseEntity<Map<String, Boolean>> checkEmail(@PathVariable String email) {
         // Log email for debugging
         System.out.println("Received email: " + email);
+        System.out.println("HERE?? LOGINCONTROLLER");
 
         // Simulere sjekk i databasen
         boolean exists = email.equalsIgnoreCase("example@test.com");
@@ -66,4 +67,4 @@ public class LoginControllerTest {
         return ResponseEntity.ok(response);
     }
 
-}
+}*/

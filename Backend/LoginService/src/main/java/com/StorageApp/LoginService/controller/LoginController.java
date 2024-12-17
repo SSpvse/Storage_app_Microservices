@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 public class LoginController {
@@ -35,5 +38,19 @@ public class LoginController {
         return ResponseEntity.ok(respUserDTO);
     }
 
+    @GetMapping("/check-email/{email}")
+    public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestBody String email) {
+        // Log email for debugging
+        System.out.println("Received email: " + email);
+        System.out.println("HERE?? LOGINCONTROLLER");
+
+        // Simulere sjekk i databasen
+        boolean exists = email.equalsIgnoreCase("example@test.com");
+
+        // Returner respons som JSON
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("exists", exists);
+        return ResponseEntity.ok(response);
+    }
 
 }

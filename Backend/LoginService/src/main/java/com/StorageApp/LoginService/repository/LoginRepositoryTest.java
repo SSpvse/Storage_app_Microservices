@@ -1,4 +1,4 @@
-package com.StorageApp.LoginService.repository;
+/*package com.StorageApp.LoginService.repository;
 
 import com.StorageApp.LoginService.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +15,4 @@ public interface LoginRepositoryTest extends JpaRepository<User, Long> {
     // Ny metode for å sjekke om en bruker med en spesifisert e-post finnes
     boolean existsByEmail(String email);
 
-}
+}*/
