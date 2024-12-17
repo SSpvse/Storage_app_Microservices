@@ -10,11 +10,12 @@ import com.StorageApp.UnitService.repository.UUAccessRepository;
 import com.StorageApp.UnitService.repository.UnitRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -70,9 +71,37 @@ public class UnitService {
     @Transactional
     public Unit updateUnit(Unit unit, Long userID) {
 
+        System.out.println("INSIDE UPDATE UNIT SERVICE");
+        System.out.println("UNIT ID: " + unit.getId());
+        System.out.println("UNIT NAME: " + unit.getName());
+        System.out.println("UNIT DESCRIPTION: " + unit.getDescription());
+        System.out.println("UNIT LOCATION: " + unit.getLocation());
+        System.out.println("UNIT TYPE: " + unit.getType());
+        System.out.println("UNIT owner ID: " + unit.getOwnerId());
 
         Unit existingUnit = unitRepository.findById(unit.getId())
                 .orElseThrow(() -> new RuntimeException("Unit with ID " + unit.getId() + " not found"));
+
+        System.out.println(" -x-x-x-x-x-x-x   EXISTING UNIT ID: " + existingUnit.getId() + " -- AND OWNER ID: " + existingUnit.getOwnerId() + "-x-x-x-x-x-x-x  ");
+
+        if (Objects.equals(existingUnit.getOwnerId(), userID)) {
+            System.out.println("OWNER ID IS SAME AS USER_ID: " + userID + " -- AND OWNER ID: " + existingUnit.getOwnerId());
+            if (unit.getDescription() != null && !unit.getDescription().isEmpty()) {
+                existingUnit.setDescription(unit.getDescription());
+            }
+            if (unit.getLocation() != null && !unit.getLocation().isEmpty()) {
+                existingUnit.setLocation(unit.getLocation());
+            }
+            if (unit.getName() != null && !unit.getName().isEmpty()) {
+                existingUnit.setName(unit.getName());
+            }
+            if (unit.getType() != null && !unit.getType().isEmpty()) {
+                existingUnit.setType(unit.getType());
+            }
+            return existingUnit;
+        }
+
+        // IF OWNER ID IS NOT SAME AS USER ID of the unit then check if the user has access to the unit through the UnitUserAccess table
 
         UnitUserAccess uua = uuAccessRepository.findAccessByUnitAndUser(existingUnit.getId(), userID)
                 .orElseThrow(() -> new RuntimeException("User with ID " + userID + " does not have access to unit with ID " + unit.getId()));
@@ -112,28 +141,49 @@ public class UnitService {
     public UnitUserAccess inviteGuest(InviteGuestDTO invDTO) {
 
         System.out.println("--- - --- INVITING GUEST DTO : " + invDTO.toString());
-        // Create the URL for the invitation
-        String url = String.format("http://gateway:8000/auth/invite/%d", invDTO.getUnitID());
+        String url = "http://gateway:8000/auth/email";
 
-        ResponseEntity<Long> userId = restTemplate.getForEntity(url, Long.class);
-        if (userId == null) {
-            throw new RuntimeException("User not found with ID: " + invDTO.getUnitID());
+        // Set the body (email) to send
+        String emailBody = invDTO.getGuestEmail();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Wrap the body and headers into an HttpEntity
+        HttpEntity<String> requestEntity = new HttpEntity<>(emailBody, headers);
+
+        Long userId;
+        try {
+            // Send POST request to the AuthService
+            ResponseEntity<Long> response = restTemplate.postForEntity(url, requestEntity, Long.class);
+
+            // Check if the response is ok
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                userId = response.getBody();
+                System.out.println("Received User ID: " + userId);
+            } else {
+                throw new RuntimeException("Failed to retrieve User ID. Response: " + response.getStatusCode());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error while calling AuthService: " + e.getMessage());
         }
 
+        // check if the unit exists in the database
         Unit unit = unitRepository.findUnitById(invDTO.getUnitID());
         if (unit == null) {
             throw new RuntimeException("Unit not found with ID: " + invDTO.getUnitID());
         }
 
         // unit and user access table object, to keep track of permissions:
+        // setting the pariring for : unit / user  / role (guest)or(owner)
         UnitUserAccess unitUserAccess = new UnitUserAccess();
 
         unitUserAccess.setUnit(unit);
-        unitUserAccess.setUser(new UnitUser(userId.getBody()));
+        unitUserAccess.setUser(new UnitUser(userId));
 
-        if (invDTO.getRole() == Role.GUEST){
+        if (invDTO.getRole() == Role.GUEST) {
             unitUserAccess.setRole(Role.GUEST);
-        }else if (invDTO.getRole() == Role.OWNER){
+        } else if (invDTO.getRole() == Role.OWNER) {
             unitUserAccess.setRole(Role.OWNER);
         }
         return uuAccessRepository.save(unitUserAccess);

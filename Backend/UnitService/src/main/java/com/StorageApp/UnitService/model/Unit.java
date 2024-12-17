@@ -24,8 +24,6 @@ public class Unit {
     private String description;
     private String location;
     private String type;
-
-    @Column(nullable = false)
     private Boolean editPermission;
 
     @Column(nullable = false)

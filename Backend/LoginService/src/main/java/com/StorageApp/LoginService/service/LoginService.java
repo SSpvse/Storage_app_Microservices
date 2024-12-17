@@ -50,7 +50,7 @@ public class LoginService {
 
 
             User user = loginRepository.save(new User(username, email, password));
-            return new UserDTO( user.getUsername(),user.getEmail());
+            return new UserDTO( user.getId(), user.getUsername(),user.getEmail());
         }
     }
 

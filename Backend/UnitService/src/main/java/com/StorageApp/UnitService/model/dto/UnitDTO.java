@@ -18,15 +18,11 @@ public class UnitDTO {
 
     public Unit DTO_to_Unit(){
         Unit unit = new Unit();
-        unit.setId(id);
         unit.setName(name);
         unit.setDescription(description);
         unit.setLocation(location);
         unit.setType(type);
-        unit.setEditPermission(editPermission);
-        unit.setOwnerId(ownerId);
         return unit;
     }
-
 
 }
