@@ -23,7 +23,7 @@ const LoginProfile = () => {
                 const data = await response.json();
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userRole', data.role); // Lagre rollen
-                navigate('/dashboard'); // Hvis admin, naviger til dashboard
+                navigate('/'); // Hvis admin, naviger til dashboard
             } else {
                 setError('Invalid username or password');
             }

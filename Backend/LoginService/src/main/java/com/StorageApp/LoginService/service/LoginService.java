@@ -6,6 +6,8 @@ import com.StorageApp.LoginService.repository.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class LoginService {
@@ -43,6 +45,8 @@ public class LoginService {
     // register user
     public UserDTO register(RegisterDTO registerDTO) {
 
+        System.out.println("-X-X-X-X-- REGISTER SERVICE CALLED");
+        System.out.println("-X-X-X-X-- the register DTO ::: " + registerDTO.toString());
         if (registerDTO == null) {
             throw new IllegalArgumentException("User cannot be null");
         }else {
@@ -52,22 +56,31 @@ public class LoginService {
             // String role = registerDTO.getRole();
             // Role enumRole = Role.valueOf(role);
 
+            System.out.println("LINE 57-X-X-X-X-- the username AFTER ASSIGNING FROM DTO TO STRINGS::: " + username);
+            System.out.println("-X-X-X-X-- the email AFTER ASSIGNING FROM DTO TO STRINGS::: " + email);
+            System.out.println("LINE 59-X-X-X-X-- the password AFTER ASSIGNING FROM DTO TO STRINGS::: " + password);
 
             User user = loginRepository.save(new User(username, email, password));
+
+            System.out.println("LINE 63-x-x-x-x BEFORE RETURNING THE USER_DTO FROM REGISTER SERVICE" + user.toString());
             return new UserDTO( user.getId(), user.getUsername(),user.getEmail());
         }
     }
 
     // get id by email
-    public UnitUserDTO getIdByEmail(EmailDTO email) {
+    public Optional<UnitUserDTO> getUserByEmail(EmailDTO email) {
+        // Get the user from the repository
+        Optional<User> user = Optional.ofNullable(loginRepository.findByEmail(email.getEmail()));
 
-
-        User user = loginRepository.findByEmail(email.getEmail());
-
-        UnitUserDTO userDTO = new UnitUserDTO(user.getId(), user.getUsername(), user.getEmail());
-        if (user == null) {
-            throw new IllegalArgumentException("User not found! ( with email: " + email +")");
+        // If the user is not present, log a message and return an empty Optional
+        if (user.isEmpty()) {
+            System.out.println("User not found! (with email: " + email + ")");
+            return Optional.empty();
         }
-        return userDTO;
+
+        // Map the user to the DTO and return it wrapped in an Optional
+        UnitUserDTO userDTO = new UnitUserDTO(user.get().getId(), user.get().getUsername(), user.get().getEmail());
+        return Optional.of(userDTO);
     }
+
 }

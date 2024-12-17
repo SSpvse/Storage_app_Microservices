@@ -27,6 +27,6 @@ export const registerUser = async (email: string, username: string, password: st
         }
     } catch (error) {
         console.error(error);
-        throw new Error('Error during registration');
+        throw new Error('Email already taken!');
     }
 };
