@@ -25,7 +25,7 @@ public class NotificationController {
 
     // ---- CREATE
 
-// CHAT GTP ---------------VVVVVV
+
     // test , add to rabbitMQ --- TESTING ------VVV
     private final String exchange = "amqp.exchange.name";
     // Your exchange name
@@ -69,6 +69,12 @@ public class NotificationController {
     public ResponseEntity<List<DateDTO>> getAllTimeDto() {
         List<DateDTO> dtos = notificationService.getAllTimeDto();
         return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteTimeDto(@PathVariable Long id) {
+        notificationService.deleteTimeDto(id);
+        return new ResponseEntity<>("TimeDto deleted", HttpStatus.OK);
     }
 
 }

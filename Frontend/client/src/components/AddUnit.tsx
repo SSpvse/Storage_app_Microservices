@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { addUnit } from "../services/UnitService.tsx";
 import {useNavigate} from "react-router-dom";
+import {useUser} from "../types/UserContext.tsx";
 
 const AddUnit = () => {
     const [unitName, setUnitName] = useState('');
@@ -9,7 +10,10 @@ const AddUnit = () => {
     const [unitType, setUnitType] = useState('');
     const [error, setError] = useState<string | null>(null);
 
+
     const navigate = useNavigate();
+    const { id: userID } = useUser();
+
     const handleAddUnit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -19,6 +23,7 @@ const AddUnit = () => {
             description: unitDescription,
             location: unitLocation,
             type: unitType,
+            ownerId: userID,
         };
 
         try {
@@ -30,6 +35,7 @@ const AddUnit = () => {
             setUnitDescription('');
             setUnitLocation('');
             setUnitType('');
+
         } catch (err) {
             setError('Failed to add unit');
             console.error('Error adding unit:', err);

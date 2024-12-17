@@ -23,6 +23,8 @@ export const fetchUnitById = async (unitId: number): Promise<Unit> => {
 // Add a new unit
 export const addUnit = async (newUnit: { name: string }): Promise<Unit> => {
     try {
+        console.log("ADDUNIT SERVICE in unit ?? Hello" + newUnit); //Jeg kommer hit!!!
+
         const response = await fetch(`${UNIT_SERVICE_URL}/addunit`, {
             method: 'POST',
             headers: {

@@ -3,4 +3,8 @@ export interface Unit {
     name: string;
     description: string;
     type: string;
+    location: string;
+    editPermission: boolean;
+    ownerID: number;
+
 }

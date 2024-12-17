@@ -180,6 +180,7 @@ public class ItemService {
         if (item.isEmpty()) {
             throw new RuntimeException("Item not found with ID: " + id);
         }else {
+            restTemplate.delete("http://gateway:8000/notification/delete/" + id);
             itemRepository.deleteById(id);
         }
     }

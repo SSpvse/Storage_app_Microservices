@@ -38,7 +38,7 @@ public class LoginService {
         if (user == null) {
             throw new IllegalArgumentException("User not found");
         }
-        return new UserDTO(user.getId(), user.getUsername());
+        return new UserDTO(user.getId(), user.getUsername(), user.getEmail());
     }
 
 

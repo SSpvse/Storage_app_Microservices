@@ -2,6 +2,7 @@ package com.email.emailservice.service;
 
 import com.email.emailservice.model.DTO.DateDTO;
 import com.email.emailservice.repository.EmailServiceRepository;
+import lombok.Setter;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,8 @@ public class EmailServiceImpl implements EmailService {
     private static final Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
 
     // For testing purposes, email can be changed here to alter the email address that the email is sent to
-    private final String myEmail = "stefvns003@gmail.com";
+    @Setter
+    private String myEmail;
 
     @Autowired
     EmailServiceRepository emailServiceRepository;

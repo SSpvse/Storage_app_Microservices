@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import {useUser} from "../types/UserContext.tsx";
 
 const LoginProfile = () => {
     const [email, setEmail] = useState('');
@@ -7,6 +8,8 @@ const LoginProfile = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+
+    const { setUser } = useUser();
     const handleLogin = async () => {
         const loginData = { email, password };
 
@@ -22,7 +25,19 @@ const LoginProfile = () => {
             if (response.ok) {
                 const data = await response.json();
                 localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('userRole', data.role); // Lagre rollen
+                localStorage.setItem('userRole', data.role);
+
+                console.log("Login success data", data);
+                localStorage.setItem('user', JSON.stringify(data));
+                setUser({
+                    id: data.id,
+                    name: data.name,
+                    email: data.email,
+                    setUser: setUser,
+                });
+
+                console.log("User logged in:", data);
+
                 navigate('/'); // Hvis admin, naviger til dashboard
             } else {
                 setError('Invalid username or password');

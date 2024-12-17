@@ -44,4 +44,10 @@ public class NotificationService {
         notificationRepository.findAll().forEach(timeItemDto -> timeItemDtoList.add(timeItemDto));
         return timeItemDtoList;
     }
+
+
+    @Transactional
+    public void deleteTimeDto(Long id) {
+        notificationRepository.deleteById(id);
+    }
 }
