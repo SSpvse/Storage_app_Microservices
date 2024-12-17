@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -43,7 +44,7 @@ public class UnitController {
         }
     }
 
-    // Check if unit exists
+    // Check if unit exists ( this is for item service to call and get approved on unit exististing)
     @GetMapping("/exists/{id}")
     public ResponseEntity<Boolean> checkUnitExists(@PathVariable Long id) {
 
@@ -91,10 +92,17 @@ public class UnitController {
     // get units when user is guest
 
     @GetMapping("/units-for-guest/{userId}")
-    public ResponseEntity<List<Unit>> getUnitsForGuest(@PathVariable Long userId) {
+    public ResponseEntity<List<UnitDTO>> getUnitsForGuest(@PathVariable Long userId) {
         // Assuming you have a method to retrieve UnitUser by userId
         List<Unit> unitList = unitService.getUnitsForGuestRole(userId);
-        return ResponseEntity.ok(unitList);
+        if (unitList == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+        List<UnitDTO> dtoList = new ArrayList<>();
+        for (Unit unit : unitList) {
+            dtoList.add(unit.Unit_to_DTO());
+        }
+        return ResponseEntity.ok(dtoList);
     }
 
 }
