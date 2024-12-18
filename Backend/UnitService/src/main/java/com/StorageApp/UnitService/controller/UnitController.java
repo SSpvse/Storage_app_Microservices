@@ -90,6 +90,8 @@ public class UnitController {
     }
 /*
 
+    // this is the better version i wanted to use but didnt use cosue of time... needs to be integrated
+
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteUnit(@RequestBody UnitDTO unit) {
         unitService.deleteUnit(unit);

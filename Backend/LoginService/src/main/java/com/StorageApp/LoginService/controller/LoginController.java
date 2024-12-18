@@ -53,7 +53,7 @@ public class LoginController {
     }
 
 
-    // GETTING USER(UNITUSER) BY EMAIL
+    // GETTING USER(unit_user) BY EMAIL
     @PostMapping("/email")
     public ResponseEntity<UnitUserDTO> getUserByEmail(@RequestBody EmailDTO mail) {
         System.out.println("MAIL BEING CALLED WITH EMAIL : :: : : ::: " + mail);

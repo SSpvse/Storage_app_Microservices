@@ -28,7 +28,6 @@ public class AmqpConfiguration {
         return new Jackson2JsonMessageConverter();
     }
 
-    // chat gpt :: (NOT NEEDED ON THE SENDER)
     @Bean
     public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);

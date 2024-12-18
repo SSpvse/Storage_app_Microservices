@@ -149,6 +149,10 @@ public class UnitService {
 
     //delete unit
     /*
+
+    // this is the better version i wanted to use but didnt use cosue of time... needs to be integrated
+
+
     @Transactional
     public void deleteUnit(UnitDTO unitDTO) {
         Optional<Unit> unit = unitRepository.findById(unitDTO.getId());

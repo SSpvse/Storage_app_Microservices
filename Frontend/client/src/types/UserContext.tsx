@@ -15,19 +15,19 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         username: '',
         email: '',
 
-        setUser: () => {} // Tom funksjon, denne blir overskrevet senere
+        setUser: () => {}
     });
 
     console.log("This is the usahh" + user);
 
     useEffect(() => {
-        // Sjekk om vi har lagret brukerdata i localStorage
+
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
     }, []);
-    // Returner Provider-komponenten som gir tilgang til context
+
     return (
         <UserContext.Provider value={{ ...user, setUser }}>
             {children}
@@ -35,7 +35,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     );
 };
 
-// En custom hook for å bruke UserContext
+
 export const useUser = () => {
     const context = useContext(UserContext);
     if (!context) {

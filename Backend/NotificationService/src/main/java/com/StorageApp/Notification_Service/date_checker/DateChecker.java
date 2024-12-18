@@ -32,7 +32,8 @@ public class DateChecker {
         this.exchangeName = exchangeName;
     }
 
-    // this method runs every 24 hours
+    // this method should run every 24 hours
+    // but for testing i made it 60 seconds
 
     @Scheduled(fixedRate = 60000)
     public void checkItems() {

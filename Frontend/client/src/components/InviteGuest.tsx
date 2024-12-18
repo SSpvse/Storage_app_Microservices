@@ -14,7 +14,7 @@ const InviteGuest = () => {
     useEffect(() => {
         const fetchUnits = async () => {
             try {
-                const myUnits = await fetchAllUnits(); // Henter enheter fra backend
+                const myUnits = await fetchAllUnits();
                 setUnits(myUnits);
             } catch (err) {
                 console.error("Failed to fetch units:", err);
@@ -27,8 +27,8 @@ const InviteGuest = () => {
     const handleUnitSelection = (unitId: number) => {
         setSelectedUnits((prev) =>
             prev.includes(unitId)
-                ? prev.filter((id) => id !== unitId) // Fjern hvis allerede valgt
-                : [...prev, unitId] // Legg til hvis ikke valgt
+                ? prev.filter((id) => id !== unitId)
+                : [...prev, unitId]
         );
     };
     const handleInvite = async () => {

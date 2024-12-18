@@ -19,7 +19,7 @@ const Register = () => {
         }
 
         try {
-            // Først, sjekk om e-posten allerede finnes
+
             const registeredUser = await registerUser(email, username, password);
             console.log("FETCHED user : :" + registeredUser);
             if (registeredUser) {

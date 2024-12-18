@@ -29,7 +29,6 @@ public class ItemController {
 
         ItemDTO savedItem = itemService.addItem(itemDTO);
         System.out.println("FROM CONTROLLER: " + savedItem.toString());
-        //return new ResponseEntity<>(savedItem.to_ItemDTO(), HttpStatus.CREATED);
         return ResponseEntity.ok(savedItem);
 
     }

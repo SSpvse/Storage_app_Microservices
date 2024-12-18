@@ -46,7 +46,7 @@ export const fetchItemsByUnitId = async (unitId: number): Promise<Item[]> => {
 // Fetch a specific item by its ID
 export const fetchItemById = async (id: number): Promise<Item> => {
     try {
-        const response = await fetch(`${ITEM_SERVICE_URL}/get/${id}`); //TODO THIS SHOULD BE id not itemID !!!! (see backend)
+        const response = await fetch(`${ITEM_SERVICE_URL}/get/${id}`);
         if (!response.ok) {
             throw new Error(`Failed to fetch item with ID ${id}`);
         }

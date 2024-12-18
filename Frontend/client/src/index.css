@@ -221,15 +221,15 @@ h3 {
 .item-list {
   margin-top: 20px;
   width: 100%;
-  max-width: 1200px; /* Maks bredde for listen */
-  padding: 0 20px; /* Horisontalt mellomrom for listen */
+  max-width: 1200px;
+  padding: 0 20px;
 }
 
 .items-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: flex-start; /* Plassere varene til venstre */
+  justify-content: flex-start;
 }
 
 /* Styling for item boxes */
@@ -255,28 +255,7 @@ h3 {
   font-style: italic;
 }
 
-/*
-.item-list {
-  margin-top: 20px;
-}
 
-.item-list ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.item-list li {
-  background-color: #fff;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.item-list li strong {
-  color: #333;
-  font-weight: bold;
-}*/
 
 
 /********          -------         ********/
@@ -284,15 +263,15 @@ h3 {
 /********          -------         ********/
 
 .searchingInputBox {
-  width: 100%; /* Sørger for at boksen bruker hele tilgjengelige bredde */
-  max-width: 400px; /* Legger til en maksimal bredde for å hindre at den blir for stor */
-  margin: 0 auto; /* Sentrerer boksen horisontalt */
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 input[type="text"] {
-  width: 100%; /* Får input-feltet til å bruke hele bredden til containeren */
-  padding: 8px; /* Legger til litt innvendig polstring for bedre brukeropplevelse */
-  font-size: 16px; /* Justerer skriftstørrelsen */
-  border: 1px solid #ccc; /* Gir input-feltet en lett grå kant */
-  border-radius: 4px; /* Runder hjørnene på input-feltet */
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }

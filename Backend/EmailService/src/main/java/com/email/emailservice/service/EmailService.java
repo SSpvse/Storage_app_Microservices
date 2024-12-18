@@ -9,5 +9,5 @@ interface EmailService {
 
     void SendDateItemToEmail(List<DateDTO> dateDTOS);
 
-    // void sendTEST(String string);
+
 }

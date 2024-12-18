@@ -37,7 +37,7 @@ const Layout = ({ children }: LayoutProps) => {
                         </button>
                         <button onClick={() => navigate("/register")} className="nav-btn">
                             <User className="icon" size={20} />
-                            RegisterDELETE
+                            Register
                         </button>
 
                     </div>

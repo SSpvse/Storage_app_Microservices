@@ -53,8 +53,6 @@ public class LoginService {
             String username = registerDTO.getUsername();
             String email = registerDTO.getEmail();
             String password = registerDTO.getPassword();
-            // String role = registerDTO.getRole();
-            // Role enumRole = Role.valueOf(role);
 
             System.out.println("LINE 57-X-X-X-X-- the username AFTER ASSIGNING FROM DTO TO STRINGS::: " + username);
             System.out.println("-X-X-X-X-- the email AFTER ASSIGNING FROM DTO TO STRINGS::: " + email);

@@ -3,9 +3,9 @@
 /*-----------------------------------------*/
 
 .main-content {
-  min-height: 100vh; /* Sørger for at innholdet dekker hele høyden på skjermen */
-  padding-top: 5rem; /* Beholder den øverste marginen */
-  padding-bottom: 3rem; /* Beholder bunnmarginen */
+  min-height: 100vh;
+  padding-top: 5rem;
+  padding-bottom: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,7 +101,7 @@
   width: 100%;
   padding: 2rem;
   text-align: center;
-  height: 557px;  /* Sett høyden til ønsket verdi */
+  height: 557px;
   bottom: 6px;
 
 }
@@ -156,17 +156,7 @@
   text-align: center;
 }
 
-/********          -------         ********/
-/********          UnitManager         ********/
-/********          -------         ********/
 
-.unit-manager {
-
-}
-
-.unit-list {
-
-}
 
 
 
@@ -190,8 +180,8 @@
 
 .item-manager .content-wrapper {
   display: flex;
-  flex-direction: column; /* Ordne innhold vertikalt */
-  flex-grow: 1; /* Gjør at denne tar opp mer plass hvis nødvendig */
+  flex-direction: column;
+  flex-grow: 1;
   margin-bottom: 20px;
 }
 
@@ -212,8 +202,8 @@
   justify-content: center;
   align-items: center;
   width: 350px;
-  padding: 1.5rem; /* Padding rundt innholdet */
-  height: 590px;  /* Sett ønsket høyde på boksen */
+  padding: 1.5rem;
+  height: 590px;
 
 }
 
@@ -241,7 +231,7 @@
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
-  border: 2px solid #1b92f6; /* Blå ramme rundt hver item-boks */
+  border: 2px solid #1b92f6;
 }
 
 .item-box:hover {
@@ -286,17 +276,17 @@
 /********          -------         ********/
 
 .searchingInputBox {
-  width: 100%; /* Sørger for at boksen bruker hele tilgjengelige bredde */
-  max-width: 400px; /* Legger til en maksimal bredde for å hindre at den blir for stor */
-  margin: 0 auto; /* Sentrerer boksen horisontalt */
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 input[type="text"] {
-  width: 100%; /* Får input-feltet til å bruke hele bredden til containeren */
-  padding: 8px; /* Legger til litt innvendig polstring for bedre brukeropplevelse */
-  font-size: 16px; /* Justerer skriftstørrelsen */
-  border: 1px solid #ccc; /* Gir input-feltet en lett grå kant */
-  border-radius: 4px; /* Runder hjørnene på input-feltet */
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 /********          -------         ********/
@@ -324,21 +314,21 @@ input[type="text"] {
 
 .item-header {
   display: flex;
-  align-items: center; /* Juster elementene vertikalt */
-  justify-content: flex-start; /* Juster innholdet til venstre */
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .item-header h3 {
   font-size: 16px;
   color: #333;
   line-height: 1.5;
-  margin-right: 10px; /* Litt avstand mellom teksten og ikonet */
+  margin-right: 10px;
 }
 
 .item-icon {
   display: flex;
-  justify-content: center; /* Juster ikonet til venstre */
-  align-items: center; /* Sentrer ikonet vertikalt */
+  justify-content: center;
+  align-items: center;
   width: 50px;
   height: 50px;
   margin-left: 270px;
@@ -375,7 +365,7 @@ input[type="text"] {
 /**          Login and Register         **/
 /**          -------         **/
 
-.auth-container {
+.login-container, .register-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -387,32 +377,32 @@ input[type="text"] {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.auth-container h2 {
+.login-container h2, .register-container h2 {
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 1rem;
 }
 
-.auth-form {
+.login-form, .register-form {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.auth-form div {
+.login-form div, .register-form div {
   display: flex;
   flex-direction: column;
 }
 
-.auth-form label {
+.login-form label, .register-form label {
   font-size: 1rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
   color: #555;
 }
 
-.auth-form input {
+.login-form input, .register-form input {
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
@@ -422,7 +412,7 @@ input[type="text"] {
   transition: border-color 0.3s ease;
 }
 
-.auth-form input:focus {
+.login-form input:focus, .register-form input:focus {
   border-color: #007bff;
 }
 
@@ -432,7 +422,7 @@ input[type="text"] {
   text-align: center;
 }
 
-.auth-container button {
+.login-container button, .register-container button {
   padding: 0.75rem;
   font-size: 1rem;
   font-weight: bold;
@@ -444,17 +434,14 @@ input[type="text"] {
   transition: background-color 0.3s ease;
 }
 
-.auth-container button:hover {
+.login-container button:hover, .register-container button:hover {
   background-color: #0056b3;
 }
 
-.toggle-auth {
+.auth-link {
   font-size: 0.875rem;
   text-align: center;
   margin-top: 1rem;
-}
-
-.toggle-auth span {
   color: #007bff;
   cursor: pointer;
   font-weight: bold;

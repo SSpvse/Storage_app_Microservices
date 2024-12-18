@@ -26,7 +26,7 @@ const ItemManager = () => {
         const handleFetchItems = async () => {
             try {
                 setLoading(true);
-                setError(null);                                 // Number (unitId)
+                setError(null);
                 const fetchedData = await fetchItemsByUnitId(unitIdNumber);
 
                 // Ensuring the response has items and unitType before updating state

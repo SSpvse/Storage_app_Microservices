@@ -40,22 +40,7 @@ public class NotificationController {
         // Log and return the sent object for confirmation
         log.info("Sent message to RabbitMQ: " + text);
     }
-// Your routing key
 
-
-    @PostMapping("/test2")
-    public ResponseEntity<DateDTO> testSendRabbit(@RequestBody DateDTO timeItemDto) {
-
-        System.out.println("øøøøøøøøøøøøøøøøøøøø iID ::::" + timeItemDto.getId());
-
-        // Send the message to RabbitMQ
-        amqpTemplate.convertAndSend(exchange, routingKey, timeItemDto);
-
-        // Log and return the sent object for confirmation
-        log.info("Sent message to RabbitMQ: " + timeItemDto);
-        return ResponseEntity.ok(timeItemDto);
-    }
-// --------------------------------AA
 
 
     // add timeDto

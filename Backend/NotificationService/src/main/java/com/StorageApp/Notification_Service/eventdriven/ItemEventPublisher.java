@@ -19,7 +19,7 @@ public class ItemEventPublisher {
 
     private final RabbitTemplate rabbitTemplate;
     private final String exchangeName;
-    private final String routingKey = "item.date.bindkey"; // Your routing key
+    private final String routingKey = "item.date.bindkey"; // routing key
 
     public ItemEventPublisher(RabbitTemplate rabbitTemplate, @Value("${amqp.exchange.name}") String exchangeName) {
         this.rabbitTemplate = rabbitTemplate;
