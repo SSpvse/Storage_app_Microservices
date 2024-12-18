@@ -45,10 +45,7 @@ public class EmailServiceImpl implements EmailService {
             return;
         }
 
-
-
     }
-
 
     @Override
     public void SendDateItemToEmail(List<DateDTO> dateDTOs) {
