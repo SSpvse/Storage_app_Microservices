@@ -56,6 +56,21 @@ public class UnitService {
     }
 
 
+    // Get units by owner
+
+    public List<UnitDTO> getUnitsByOwner(Long ownerId) {
+        List<Unit> unitList = unitRepository.findByOwnerId(ownerId);
+        if (unitList == null) {
+            return null;
+        }
+        List<UnitDTO> dtoList = new ArrayList<>();
+        for (Unit unit : unitList) {
+            dtoList.add(unit.Unit_to_DTO());
+        }
+        return dtoList;
+    }
+
+
     // Get all units
     public List<Unit> getAllUnits(){
         return unitRepository.findAll();
@@ -131,6 +146,22 @@ public class UnitService {
         existingUnit.Unit_to_DTO();
         return unitRepository.save(existingUnit).Unit_to_DTO();
     }
+
+    //delete unit
+    /*
+    @Transactional
+    public void deleteUnit(UnitDTO unitDTO) {
+        Optional<Unit> unit = unitRepository.findById(unitDTO.getId());
+        if (unit.isEmpty()) {
+            throw new RuntimeException("Item not found with ID: " + unitDTO.getId());
+        }
+        if (unit.get().getOwnerId() == unitDTO.getOwnerId()) {
+            unitRepository.deleteById(unitDTO.getId());
+        } else {
+            throw new RuntimeException("User with ID " + unitDTO.getOwnerId() + " does not have permission to delete unit with ID " + unitDTO.getId());
+        }
+    }
+     */
 
     //delete unit
     @Transactional
@@ -222,6 +253,7 @@ public class UnitService {
 
         return unitList;
     }
+
 
 
 

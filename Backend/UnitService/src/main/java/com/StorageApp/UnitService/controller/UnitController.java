@@ -41,6 +41,16 @@ public class UnitController {
         }
     }
 
+    // Get all units by owner
+    @GetMapping("/byowner/{ownerId}")
+    public ResponseEntity<List<UnitDTO>> getUnitsByOwner(@PathVariable Long ownerId) {
+        List<UnitDTO> unitList = unitService.getUnitsByOwner(ownerId);
+        if (unitList == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+        return ResponseEntity.ok(unitList);
+    }
+
     // Check if unit exists ( this is for item service to call and get approved on unit exististing)
     @GetMapping("/exists/{id}")
     public ResponseEntity<Boolean> checkUnitExists(@PathVariable Long id) {
@@ -71,14 +81,23 @@ public class UnitController {
         return new ResponseEntity<>(updatedUnit, HttpStatus.OK);
     }
 
-
     // delete unit by ID
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUnit(@PathVariable Long id) {
         unitService.deleteUnit(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+/*
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteUnit(@RequestBody UnitDTO unit) {
+        unitService.deleteUnit(unit);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+ */
     // invite guest to unit
     @PostMapping("/invite")
     public ResponseEntity<Long> inviteGuest(@RequestBody InviteGuestDTO invDTO) {

@@ -1,5 +1,6 @@
 package com.StorageApp.Notification_Service.model.DTO;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ public class DateDTO {
     private Long id;
     private String name;
     private LocalDate date;
+
     private Long unitID;
     private Long userID;
 

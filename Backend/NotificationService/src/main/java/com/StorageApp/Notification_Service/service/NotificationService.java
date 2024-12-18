@@ -14,12 +14,10 @@ import java.util.List;
 @Service
 @NoArgsConstructor
 public class NotificationService {
-// ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !THIS WHOLE SERVICE IS FOR TESTING PURPOSES ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
     @Autowired
     private NotificationRepository notificationRepository;
 
-// ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !THIS WHOLE CONTROLLER IS FOR TESTING PURPOSES ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
     @Transactional
     public DateDTO addTimeDto(DateDTO timeItemDto) {

@@ -86,8 +86,15 @@ public class LoginService {
 
     // get email by id
     public EmailDTO getEmailById(Long id) {
-        EmailDTO emailDTO = new EmailDTO(loginRepository.findEmailById(id));
-        return emailDTO;
+        User user = loginRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User with ID " + id + " not found"));
+        String email = user.getEmail();
+        if (email == null || email.isEmpty()) {
+            System.out.println("Email is null or empty for user ID: " + id);
+            throw new RuntimeException("Email address is missing for user ID " + id);
+        }
+        return new EmailDTO(email);
     }
+
 
 }

@@ -17,13 +17,11 @@ import java.util.List;
 @Slf4j
 public class NotificationController {
 
-// ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !THIS WHOLE CONTROLLER IS FOR TESTING PURPOSES ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
     @Autowired
     NotificationService notificationService;
     @Autowired
     AmqpTemplate amqpTemplate; // Inject the RabbitMQ template
 
-// ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !THIS WHOLE CONTROLLER IS FOR TESTING PURPOSES ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
 
     // ---- CREATE
 
@@ -45,7 +43,7 @@ public class NotificationController {
 // Your routing key
 
 
-    @PostMapping("/test1")
+    @PostMapping("/test2")
     public ResponseEntity<DateDTO> testSendRabbit(@RequestBody DateDTO timeItemDto) {
 
         System.out.println("øøøøøøøøøøøøøøøøøøøø iID ::::" + timeItemDto.getId());
@@ -58,6 +56,7 @@ public class NotificationController {
         return ResponseEntity.ok(timeItemDto);
     }
 // --------------------------------AA
+
 
     // add timeDto
     @PostMapping("/add")

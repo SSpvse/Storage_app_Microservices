@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -90,9 +91,17 @@ public class ItemService {
                 // System.out.println("INSIDE ITEM_SERVICE / ADDITEM METHOD / itemDto.getDate != null :: getdate::" + savedItem.getDate());
 
                 assert savedItem != null;
-                DateDTO timeDto = new DateDTO(savedItem.getId(),savedItem.getName(), savedItem.getDate(), savedItem.getUserID(), savedItem.getUnitID());
+                DateDTO timeDto = new DateDTO(
+                        savedItem.getId(),
+                        savedItem.getName(),
+                        savedItem.getDate(),
+                        savedItem.getUnitID(),
+                        savedItem.getUserID()
+                );
 
                 System.out.println("BEFORE SENDING TO THE RESTTEMPLATE POSTFORENTTITY, timeDto.getDate:::: " + timeDto.getDate());
+                System.out.println("BEFORE SENDING TO THE RESTTEMPLATE POSTFORENTTITY, timeDto.getUnitID:::: " + timeDto.getUnitID());
+                System.out.println("BEFORE SENDING TO THE RESTTEMPLATE POSTFORENTTITY, timeDto.getUserID:::: " + timeDto.getUserID());
               // for localhost :
                 //String notificationUrl = "http://localhost:8000/notification/add";
                 String notificationUrl = "http://gateway:8000/notification/add";
@@ -161,15 +170,33 @@ public class ItemService {
 
     // update item
     @Transactional
-    public Item updateItem(Item item, Long id) {
-        Optional<Item> oldItem = itemRepository.findById(id);
-        if (oldItem.isPresent()) {
-            itemRepository.deleteById(id);
+    public Item updateItem(Item item , Long id) {
+        System.out.println("INSIDE UPDATE ITEM SERVICE");
+        System.out.println("ITEM ID: " + item.getId());
+        System.out.println("ITEM NAME: " + item.getName());
+        System.out.println("ITEM DATE: " + item.getDate());
+        System.out.println("ITEM USER ID: " + item.getUserID());
+        System.out.println("ITEM UNIT ID: " + item.getUnitID());
 
-            return itemRepository.save(item);
-        }else {
-            return null;
+        Item existingItem = itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item with ID " + item.getId() + " not found"));
+
+        System.out.println(" -x-x-x-x-x-x-x   EXISTING ITEM ID: " + existingItem.getId() + " -x-x-x-x-x-x-x  ");
+
+        if (item.getName() != null && !item.getName().isEmpty()) {
+            existingItem.setName(item.getName());
         }
+        if (item.getDate() != null) {
+            existingItem.setDate(item.getDate());
+        }
+        if (item.getUserID() != null) {
+            existingItem.setUserID(item.getUserID());
+        }
+        if (item.getUnitID() != null) {
+            existingItem.setUnitID(item.getUnitID());
+        }
+
+        return itemRepository.save(existingItem);
     }
 
     // delete item by id

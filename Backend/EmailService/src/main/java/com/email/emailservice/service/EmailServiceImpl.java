@@ -76,13 +76,22 @@ public class EmailServiceImpl implements EmailService {
             itemsOwnerID = dateDTO.getUserID();
         }
 
+
         if (itemsOwnerID == null) {
             logger.error("X_X_X_X_X_(EmailServiceImpl)No items owner ID found in the list of items");
             return;
         }else {
 
-            ResponseEntity<String> resEmail = restTemplate.getForEntity("http://localhost:8080/auth/getMail-by-id/" + itemsOwnerID, String.class);
+            System.out.println("X_X_X_X_X_(EmailServiceImpl)Items owner ID found: " + itemsOwnerID);
+            ResponseEntity<String> resEmail = restTemplate.getForEntity("http://gateway:8000/auth/getMail-by-id/" + itemsOwnerID, String.class);
+
+
             myEmail = resEmail.getBody();
+            if (myEmail == null || myEmail.isEmpty()) {
+                logger.error("Email address is null or empty for user ID: {}", itemsOwnerID);
+                return;
+            }
+            System.out.println("X_X_X_X_X_(EmailServiceImpl)Email found: " + myEmail);
         }
 
 

@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface NotificationRepository extends JpaRepository<DateDTO, Long> {
 
+
     List<DateDTO> findByDate(@Param("date") LocalDate date);
     void deleteById(Long id);
 
