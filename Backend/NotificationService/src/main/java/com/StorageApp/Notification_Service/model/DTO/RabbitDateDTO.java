@@ -14,4 +14,5 @@ public class RabbitDateDTO {
     private String name;
     private String date;
     private Long unitID;
+    private Long userID;
 }

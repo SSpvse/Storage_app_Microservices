@@ -7,7 +7,9 @@ import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,6 +22,9 @@ public class EmailServiceImpl implements EmailService {
     // For testing purposes, email can be changed here to alter the email address that the email is sent to
     @Setter
     private String myEmail;
+
+
+    RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
     EmailServiceRepository emailServiceRepository;
@@ -39,7 +44,7 @@ public class EmailServiceImpl implements EmailService {
             logger.warn(": : : Empty or null list provided to sortingItemsForMail");
             return;
         }
-        
+
 
 
     }
@@ -60,16 +65,28 @@ public class EmailServiceImpl implements EmailService {
         // Construct the subject dynamically by using dateDTOs values
         String subject = "Expiring items from unit_name: ";
 
-
         StringBuilder itemsForMail = new StringBuilder();
+        Long itemsOwnerID = null;
         for (DateDTO dateDTO : dateDTOs) {
-            itemsForMail.append(String.format("<p><b>Name:</b> %s</p>", dateDTO.getName()));
-            itemsForMail.append(String.format("<p><b>Date of expiring:</b> %s</p>", dateDTO.getDate()));
+            itemsForMail.append(String.format("X_X_X_X_X_(EmailServiceImpl)<p><b>Name:</b> %s</p>", dateDTO.getName()));
+            itemsForMail.append(String.format("X_X_X_X_X_(EmailServiceImpl)<p><b>Date of expiring:</b> %s</p>", dateDTO.getDate()));
             itemsForMail.append("<p> - - - - - - - </p>");  // separator
             logger.debug("Processing item: {} with expiration date: {}", dateDTO.getName(), dateDTO.getDate());
+            System.out.println("X_X_X_X_X_(EmailServiceImpl) Processing item: " + dateDTO.getName() + " with expiration date: " + dateDTO.getDate() + "AND THE ITEM OWNER ID::: " + dateDTO.getUserID());
+            itemsOwnerID = dateDTO.getUserID();
         }
 
-        String text = String.format("Your items that are running out: %s", itemsForMail);
+        if (itemsOwnerID == null) {
+            logger.error("X_X_X_X_X_(EmailServiceImpl)No items owner ID found in the list of items");
+            return;
+        }else {
+
+            ResponseEntity<String> resEmail = restTemplate.getForEntity("http://localhost:8080/auth/getMail-by-id/" + itemsOwnerID, String.class);
+            myEmail = resEmail.getBody();
+        }
+
+
+        String text = String.format("X_X_X_X_X_(EmailServiceImpl)Your items that are running out: %s", itemsForMail);
 
         // Construct the JSON body dynamically
         String jsonBody = String.format(

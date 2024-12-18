@@ -2,19 +2,19 @@ version: "3.8"
 
 services:
 
-  frontend:
-    build:
-      context: ../../Frontend/client
-      dockerfile: Dockerfile
-    container_name: frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      - gateway
-    networks:
-      - storage_manager
-    restart: always
-
+#frontend:
+#  build:
+#    context: ../../Frontend/client
+#    dockerfile: Dockerfile
+#  container_name: frontend
+#  ports:
+#    - "3000:80"
+#  depends_on:
+#    - gateway
+#  networks:
+#    - storage_manager
+#  restart: always
+#
   loginservice:
     image: loginservice:0.0.1-SNAPSHOT
     container_name: login_service

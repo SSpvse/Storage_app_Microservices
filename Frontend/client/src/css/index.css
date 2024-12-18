@@ -345,9 +345,9 @@ input[type="text"] {
 }
 
 .item-detail-icon {
-  width: 100%;  /* Sørg for at ikonet fyller containeren riktig */
+  width: 100%;
   height: 100%;
-  object-fit: contain; /* Behold ikonets aspektforhold */
+  object-fit: contain;
 }
 
 .item-detail p {
@@ -369,6 +369,95 @@ input[type="text"] {
 
 .delete-btn:hover {
   background-color: #c0392b;
+}
+
+/**          -------         **/
+/**          Login and Register         **/
+/**          -------         **/
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem auto;
+  padding: 2rem 3rem;
+  max-width: 500px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form label {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.auth-form input:focus {
+  border-color: #007bff;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.auth-container button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-container button:hover {
+  background-color: #0056b3;
+}
+
+.toggle-auth {
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.toggle-auth span {
+  color: #007bff;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 

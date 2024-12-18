@@ -2,7 +2,7 @@ import React, {createContext, useState, ReactNode, useContext, useEffect} from '
 
 export interface UserContext {
     id: number;
-    name: string;
+    username: string;
     email: string;
     setUser: (user: UserContext) => void;
 }
@@ -12,7 +12,7 @@ export const UserContext = createContext<UserContext | undefined>(undefined);
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<UserContext>({
         id: 0 ,
-        name: '',
+        username: '',
         email: '',
 
         setUser: () => {} // Tom funksjon, denne blir overskrevet senere

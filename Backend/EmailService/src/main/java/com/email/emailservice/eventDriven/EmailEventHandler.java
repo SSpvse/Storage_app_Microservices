@@ -22,14 +22,15 @@ public class EmailEventHandler {
 
         // just to trouble shoot and get list printed for the logs:
         if (dateItems == null || dateItems.isEmpty()) {
-            System.out.println(" !!  EMPTY LIST IN THE EVENT HANDLER !! ");
+            System.out.println(" X_X_X_X_X_(EmailEventHandler)!!  EMPTY LIST IN THE EVENT HANDLER !! ");
         }else {
-            System.out.println(" !!  LIST IN THE EVENT HANDLER !! ");
+            System.out.println(" X_X_X_X_X_(EmailEventHandler)!!  LIST IN THE EVENT HANDLER !! ");
             for (DateDTO dateDTO : dateItems) {
+                System.out.println("_X_X_X_X_XX_(EmailEventHandler)X   DATEDTO GET ID: " + dateDTO.getUserID());
                 System.out.println(dateDTO.getName());
             }
         }
-        System.out.println("INSIDE EVENT HANDLER, dateItems.size()::::: " + dateItems.size());
+        System.out.println("X_X_X_X_X_(EmailEventHandler)INSIDE EVENT HANDLER, dateItems.size()::::: " + dateItems.size());
 
 
         emailService.SendDateItemToEmail(dateItems);

@@ -83,4 +83,11 @@ public class LoginService {
         return Optional.of(userDTO);
     }
 
+
+    // get email by id
+    public EmailDTO getEmailById(Long id) {
+        EmailDTO emailDTO = new EmailDTO(loginRepository.findEmailById(id));
+        return emailDTO;
+    }
+
 }

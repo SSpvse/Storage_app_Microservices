@@ -3,6 +3,7 @@ import { addItem } from "../services/itemService.tsx";
 import { NewItem } from "../types/NewItem.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {fetchUnitById} from "../services/UnitService.tsx";
+import {useUser} from "../types/UserContext.tsx";
 
 const itemTypes = {
     food: "food",
@@ -24,6 +25,8 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
     const [quantity, setQuantity] = useState('');
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
+
+    const {id: user_id} = useUser();
 
     console.log("UNIT ID FROM URRRL", unitId);
     // Converting the unitId from url from string to number
@@ -55,6 +58,7 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
             return;
         }
         console.log("-----Item Type before submission:", itemType);
+        console.log("------Item User id:", user_id);
 
         const newItem: NewItem = {
             name,
@@ -62,10 +66,10 @@ const AddItem = ({ unitId, onItemAdded }: AddItemProps) => {
             date,
             quantity: quantity? parseInt(quantity):0,
             unitID: unitIdNumber,
-            userID: 1,
+            userID: user_id,
             type: itemType,
         };
-
+        console.log("New Item:", newItem);
         try {
             const savedItem = await addItem(newItem);
             onItemAdded(savedItem);

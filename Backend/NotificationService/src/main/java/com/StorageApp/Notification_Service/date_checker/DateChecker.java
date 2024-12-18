@@ -44,6 +44,11 @@ public class DateChecker {
 
         List<DateDTO> itemsToSend = notificationRepository.findByDate(tomorrowLocalDate);
 
+        for (DateDTO dateDTO : itemsToSend) {
+            System.out.println("X_X_X_X_X_XX_(DateChecker)X   DATEDTO GET ID: " + dateDTO.getUserID());
+            System.out.println("X__X_X_X_X getname: "+dateDTO.getName());
+        }
+
         System.out.println("CHECKING TOMORROW DATE AND ITEMS TO SEND list.size()LENGTH==== " + itemsToSend.size());
         System.out.println("AND DATATYPE IS : ~ : ~ :" + itemsToSend.getClass().getName());
 

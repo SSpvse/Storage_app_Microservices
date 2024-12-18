@@ -29,7 +29,7 @@ const Layout = ({ children }: LayoutProps) => {
                         </button>
                         <button onClick={() => navigate("/profile")} className="nav-btn">
                             <User className="icon" size={20} />
-                            Profile/Login
+                            Profile
                         </button>
                         <button onClick={() => navigate("/login")} className="nav-btn">
                             <User className="icon" size={20} />
@@ -37,7 +37,7 @@ const Layout = ({ children }: LayoutProps) => {
                         </button>
                         <button onClick={() => navigate("/register")} className="nav-btn">
                             <User className="icon" size={20} />
-                            Register
+                            RegisterDELETE
                         </button>
 
                     </div>

@@ -69,4 +69,10 @@ public class LoginController {
     }
 
 
+    @GetMapping("/getMail-by-id/{id}")
+    public ResponseEntity<EmailDTO> getMailById(@PathVariable Long id) {
+        EmailDTO emailDTO = loginService.getEmailById(id);
+        return ResponseEntity.ok(emailDTO);
+    }
+
 }

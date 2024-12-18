@@ -1,6 +1,7 @@
 package com.StorageApp.LoginService.repository;
 
 import com.StorageApp.LoginService.model.User;
+import com.StorageApp.LoginService.model.dto.EmailDTO;
 import com.StorageApp.LoginService.model.dto.RegisterDTO;
 import com.StorageApp.LoginService.model.dto.UnitUserDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +15,6 @@ public interface LoginRepository extends JpaRepository<User, Long> {
     User save(User user);
 
     User findByEmail(String email);
+    String findEmailById(Long id);
 }
 
